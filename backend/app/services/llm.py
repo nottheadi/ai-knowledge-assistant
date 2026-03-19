@@ -1,5 +1,6 @@
 import os
 import asyncio
+import json
 import requests
 from dotenv import load_dotenv
 
@@ -10,21 +11,21 @@ BASE_URL = os.getenv("OPENROUTER_BASE_URL")
 MODEL = os.getenv("MODEL")
 
 async def ask_llm(prompt):
-    """Make an async call to the LLM API."""
+    """Make an async call to the OpenRouter LLM API."""
     try:
         def make_request():
             return requests.post(
-                f"{BASE_URL}/chat/completions",
+                BASE_URL,
                 headers={
                     "Authorization": f"Bearer {API_KEY}",
                     "Content-Type": "application/json"
                 },
-                json={
+                data=json.dumps({
                     "model": MODEL,
                     "messages": [
                         {"role": "user", "content": prompt}
                     ]
-                }
+                })
             )
         
         loop = asyncio.get_event_loop()
