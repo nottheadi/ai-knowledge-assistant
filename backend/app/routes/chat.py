@@ -7,11 +7,29 @@ router = APIRouter()
 class ChatRequest(BaseModel):
     query: str
 
-@router.post("/chat")
+class ChatResponse(BaseModel):
+    response: str = None
+    error: str = None
+
+@router.post(
+    "/chat",
+    response_model=ChatResponse,
+    summary="Chat with AI",
+    description="Send a query to the AI model and get a response. The model is powered by OpenRouter.",
+    responses={
+        200: {"description": "Successful response with AI answer"}
+    }
+)
 async def chat(request: ChatRequest):
-    """Handle chat requests and return LLM responses."""
+    """
+    Chat with the AI model.
+    
+    - **query**: The question or prompt to send to the AI model
+    
+    Returns the AI's response or an error message if the request fails.
+    """
     try:
         response = await ask_llm(request.query)
-        return {"response": response}
+        return ChatResponse(response=response)
     except Exception as e:
-        return {"error": str(e)}
+        return ChatResponse(error=str(e))
