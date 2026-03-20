@@ -3,7 +3,7 @@ from app.routes import chat
 
 app = FastAPI(
     title="AI Knowledge Assistant API",
-    description="A REST API for querying AI models using OpenRouter",
+    description="A REST API for querying AI models using Google Gemini",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",

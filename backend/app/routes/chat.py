@@ -15,7 +15,7 @@ class ChatResponse(BaseModel):
     "/chat",
     response_model=ChatResponse,
     summary="Chat with AI",
-    description="Send a query to the AI model and get a response. The model is powered by OpenRouter.",
+    description="Send a query to the AI model and get a response. The model is powered by Google Gemini.",
     responses={
         200: {"description": "Successful response with AI answer"}
     }
