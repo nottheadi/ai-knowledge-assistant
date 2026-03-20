@@ -4,7 +4,7 @@
     {
       "label": "Run Uvicorn (Fast)",
       "type": "shell",
-      "command": "cd backend && pip install -r requirement.txt && uvicorn app.main:app --reload --reload-delay 2",
+      "command": "cd ${workspaceFolder} && .venv/bin/python -m pip install -r backend/requirement.txt && cd backend && ../.venv/bin/uvicorn app.main:app --reload --reload-delay 2",
       "isBackground": true,
       "presentation": {
         "reveal": "always"
@@ -17,7 +17,7 @@
     {
       "label": "Run Uvicorn (Production)",
       "type": "shell",
-      "command": "cd backend && pip install -r requirement.txt && uvicorn app.main:app --workers 4 --host 0.0.0.0 --port 8000",
+      "command": "cd ${workspaceFolder} && .venv/bin/python -m pip install -r backend/requirement.txt && cd backend && ../.venv/bin/uvicorn app.main:app --workers 4 --host 0.0.0.0 --port 8000",
       "isBackground": true,
       "presentation": {
         "reveal": "always"
