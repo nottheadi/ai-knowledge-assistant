@@ -1,42 +1,26 @@
 import os
 import asyncio
-import json
-import requests
+import google.generativeai as genai
 from dotenv import load_dotenv
 
 load_dotenv()
 
-API_KEY = os.getenv("OPENROUTER_API_KEY")
-BASE_URL = os.getenv("OPENROUTER_BASE_URL")
+API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL = os.getenv("MODEL")
 
+# Configure Gemini API
+genai.configure(api_key=API_KEY)
+
 async def ask_llm(prompt):
-    """Make an async call to the OpenRouter LLM API."""
+    """Make an async call to the Gemini LLM API."""
     try:
         def make_request():
-            return requests.post(
-                BASE_URL,
-                headers={
-                    "Authorization": f"Bearer {API_KEY}",
-                    "Content-Type": "application/json"
-                },
-                data=json.dumps({
-                    "model": MODEL,
-                    "messages": [
-                        {"role": "user", "content": prompt}
-                    ]
-                })
-            )
+            model = genai.GenerativeModel(MODEL)
+            response = model.generate_content(prompt)
+            return response.text
         
         loop = asyncio.get_event_loop()
         response = await loop.run_in_executor(None, make_request)
-        response.raise_for_status()
-        
-        data = response.json()
-        return data["choices"][0]["message"]["content"]
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"API request failed: {str(e)}")
-    except (KeyError, IndexError) as e:
-        raise Exception(f"Unexpected response format: {str(e)}")
+        return response
     except Exception as e:
-        raise Exception(f"Error calling LLM: {str(e)}")
+        raise Exception(f"Error calling Gemini LLM: {str(e)}")
