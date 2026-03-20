@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run Uvicorn (Fast)",
+      "type": "shell",
+      "command": "cd backend && pip install -r requirement.txt && uvicorn app.main:app --reload --reload-delay 2",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Run Uvicorn (Production)",
+      "type": "shell",
+      "command": "cd backend && pip install -r requirement.txt && uvicorn app.main:app --workers 4 --host 0.0.0.0 --port 8000",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always"
+      }
+    }
+  ]
+}
