@@ -1,9 +1,23 @@
+
+"""
+RAG chain module for generating responses using retrieved documents and LLM.
+"""
+
 from app.rag.retriever import retrieve_docs
 from app.services.llm import ask_llm
 
 import asyncio
 
 async def generate_rag_response(query):
+    """
+    Generate a response using Retrieval-Augmented Generation (RAG).
+
+    Args:
+        query (str): The user query.
+
+    Returns:
+        tuple: (response from LLM, list of retrieved documents)
+    """
     docs = retrieve_docs(query)
 
     context = "\n\n".join([doc.page_content for doc in docs])
