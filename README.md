@@ -33,4 +33,69 @@ This is an AI-enabled assistant that responds to queries related to uploaded doc
 
 ## API Endpoints
 
-- `POST /api/chat` — Query the AI with a prompt
+### Health Check
+
+- `GET /` — Returns API status.
+  
+	**Response:**
+	```json
+	{"status": "success", "message": "AI Knowledge Assistant API is running."}
+	```
+
+### Chat with AI
+
+- `POST /api/chat`
+  
+	**Request JSON:**
+	```json
+	{"query": "What is RAG?"}
+	```
+	**Response JSON:**
+	```json
+	{"response": "..."}
+	```
+
+### RAG Chat
+
+- `POST /api/chat/RAG`
+  
+	**Request JSON:**
+	```json
+	{"query": "Summarize the uploaded document."}
+	```
+	**Response JSON:**
+	```json
+	{"answer": "...", "sources": [ ... ]}
+	```
+
+### Upload PDF
+
+- `POST /api/upload`
+  
+	**Form Data:**
+	- `file`: PDF file to upload (max 10MB)
+  
+	**Response JSON:**
+	```json
+	{"message": "File uploaded and processed successfully."}
+	```
+  
+	**Errors:**
+	- Only PDF files are allowed
+	- File size exceeds 10MB
+	- Invalid PDF signature
+
+## Testing
+
+Run all tests:
+```
+pytest tests/
+```
+
+## Security Notes
+- Only PDF files are accepted for upload
+- File size is limited to 10MB
+- Uploaded files are checked for valid PDF signature
+
+---
+For more details, see the code and tests in the repository.
