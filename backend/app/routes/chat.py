@@ -94,7 +94,7 @@ async def chat_rag(query):
         return {"answer": None, "error": str(e)}
 
 
-# @router.post("/upload")
+@router.post("/upload")
 async def upload_pdf(file: UploadFile = File(...)):
     """
     Upload a PDF file, process it, and store in the vector DB.
