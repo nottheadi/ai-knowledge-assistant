@@ -1,1 +1,1 @@
-uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 10000
+cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
