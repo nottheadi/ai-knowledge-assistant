@@ -4,6 +4,7 @@ Retriever utility for fetching relevant documents from the vector store using si
 
 from app.rag.vectorstore import load_vector_store
 
+
 def retrieve_docs(query, k=5):
     """
     Retrieve top-k relevant documents from the vector store based on a query.

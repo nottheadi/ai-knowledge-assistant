@@ -1,9 +1,7 @@
-
 """
 API routes for chat, RAG, and file upload endpoints.
 Handles chat with LLM, RAG-based chat, and PDF upload/processing.
 """
-
 
 from fastapi import APIRouter, UploadFile, File
 import shutil
@@ -15,7 +13,9 @@ from app.rag.pipeline import process_pdf
 from app.rag.rag_chain import generate_rag_response
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 UPLOAD_DIR = "uploads"
@@ -23,18 +23,20 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 router = APIRouter()
 
+
 class ChatRequest(BaseModel):
     """
     Request model for chat endpoint.
     """
-    query: str
 
+    query: str
 
 
 class ChatResponse(BaseModel):
     """
     Response model for chat endpoint.
     """
+
     response: str = None
     error: str = None
 
@@ -65,6 +67,7 @@ async def chat(request: ChatRequest):
         logger.error(f"Error in chat endpoint: {e}")
         return ChatResponse(error=str(e))
 
+
 @router.post("/chat/RAG")
 async def chat_rag(query):
     """
@@ -85,10 +88,7 @@ async def chat_rag(query):
         answer, docs = await generate_rag_response(query)
         sources = [doc.metadata.get("source", "Unknown") for doc in docs]
         logger.info("RAG response generated successfully.")
-        return {
-            "answer": answer,
-            "sources": sources
-        }
+        return {"answer": answer, "sources": sources}
     except Exception as e:
         logger.error(f"Error in chat_rag endpoint: {e}")
         return {"answer": None, "error": str(e)}
@@ -107,20 +107,24 @@ async def upload_pdf(file: UploadFile = File(...)):
     """
     # Input validation: check file type and extension
     MAX_FILE_SIZE_MB = 10
-    if not file.filename.lower().endswith('.pdf'):
+    if not file.filename.lower().endswith(".pdf"):
         logger.warning(f"upload_pdf: Rejected file upload (not PDF): {file.filename}")
         return {"error": "Only PDF files are allowed."}
     file.file.seek(0, os.SEEK_END)
     file_size_mb = file.file.tell() / (1024 * 1024)
     file.file.seek(0)
     if file_size_mb > MAX_FILE_SIZE_MB:
-        logger.warning(f"upload_pdf: Rejected file upload (too large): {file.filename}, size: {file_size_mb:.2f} MB")
+        logger.warning(
+            f"upload_pdf: Rejected file upload (too large): {file.filename}, size: {file_size_mb:.2f} MB"
+        )
         return {"error": f"File size exceeds {MAX_FILE_SIZE_MB} MB limit."}
     # Check PDF signature (first 4 bytes should be %PDF)
     header = file.file.read(4)
     file.file.seek(0)
-    if header != b'%PDF':
-        logger.warning(f"upload_pdf: Rejected file upload (invalid PDF signature): {file.filename}")
+    if header != b"%PDF":
+        logger.warning(
+            f"upload_pdf: Rejected file upload (invalid PDF signature): {file.filename}"
+        )
         return {"error": "Uploaded file is not a valid PDF."}
     file_path = os.path.join(UPLOAD_DIR, file.filename)
     try:

@@ -1,4 +1,3 @@
-
 """
 RAG chain module for generating responses using retrieved documents and LLM.
 """
@@ -7,6 +6,7 @@ from app.rag.retriever import retrieve_docs
 from app.services.llm import ask_llm
 
 import asyncio
+
 
 async def generate_rag_response(query):
     """

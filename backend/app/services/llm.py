@@ -16,6 +16,7 @@ MODEL = os.getenv("MODEL")
 # Configure Gemini API
 genai.configure(api_key=API_KEY)
 
+
 async def ask_llm(prompt):
     """
     Make an async call to the Gemini LLM API.
@@ -27,6 +28,7 @@ async def ask_llm(prompt):
         str: The LLM's response text.
     """
     try:
+
         def make_request():
             model = genai.GenerativeModel(MODEL)
             response = model.generate_content(prompt)
