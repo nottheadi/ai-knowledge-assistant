@@ -26,10 +26,21 @@ This document describes the main API endpoints for the AI Knowledge Assistant.
     ```json
     {"query": "Summarize the uploaded document."}
     ```
+
   - **Response JSON:**
     ```json
-    {"answer": "...", "sources": [ ... ]}
+    {
+      "answer": "...",
+      "sources": [
+        {"page": 1, "source": "document.pdf"},
+        {"page": 2, "source": "document.pdf"}
+      ]
+    }
     ```
+
+  - **Notes:**
+    - The RAG response now includes a list of sources, each with `page` and `source` fields for traceability.
+    - The assistant uses the last 3 chat interactions as context for more relevant answers.
 
 ## Upload PDF
 - `POST /api/upload`

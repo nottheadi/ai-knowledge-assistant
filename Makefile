@@ -12,7 +12,7 @@ help:
 	@echo "  clean   Remove __pycache__ and .pytest_cache__"
 
 setup:
-	pip install -r backend/requirement.txt
+	pip install -r backend/requirements.txt
 	pip install -r backend/requirements-dev.txt
 
 run:

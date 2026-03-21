@@ -2,6 +2,8 @@
 Retriever utility for fetching relevant documents from the vector store using similarity search.
 """
 
+vectordb = None
+
 from app.rag.vectorstore import load_vector_store
 
 
@@ -16,6 +18,11 @@ def retrieve_docs(query, k=5):
     Returns:
         list: List of retrieved document objects.
     """
-    vectordb = load_vector_store()
+    global vectordb
+
+    if vectordb is None:
+        vectordb = load_vector_store()
+
     results = vectordb.similarity_search(query, k=k)
+
     return results

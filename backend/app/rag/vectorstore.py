@@ -1,6 +1,5 @@
-from langchain_community.vectorstores import Chroma
 from app.rag.embedder import get_embeddings
-
+from langchain_community.vectorstores import Chroma
 
 """
 Vector store utilities for document storage and retrieval using ChromaDB.
@@ -18,9 +17,10 @@ def create_vectore_store(chunks, embeddings):
     Returns:
         Chroma: Persisted vector store instance.
     """
-    vectordb = Chroma.from_documents(
-        documents=chunks, embedding=embeddings, persist_directory="./chroma_db"
-    )
+    vectordb = Chroma(persist_directory="./chroma_db", embedding_function=embeddings)
+    vectordb.add_documents(chunks)
+    vectordb.persist()
+
     return vectordb
 
 

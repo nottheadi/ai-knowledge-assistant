@@ -26,17 +26,19 @@ This is an AI-enabled assistant that responds to queries related to uploaded doc
 
 ## Documentation
 
-- [Architecture Overview](docs/architecture.md)
-- [API Documentation](docs/api.md)
-- [Developer Guide](docs/developer_guide.md)
+- [Architecture Overview](backend/docs/architecture.md)
+- [API Documentation](backend/docs/api.md)
+- [Developer Guide](backend/docs/developer_guide.md)
 
-See the `docs/` folder for more details and to contribute to project documentation.
+See the `backend/docs/` folder for more details and to contribute to project documentation.
 
 ## Features
 
 - Upload and process PDF documents
 - Query AI models (Google Gemini) for answers based on your documents
 - REST API built with FastAPI
+- Conversational memory: The assistant uses the last 3 chat interactions for context
+- RAG responses include detailed source metadata (page, source) for each answer
 
 ## Setup
 
@@ -67,7 +69,7 @@ See the `docs/` folder for more details and to contribute to project documentati
 
 ## API Endpoints
 
-See [API Documentation](docs/api.md) for details on endpoints, requests, and responses.
+See [API Documentation](backend/docs/api.md) for details on endpoints, requests, and responses.
 
 ### RAG Chat
 

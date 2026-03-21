@@ -1,7 +1,6 @@
+from app.routes import chat
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-from app.routes import chat
-
 
 app = FastAPI(
     title="AI Knowledge Assistant API",

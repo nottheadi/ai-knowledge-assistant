@@ -2,10 +2,11 @@
 RAG chain module for generating responses using retrieved documents and LLM.
 """
 
+import asyncio
+
 from app.rag.retriever import retrieve_docs
 from app.services.llm import ask_llm
-
-import asyncio
+from app.services.memory import add_to_memory, get_memory
 
 
 async def generate_rag_response(query):
@@ -19,6 +20,11 @@ async def generate_rag_response(query):
         tuple: (response from LLM, list of retrieved documents)
     """
     docs = retrieve_docs(query)
+    memory = get_memory()
+
+    memory_text = "\n".join(
+        [f"User : {m['query']}\nAssistant: {m['response']}" for m in memory]
+    )
 
     context = "\n\n".join([doc.page_content for doc in docs])
 
@@ -33,10 +39,15 @@ Guidelines:
 - If unsure, say you "I don't know"
 - Do NOT make up information
 
+Conversation history:
+{memory_text}
+
 Context:
 {context}
+
 Question: 
 {query}
 """
     response = await ask_llm(prompt)
+    add_to_memory(query, response)
     return response, docs
