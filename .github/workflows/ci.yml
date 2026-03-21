@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirement.txt
+          pip install -r backend/requirements-dev.txt
+      - name: Lint with flake8
+        run: |
+          flake8 backend/app || echo "Lint warnings only, not failing build."
+      - name: Check formatting with black
+        run: |
+          black --check backend/app
+      - name: Type check with mypy
+        run: |
+          mypy backend/app
+      - name: Run tests
+        run: |
+          pytest backend/tests
+      - name: Pre-commit hooks
+        run: pre-commit run --all-files || true
+      - name: Security check (optional)
+        run: |
+          pip install pip-audit
+          pip-audit

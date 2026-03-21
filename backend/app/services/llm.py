@@ -1,3 +1,8 @@
+"""
+LLM service for interacting with Google Gemini models.
+Provides async function to query the LLM.
+"""
+
 import os
 import asyncio
 import google.generativeai as genai
@@ -11,14 +16,24 @@ MODEL = os.getenv("MODEL")
 # Configure Gemini API
 genai.configure(api_key=API_KEY)
 
+
 async def ask_llm(prompt):
-    """Make an async call to the Gemini LLM API."""
+    """
+    Make an async call to the Gemini LLM API.
+
+    Args:
+        prompt (str): The prompt/question to send to the LLM.
+
+    Returns:
+        str: The LLM's response text.
+    """
     try:
+
         def make_request():
             model = genai.GenerativeModel(MODEL)
             response = model.generate_content(prompt)
             return response.text
-        
+
         loop = asyncio.get_event_loop()
         response = await loop.run_in_executor(None, make_request)
         return response

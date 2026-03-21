@@ -1,5 +1,7 @@
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from app.routes import chat
+
 
 app = FastAPI(
     title="AI Knowledge Assistant API",
@@ -7,11 +9,20 @@ app = FastAPI(
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
-    openapi_url="/openapi.json"
+    openapi_url="/openapi.json",
 )
 
-app.include_router(
-    chat.router,
-    tags=["Chat"],
-    prefix="/api"
-)
+
+# Health check endpoint
+@app.get("/", tags=["Health"])
+def health_check():
+    """Health check endpoint for readiness probe."""
+    return JSONResponse(
+        content={
+            "status": "success",
+            "message": "AI Knowledge Assistant API is running.",
+        }
+    )
+
+
+app.include_router(chat.router, tags=["Chat"], prefix="/api")
