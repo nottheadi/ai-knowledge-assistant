@@ -45,7 +45,7 @@ async def chat(request: ChatRequest):
 async def chat_rag(query):
     try:
         answer, docs = await generate_rag_response(query)
-        sources = [doc.metadata for doc in docs]
+        sources = [doc.metadata.get("source", "Unknown") for doc in docs]
         return {
             "answer": answer,
             "sources": sources
