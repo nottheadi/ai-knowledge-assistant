@@ -3,19 +3,22 @@
 This guide helps new contributors get started with development.
 
 ## Setup
-- Clone the repo
-- Install dependencies: `pip install -r backend/requirement.txt`
-- Set up `.env` file with required variables
-- Run the app: `uvicorn app.main:app --reload`
+- Clone the repo: `git clone https://github.com/nottheadi/ai-knowledge-assistant.git`
+- Install dependencies: `pip install -r backend/requirements.txt`
+- (Optional) Install dev dependencies: `pip install -r backend/requirements-dev.txt`
+- Set up `.env` file in `backend/` with required variables (see `.env.example`):
+	- `GEMINI_API_KEY`
+	- `MODEL`
+- Run the app: `cd backend && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000`
 
 ## Testing
 - Run tests: `pytest backend/tests`
 - Lint: `flake8 backend/app`
-- Format: `black backend/app`
+- Format: `black backend/app && isort backend/app`
 
 ## Contributing
-- Follow code style and add docstrings
-- Write tests for new features
+- Follow code style and add docstrings (see CONTRIBUTING.md)
+- Write tests for new features and bug fixes
 - Open a pull request for review
 
 See CONTRIBUTING.md for more details.

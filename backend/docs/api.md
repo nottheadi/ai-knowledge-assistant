@@ -4,14 +4,46 @@ This document describes the main API endpoints for the AI Knowledge Assistant.
 
 ## Health Check
 - `GET /` — Returns API status
+  - **Response:**
+    ```json
+    {"status": "success", "message": "AI Knowledge Assistant API is running."}
+    ```
 
-## Chat Endpoint
-- `POST /chat/` — Query the AI with a question and (optionally) a file
-  - Request: JSON with `question` and optional file upload
-  - Response: JSON with answer
+## Chat with AI
+- `POST /api/chat`
+  - **Request JSON:**
+    ```json
+    {"query": "What is RAG?"}
+    ```
+  - **Response JSON:**
+    ```json
+    {"response": "..."}
+    ```
+
+## RAG Chat
+- `POST /api/chat/RAG`
+  - **Request JSON:**
+    ```json
+    {"query": "Summarize the uploaded document."}
+    ```
+  - **Response JSON:**
+    ```json
+    {"answer": "...", "sources": [ ... ]}
+    ```
+
+## Upload PDF
+- `POST /api/upload`
+  - **Form Data:**
+    - `file`: PDF file to upload (max 10MB)
+  - **Response JSON:**
+    ```json
+    {"message": "File uploaded and processed successfully."}
+    ```
+  - **Errors:**
+    - Only PDF files are allowed
+    - File size exceeds 10MB
+    - Invalid PDF signature
 
 ## Documentation
 - Interactive docs: `/docs` (Swagger UI)
 - Redoc: `/redoc`
-
-Add more endpoint details and examples as your API grows.
