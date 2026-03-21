@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main, feature ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, feature ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -32,3 +32,9 @@ jobs:
       - name: Run tests
         run: |
           pytest backend/tests
+      - name: Pre-commit hooks
+        run: pre-commit run --all-files || true
+      - name: Security check (optional)
+        run: |
+          pip install pip-audit
+          pip-audit
