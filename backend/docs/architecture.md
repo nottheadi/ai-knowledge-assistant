@@ -31,4 +31,10 @@ This document describes the high-level architecture of the AI Knowledge Assistan
 - New document loaders, embedding models, or vector stores can be added by extending the `rag/` modules.
 - The API layer is modular and can be expanded for new endpoints or business logic.
 
+### Conversation Memory
+The RAG pipeline now includes a memory module (`services/memory.py`) that stores the last 3 user/assistant interactions. This memory is injected into the LLM prompt to provide conversational context and continuity.
+
+### RAG Response Format
+The `/api/chat/RAG` endpoint now returns both the answer and a list of source documents, each with page and source metadata, for improved traceability.
+
 Add diagrams or more details as needed.

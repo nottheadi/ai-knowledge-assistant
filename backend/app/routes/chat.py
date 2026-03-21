@@ -3,14 +3,15 @@ API routes for chat, RAG, and file upload endpoints.
 Handles chat with LLM, RAG-based chat, and PDF upload/processing.
 """
 
-from fastapi import APIRouter, UploadFile, File
-import shutil
-import os
 import logging
-from pydantic import BaseModel
-from app.services.llm import ask_llm
+import os
+import shutil
+
 from app.rag.pipeline import process_pdf
 from app.rag.rag_chain import generate_rag_response
+from app.services.llm import ask_llm
+from fastapi import APIRouter, File, UploadFile
+from pydantic import BaseModel
 
 # Configure logging
 logging.basicConfig(
@@ -86,7 +87,13 @@ async def chat_rag(query):
     try:
         logger.info(f"Received RAG chat request: {query}")
         answer, docs = await generate_rag_response(query)
-        sources = [doc.metadata.get("source", "Unknown") for doc in docs]
+        sources = [
+            {
+                "page": doc.metadata.get("page", "N/A"),
+                "source": doc.metadata.get("source", "Unknown"),
+            }
+            for doc in docs
+        ]
         logger.info("RAG response generated successfully.")
         return {"answer": answer, "sources": sources}
     except Exception as e:

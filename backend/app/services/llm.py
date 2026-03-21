@@ -3,8 +3,9 @@ LLM service for interacting with Google Gemini models.
 Provides async function to query the LLM.
 """
 
-import os
 import asyncio
+import os
+
 import google.generativeai as genai
 from dotenv import load_dotenv
 
