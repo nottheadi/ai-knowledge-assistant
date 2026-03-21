@@ -4,6 +4,7 @@ import os
 from pydantic import BaseModel
 from app.services.llm import ask_llm
 from app.rag.pipeline import process_pdf
+from app.rag.rag_chain import generate_rag_response
 
 router = APIRouter()
 UPLOAD_DIR = "uploads"
@@ -39,6 +40,18 @@ async def chat(request: ChatRequest):
         return ChatResponse(response=response)
     except Exception as e:
         return ChatResponse(error=str(e))
+
+@router.post("/chat/RAG")
+async def chat_rag(query):
+    try:
+        answer, docs = await generate_rag_response(query)
+        sources = [doc.metadata for doc in docs]
+        return {
+            "answer": answer,
+            "sources": sources
+        }
+    except Exception as e:
+        return {"answer": None, "error": str(e)}
 
 
 @router.post("/upload")
