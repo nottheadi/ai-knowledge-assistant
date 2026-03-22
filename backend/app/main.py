@@ -1,3 +1,4 @@
+from fastapi.middleware.cors import CORSMiddleware
 from app.routes import chat
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
@@ -11,6 +12,13 @@ app = FastAPI(
     openapi_url="/openapi.json",
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Update with your frontend URL for production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Health check endpoint
 @app.get("/", tags=["Health"])
