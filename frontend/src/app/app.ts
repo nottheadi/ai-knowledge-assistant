@@ -1,4 +1,4 @@
-import { Component, ElementRef, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, signal, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ApiService } from './services/api.service';
 import { FormsModule } from '@angular/forms';
@@ -11,10 +11,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('frontend');
 
   selectedFile!: File;
+
+  uploadedFiles: string[] = [];
 
   query = '';
 
@@ -24,7 +26,24 @@ export class App {
 
   @ViewChild('chatWindow') chatWindow!: ElementRef;
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    this.fetchUploadedFiles();
+  }
+  fetchUploadedFiles() {
+    console.log('Fetching uploaded files...');
+    this.api.getUploadedFiles().subscribe({
+      next: (res: any) => {
+        console.log('Files response:', res);
+        this.uploadedFiles = res.files || [];
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error fetching files:', err);
+      }
+    });
+  }
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
@@ -39,6 +58,7 @@ export class App {
 
     this.api.uploadFile(this.selectedFile).subscribe(() => {
       alert("File uploaded successfully");
+      this.fetchUploadedFiles();
     });
 
   }

@@ -18,4 +18,8 @@ export class ApiService {
   chat(query: string) {
     return this.http.post(`${this.baseUrl}/chat`, { query });
   }
+
+    getUploadedFiles() {
+    return this.http.get(`${this.baseUrl}/uploads`);
+  }
 }

@@ -11,6 +11,7 @@ from app.rag.pipeline import process_pdf
 from app.rag.rag_chain import generate_rag_response
 from app.services.llm import ask_llm
 from fastapi import APIRouter, File, UploadFile
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 # Configure logging
@@ -145,3 +146,18 @@ async def upload_pdf(file: UploadFile = File(...)):
     except Exception as e:
         logger.error(f"Error in upload_pdf endpoint: {e}")
         return {"error": str(e)}
+
+@router.get("/uploads")
+async def list_uploaded_pdfs():
+    """
+    List all uploaded PDF files in the uploads directory.
+    Returns:
+        dict: List of PDF filenames.
+    """
+    try:
+        files = [f for f in os.listdir(UPLOAD_DIR) if f.lower().endswith(".pdf")]
+        return JSONResponse(content={"files": files})
+    except Exception as e:
+        logger.error(f"Error listing uploaded PDFs: {e}")
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+
