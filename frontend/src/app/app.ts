@@ -4,12 +4,11 @@ import { ApiService } from './services/api.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, FormsModule, CommonModule],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App implements OnInit {
   protected readonly title = signal('frontend');
@@ -26,7 +25,10 @@ export class App implements OnInit {
 
   @ViewChild('chatWindow') chatWindow!: ElementRef;
 
-  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private api: ApiService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
     this.fetchUploadedFiles();
@@ -41,7 +43,7 @@ export class App implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching files:', err);
-      }
+      },
     });
   }
 
@@ -64,19 +66,18 @@ export class App implements OnInit {
       },
       error: (err) => {
         this.uploadError = 'Upload failed. Please try again.';
-      }
+      },
     });
   }
 
   send() {
-
     if (!this.query.trim()) return;
 
     const question = this.query;
 
     this.messages.push({
       sender: 'User',
-      text: question
+      text: question,
     });
 
     this.query = '';
@@ -89,24 +90,18 @@ export class App implements OnInit {
       this.messages.push({
         sender: 'AI',
         text: res.answer || res.response || res.error,
-        sources: res.sources
+        sources: res.sources,
       });
       setTimeout(() => this.scrollToBottom(), 100);
     });
-
   }
 
   scrollToBottom() {
-
     setTimeout(() => {
-
       if (this.chatWindow) {
-        this.chatWindow.nativeElement.scrollTop =
-          this.chatWindow.nativeElement.scrollHeight;
+        this.chatWindow.nativeElement.scrollTop = this.chatWindow.nativeElement.scrollHeight;
       }
-
     }, 100);
-
   }
   dragOver: boolean = false;
   uploadError: string = '';

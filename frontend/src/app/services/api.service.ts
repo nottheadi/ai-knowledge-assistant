@@ -21,12 +21,16 @@ export class ApiService {
 
   chatRag(query: string) {
     // The backend expects a JSON object: { query: ... }
-    return this.http.post(`${this.baseUrl}/chat/RAG`, { query }, {
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return this.http.post(
+      `${this.baseUrl}/chat/RAG`,
+      { query },
+      {
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
   }
 
-    getUploadedFiles() {
+  getUploadedFiles() {
     return this.http.get(`${this.baseUrl}/uploads`);
   }
 }

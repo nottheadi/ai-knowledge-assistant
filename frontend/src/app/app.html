@@ -1,6 +1,6 @@
-
-<div class="min-h-screen flex flex-col items-center justify-center relative p-0 sm:p-4 overflow-x-hidden">
-
+<div
+  class="min-h-screen flex flex-col items-center justify-center relative p-0 sm:p-4 overflow-x-hidden"
+>
   <!-- Animated glass background -->
   <div class="glass-bg">
     <div class="shape shape1"></div>
@@ -9,46 +9,65 @@
   </div>
 
   <!-- Title -->
-  <h1 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 text-center drop-shadow-lg tracking-tight z-10">
+  <h1
+    class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 text-center drop-shadow-lg tracking-tight z-10"
+  >
     AI Knowledge Assistant
   </h1>
 
   <!-- Upload Section -->
 
-    <!-- Uploaded PDFs List -->
-    <div *ngIf="uploadedFiles.length > 0" class="w-full max-w-2xl mb-2 flex flex-wrap gap-2 z-10">
-      <span *ngFor="let file of uploadedFiles" class="px-3 py-1 rounded-full bg-[#CBCBCB] text-[#4A4A4A] font-medium shadow border border-[#FFFFE3] text-sm truncate max-w-xs cursor-pointer hover:bg-[#FFFFE3] transition">
-        {{ file }}
-      </span>
-    </div>
+  <!-- Uploaded PDFs List -->
+  <div *ngIf="uploadedFiles.length > 0" class="w-full max-w-2xl mb-2 flex flex-wrap gap-2 z-10">
+    <span
+      *ngFor="let file of uploadedFiles"
+      class="px-3 py-1 rounded-full bg-[#CBCBCB] text-[#4A4A4A] font-medium shadow border border-[#FFFFE3] text-sm truncate max-w-xs cursor-pointer hover:bg-[#FFFFE3] transition"
+    >
+      {{ file }}
+    </span>
+  </div>
 
   <!-- Drag & Drop Upload Section -->
-  <div class="glassmorphism shadow-xl rounded-2xl p-3 sm:p-4 w-full max-w-2xl mb-3 flex flex-col sm:flex-row gap-2 items-stretch border border-white/30 z-10"
-    [class.dragover]="dragOver" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
-    <label class="flex-1 flex items-center gap-2 bg-[#FFFFE3] border-2 border-[#CBCBCB] rounded-xl px-3 py-2 cursor-pointer transition hover:border-[#6D8196] focus-within:border-[#6D8196]">
+  <div
+    class="glassmorphism shadow-xl rounded-2xl p-3 sm:p-4 w-full max-w-2xl mb-3 flex flex-col sm:flex-row gap-2 items-stretch border border-white/30 z-10"
+    [class.dragover]="dragOver"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+  >
+    <label
+      class="flex-1 flex items-center gap-2 bg-[#FFFFE3] border-2 border-[#CBCBCB] rounded-xl px-3 py-2 cursor-pointer transition hover:border-[#6D8196] focus-within:border-[#6D8196]"
+    >
       <input type="file" (change)="onFileSelected($event)" class="hidden" />
-      <span class="text-[#4A4A4A] font-medium truncate">{{ selectedFile?.name || 'Drag & Drop or Choose File' }}</span>
+      <span class="text-[#4A4A4A] font-medium truncate">{{
+        selectedFile?.name || 'Drag & Drop or Choose File'
+      }}</span>
     </label>
-    <button (click)="upload()" class="bg-[#6D8196] text-[#FFFFE3] px-6 py-2 rounded-xl font-semibold shadow-sm border-2 border-[#6D8196] hover:bg-[#4A4A4A] hover:text-white hover:border-[#4A4A4A] transition active:scale-95">
+    <button
+      (click)="upload()"
+      class="bg-[#6D8196] text-[#FFFFE3] px-6 py-2 rounded-xl font-semibold shadow-sm border-2 border-[#6D8196] hover:bg-[#4A4A4A] hover:text-white hover:border-[#4A4A4A] transition active:scale-95"
+    >
       Upload
     </button>
   </div>
   <div *ngIf="uploadError" class="text-red-600 text-sm mt-1">{{ uploadError }}</div>
 
   <!-- Chat Window -->
-  <div #chatWindow class="glassmorphism shadow-2xl rounded-2xl w-full max-w-2xl flex-1 overflow-y-auto p-2 sm:p-4 mb-3 transition-all border border-white/30 flex flex-col z-10" style="min-height: 300px;">
-
-
+  <div
+    #chatWindow
+    class="glassmorphism shadow-2xl rounded-2xl w-full max-w-2xl flex-1 overflow-y-auto p-2 sm:p-4 mb-3 transition-all border border-white/30 flex flex-col z-10"
+    style="min-height: 300px"
+  >
     <div *ngFor="let msg of messages" class="flex flex-col">
       <div *ngIf="msg.sender === 'User'" class="flex justify-end">
-        <div class="bubble user animate-fade-in">{{msg.text}}</div>
+        <div class="bubble user animate-fade-in">{{ msg.text }}</div>
       </div>
       <div *ngIf="msg.sender === 'AI'" class="flex justify-start">
         <div class="bubble ai animate-fade-in premium-bubble">
-          <div>{{msg.text}}</div>
+          <div>{{ msg.text }}</div>
           <div *ngIf="msg.sources" class="sources">
             <div class="font-semibold">Sources:</div>
-            <div *ngFor="let s of msg.sources" class="source-chip">Page {{s.page}}</div>
+            <div *ngFor="let s of msg.sources" class="source-chip">Page {{ s.page }}</div>
           </div>
         </div>
       </div>
@@ -61,15 +80,24 @@
       </div>
       <span class="text-gray-400 text-xs">AI is thinking...</span>
     </div>
-
   </div>
 
   <!-- Input Area -->
   <form class="input-area z-10" (ngSubmit)="send()">
-    <input [(ngModel)]="query" name="query" autocomplete="off" (keyup.enter)="send()" placeholder="Ask something from the document..."
-      class="bg-[#FFFFE3] border-2 border-[#CBCBCB] text-[#4A4A4A] placeholder-[#6D8196] font-medium focus:border-[#6D8196] focus:ring-2 focus:ring-[#6D8196] transition" />
-    <button type="submit" class="bg-[#4A4A4A] text-[#FFFFE3] border-2 border-[#4A4A4A] rounded-xl font-semibold px-8 py-2 shadow-sm hover:bg-[#6D8196] hover:border-[#6D8196] hover:text-white transition active:scale-95">Send</button>
+    <input
+      [(ngModel)]="query"
+      name="query"
+      autocomplete="off"
+      (keyup.enter)="send()"
+      placeholder="Ask something from the document..."
+      class="bg-[#FFFFE3] border-2 border-[#CBCBCB] text-[#4A4A4A] placeholder-[#6D8196] font-medium focus:border-[#6D8196] focus:ring-2 focus:ring-[#6D8196] transition"
+    />
+    <button
+      type="submit"
+      class="bg-[#4A4A4A] text-[#FFFFE3] border-2 border-[#4A4A4A] rounded-xl font-semibold px-8 py-2 shadow-sm hover:bg-[#6D8196] hover:border-[#6D8196] hover:text-white transition active:scale-95"
+    >
+      Send
+    </button>
   </form>
-
 </div>
 <router-outlet></router-outlet>

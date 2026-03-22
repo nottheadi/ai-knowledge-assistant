@@ -25,9 +25,11 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 router = APIRouter()
 
+
 class ChatRagRequest(BaseModel):
     query: str
-    
+
+
 class ChatRequest(BaseModel):
     """
     Request model for chat endpoint.
@@ -150,6 +152,7 @@ async def upload_pdf(file: UploadFile = File(...)):
         logger.error(f"Error in upload_pdf endpoint: {e}")
         return {"error": str(e)}
 
+
 @router.get("/uploads")
 async def list_uploaded_pdfs():
     """
@@ -163,4 +166,3 @@ async def list_uploaded_pdfs():
     except Exception as e:
         logger.error(f"Error listing uploaded PDFs: {e}")
         return JSONResponse(content={"error": str(e)}, status_code=500)
-

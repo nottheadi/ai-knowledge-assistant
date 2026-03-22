@@ -1,6 +1,6 @@
-from fastapi.middleware.cors import CORSMiddleware
 from app.routes import chat
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 app = FastAPI(
@@ -19,6 +19,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Health check endpoint
 @app.get("/", tags=["Health"])
