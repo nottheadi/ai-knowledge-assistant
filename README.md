@@ -22,7 +22,7 @@
 - Pytest, Black, Flake8, isort, mypy, pre-commit
 
 
-This is an AI-enabled assistant that responds to queries related to uploaded documents (PDFs, Confluence, SOPs, etc.).
+AI Knowledge Assistant is a Retrieval-Augmented Generation (RAG) system that enables users to upload documents and query them using natural language. The system retrieves relevant document chunks using vector embeddings and generates context-aware answers using a large language model.
 
 ## Documentation
 
@@ -31,6 +31,20 @@ This is an AI-enabled assistant that responds to queries related to uploaded doc
 - [Developer Guide](backend/docs/developer_guide.md)
 
 See the `backend/docs/` folder for more details and to contribute to project documentation.
+
+## Architecture Diagram 
+
+User Query
+    ↓
+Retriever (ChromaDB)
+    ↓
+Relevant Document Chunks
+    ↓
+Prompt Builder
+    ↓
+Gemini LLM
+    ↓
+Answer with Sources
 
 ## Features
 
