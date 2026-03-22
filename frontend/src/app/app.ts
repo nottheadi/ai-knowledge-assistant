@@ -1,4 +1,6 @@
 import { Component, ElementRef, signal, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { marked } from 'marked';
 import { RouterOutlet } from '@angular/router';
 import { ApiService } from './services/api.service';
 import { FormsModule } from '@angular/forms';
@@ -22,12 +24,14 @@ export class App implements OnInit {
   messages: any[] = [];
 
   isLoading = false;
+  loadingPhase: 'none' | 'thinking' | 'refining' | 'formatting' = 'none';
 
   @ViewChild('chatWindow') chatWindow!: ElementRef;
 
   constructor(
     private api: ApiService,
     private cdr: ChangeDetectorRef,
+    private sanitizer: DomSanitizer,
   ) {}
 
   ngOnInit(): void {
@@ -83,16 +87,39 @@ export class App implements OnInit {
     this.query = '';
 
     this.isLoading = true;
+    this.loadingPhase = 'thinking';
 
+    const start = performance.now();
     this.api.chatRag(question).subscribe((res: any) => {
-      console.log('Chat RAG API response:', res);
-      this.isLoading = false;
-      this.messages.push({
-        sender: 'AI',
-        text: res.answer || res.response || res.error,
-        sources: res.sources,
-      });
-      setTimeout(() => this.scrollToBottom(), 100);
+      // API responded, now formatting
+      this.loadingPhase = 'formatting';
+      // If Markdown processing is fast, show the phase only briefly
+      setTimeout(() => {
+        let html: SafeHtml | string = res.answer || res.response || res.error;
+        if (typeof html === 'string') {
+          let rendered: string;
+          if (typeof marked.parse === 'function') {
+            const result = marked.parse(html);
+            if (typeof result === 'string') {
+              rendered = result;
+            } else {
+              rendered = (marked as any)(html);
+            }
+          } else {
+            rendered = (marked as any)(html);
+          }
+          html = this.sanitizer.bypassSecurityTrustHtml(rendered);
+        }
+        this.messages.push({
+          sender: 'AI',
+          text: res.answer || res.response || res.error,
+          html: html,
+          sources: res.sources,
+        });
+        this.isLoading = false;
+        this.loadingPhase = 'none';
+        setTimeout(() => this.scrollToBottom(), 100);
+      }, 200); // Show 'Formatting response...' for at least 200ms
     });
   }
 

@@ -40,7 +40,7 @@
     >
       <input type="file" (change)="onFileSelected($event)" class="hidden" />
       <span class="text-[#4A4A4A] font-medium truncate">{{
-        selectedFile?.name || 'Drag & Drop or Choose File'
+        selectedFile && selectedFile.name || 'Drag & Drop or Choose File'
       }}</span>
     </label>
     <button
@@ -64,7 +64,7 @@
       </div>
       <div *ngIf="msg.sender === 'AI'" class="flex justify-start">
         <div class="bubble ai animate-fade-in premium-bubble">
-          <div>{{ msg.text }}</div>
+          <div [innerHTML]="msg.html || msg.text"></div>
           <div *ngIf="msg.sources" class="sources">
             <div class="font-semibold">Sources:</div>
             <div *ngFor="let s of msg.sources" class="source-chip">Page {{ s.page }}</div>
@@ -73,12 +73,17 @@
       </div>
     </div>
 
-    <!-- Animated Typing Indicator -->
+    <!-- Animated Typing Indicator with Multi-Stage Loading -->
     <div *ngIf="isLoading" class="flex items-center gap-2 mt-2 animate-fade-in">
       <div class="bubble ai typing-indicator premium-bubble">
         <span class="dot"></span><span class="dot"></span><span class="dot"></span>
       </div>
-      <span class="text-gray-400 text-xs">AI is thinking...</span>
+      <span class="text-gray-400 text-xs">
+        <ng-container [ngSwitch]="loadingPhase">
+          <span *ngSwitchCase="'thinking'">AI is thinking...</span>
+          <span *ngSwitchCase="'formatting'">Formatting response...</span>
+        </ng-container>
+      </span>
     </div>
   </div>
 
