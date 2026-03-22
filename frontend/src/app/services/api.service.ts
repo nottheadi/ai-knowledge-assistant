@@ -19,9 +19,9 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/chat`, { query });
   }
 
-    chatRag(query: string) {
-    // The backend expects a plain string, not an object
-    return this.http.post(`${this.baseUrl}/chat/RAG`, query, {
+  chatRag(query: string) {
+    // The backend expects a JSON object: { query: ... }
+    return this.http.post(`${this.baseUrl}/chat/RAG`, { query }, {
       headers: { 'Content-Type': 'application/json' }
     });
   }

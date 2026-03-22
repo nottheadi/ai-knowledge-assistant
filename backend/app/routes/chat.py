@@ -25,7 +25,9 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 router = APIRouter()
 
-
+class ChatRagRequest(BaseModel):
+    query: str
+    
 class ChatRequest(BaseModel):
     """
     Request model for chat endpoint.
@@ -71,7 +73,7 @@ async def chat(request: ChatRequest):
 
 
 @router.post("/chat/RAG")
-async def chat_rag(query):
+async def chat_rag(request: ChatRagRequest):
     """
     Chat with the AI model using Retrieval-Augmented Generation (RAG).
 
@@ -82,6 +84,7 @@ async def chat_rag(query):
         dict: The AI's answer and source documents, or error message.
     """
     # Input validation
+    query = request.query
     if not isinstance(query, str) or not query.strip():
         logger.warning("chat_rag: Query must be a non-empty string.")
         return {"answer": None, "error": "Query must be a non-empty string."}
