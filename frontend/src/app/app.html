@@ -38,24 +38,28 @@
   <!-- Chat Window -->
   <div #chatWindow class="glassmorphism shadow-2xl rounded-2xl w-full max-w-2xl flex-1 overflow-y-auto p-2 sm:p-4 mb-3 transition-all border border-white/30 flex flex-col z-10" style="min-height: 300px;">
 
+
     <div *ngFor="let msg of messages" class="flex flex-col">
       <div *ngIf="msg.sender === 'User'" class="flex justify-end">
         <div class="bubble user animate-fade-in">{{msg.text}}</div>
       </div>
       <div *ngIf="msg.sender === 'AI'" class="flex justify-start">
-        <div class="bubble ai animate-fade-in">
+        <div class="bubble ai animate-fade-in premium-bubble">
           <div>{{msg.text}}</div>
           <div *ngIf="msg.sources" class="sources">
             <div class="font-semibold">Sources:</div>
-            <div *ngFor="let s of msg.sources">Page {{s.page}}</div>
+            <div *ngFor="let s of msg.sources" class="source-chip">Page {{s.page}}</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Loading -->
-    <div *ngIf="isLoading" class="text-gray-500 text-sm animate-pulse mt-2">
-      AI is thinking...
+    <!-- Animated Typing Indicator -->
+    <div *ngIf="isLoading" class="flex items-center gap-2 mt-2 animate-fade-in">
+      <div class="bubble ai typing-indicator premium-bubble">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+      <span class="text-gray-400 text-xs">AI is thinking...</span>
     </div>
 
   </div>
