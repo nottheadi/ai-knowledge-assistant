@@ -67,7 +67,9 @@
           <div [innerHTML]="msg.html || msg.text"></div>
           <div *ngIf="msg.sources" class="sources">
             <div class="font-semibold">Sources:</div>
-            <div *ngFor="let s of msg.sources" class="source-chip">Page {{ s.page }}</div>
+            <div *ngFor="let s of msg.sources" class="source-chip">
+              <span class="chip-icon">📄</span>Page {{ s.page }}
+            </div>
           </div>
         </div>
       </div>

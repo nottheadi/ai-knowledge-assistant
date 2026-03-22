@@ -201,30 +201,94 @@ body {
     box-shadow 0.2s;
 }
 .input-area input:focus {
-  border: 2px solid #4f8cff;
   outline: none;
-  box-shadow: 0 0 0 2px #a1c4fd44;
+  border-color: #6d8196;
+  box-shadow: 0 0 0 3px #e6eaf1;
 }
 .input-area button {
+  border-radius: 1.25rem;
+  padding: 1rem 2.5rem 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
   background: #4a4a4a;
   color: #ffffe3;
-  border: none;
-  border-radius: 1.25rem;
-  padding: 0 2rem;
-  font-weight: 600;
-  font-size: 1.1rem;
-  box-shadow: 0 2px 8px 0 rgba(77, 77, 77, 0.07);
+  border: 2px solid #4a4a4a;
   transition:
     background 0.2s,
-    transform 0.1s;
+    color 0.2s,
+    border 0.2s,
+    box-shadow 0.2s;
+  cursor: pointer;
+  position: relative;
 }
 .input-area button:hover {
   background: #6d8196;
   color: #fff;
-  transform: scale(1.04);
+  border-color: #6d8196;
+  box-shadow: 0 2px 8px 0 rgba(109, 129, 150, 0.13);
 }
-.input-area button:active {
-  transform: scale(0.97);
+/* Markdown Styling */
+.bubble h1, .bubble h2, .bubble h3, .bubble h4, .bubble h5, .bubble h6 {
+  font-weight: 700;
+  color: #6d8196;
+  margin: 0.5em 0 0.3em 0;
+  line-height: 1.2;
+}
+.bubble h1 { font-size: 1.5em; }
+.bubble h2 { font-size: 1.3em; }
+.bubble h3 { font-size: 1.15em; }
+.bubble ul, .bubble ol {
+  margin: 0.5em 0 0.5em 1.2em;
+  padding-left: 1.2em;
+}
+.bubble ul {
+  list-style: disc inside;
+}
+.bubble ol {
+  list-style: decimal inside;
+}
+.bubble li {
+  margin-bottom: 0.2em;
+}
+.bubble blockquote {
+  border-left: 4px solid #b4b4b4;
+  background: #f9f9e3;
+  margin: 0.5em 0;
+  padding: 0.5em 1em;
+  color: #6d8196;
+  font-style: italic;
+  border-radius: 0.5em;
+}
+.bubble pre, .bubble code {
+  background: #23272e;
+  color: #f8f8f2;
+  border-radius: 0.4em;
+  padding: 0.3em 0.7em;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  font-size: 0.95em;
+}
+.bubble pre {
+  overflow-x: auto;
+  margin: 0.5em 0;
+}
+.bubble a {
+  color: #4a90e2;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+.bubble a:hover {
+  color: #6d8196;
+}
+/* Custom Scrollbar for chat window */
+#chatWindow::-webkit-scrollbar {
+  width: 10px;
+}
+#chatWindow::-webkit-scrollbar-thumb {
+  background: #cbcbcb;
+  border-radius: 8px;
+}
+#chatWindow::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 @media (max-width: 640px) {
