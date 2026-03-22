@@ -13,8 +13,11 @@
 - Check that your request uses the correct form data key: `file`.
 
 ## How do I use RAG chat?
-- Use the `/api/chat/RAG` endpoint with a JSON body: `{ "query": "your question" }`.
+- Use the `/api/chat/RAG` endpoint with a JSON body: `{ "query": "your question" }` (the request must be a JSON object with a `query` field).
 - Make sure you have uploaded at least one PDF document first.
+
+## How do I list uploaded PDFs?
+- Use the `/api/uploads` endpoint (GET) to retrieve a list of all uploaded PDF filenames.
 
 ## Where can I find API details?
 - See `backend/docs/api.md` or the live Swagger UI at `/docs` when the app is running.

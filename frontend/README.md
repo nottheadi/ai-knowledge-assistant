@@ -54,6 +54,31 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
+
+## API Integration
+
+This frontend communicates with the AI Knowledge Assistant backend via HTTP API endpoints. The main API interactions are:
+
+- **Upload PDF:**
+	- `POST /api/upload` — Upload a PDF file for processing.
+- **List Uploaded PDFs:**
+	- `GET /api/uploads` — Retrieve a list of all uploaded PDF filenames.
+- **Chat with AI:**
+	- `POST /api/chat` — Send a question to the AI (standard chat).
+- **RAG Chat:**
+	- `POST /api/chat/RAG` — Query uploaded documents using Retrieval-Augmented Generation. The request body must be a JSON object: `{ "query": "your question" }`.
+
+All API calls are handled in `src/app/services/api.service.ts`.
+
+## UI Features
+
+- Drag & drop or select PDF files to upload
+- View a list of uploaded PDFs
+- Chat interface for asking questions and receiving answers
+- RAG chat mode for document-aware answers
+
+## Accessibility & Best Practices
+
+This project follows Angular and TypeScript best practices as described in `AGENTS.md`.
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

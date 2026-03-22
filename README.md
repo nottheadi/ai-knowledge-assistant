@@ -24,11 +24,16 @@
 
 AI Knowledge Assistant is a Retrieval-Augmented Generation (RAG) system that enables users to upload documents and query them using natural language. The system retrieves relevant document chunks using vector embeddings and generates context-aware answers using a large language model.
 
+
 ## Documentation
 
 - [Architecture Overview](backend/docs/architecture.md)
 - [API Documentation](backend/docs/api.md)
 - [Developer Guide](backend/docs/developer_guide.md)
+
+**Key Endpoints:**
+- `POST /api/chat/RAG` — Query documents with Retrieval-Augmented Generation (JSON body: `{ "query": "..." }`)
+- `GET /api/uploads` — List all uploaded PDF files
 
 See the `backend/docs/` folder for more details and to contribute to project documentation.
 

@@ -21,11 +21,13 @@ This document describes the high-level architecture of the AI Knowledge Assistan
 - `backend/chroma_db/`: ChromaDB persistent data
 
 ## Data Flow
+
 1. User uploads a PDF document via `/api/upload`
 2. The document is loaded, split into chunks, embedded, and stored in ChromaDB
-3. User queries the API via `/api/chat` or `/api/chat/RAG`
-4. For RAG, relevant chunks are retrieved from ChromaDB and sent to the LLM
-5. The LLM (Google Gemini) generates an answer using the provided context
+3. User can list uploaded PDFs via `/api/uploads`
+4. User queries the API via `/api/chat` or `/api/chat/RAG` (with a JSON body: `{ "query": "..." }`)
+5. For RAG, relevant chunks are retrieved from ChromaDB and sent to the LLM
+6. The LLM (Google Gemini) generates an answer using the provided context
 
 ## Extensibility
 - New document loaders, embedding models, or vector stores can be added by extending the `rag/` modules.
@@ -35,6 +37,6 @@ This document describes the high-level architecture of the AI Knowledge Assistan
 The RAG pipeline now includes a memory module (`services/memory.py`) that stores the last 3 user/assistant interactions. This memory is injected into the LLM prompt to provide conversational context and continuity.
 
 ### RAG Response Format
-The `/api/chat/RAG` endpoint now returns both the answer and a list of source documents, each with page and source metadata, for improved traceability.
+The `/api/chat/RAG` endpoint returns both the answer and a list of source documents, each with page and source metadata, for improved traceability. The request must be a JSON object with a `query` field.
 
 Add diagrams or more details as needed.

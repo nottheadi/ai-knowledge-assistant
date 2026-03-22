@@ -26,6 +26,10 @@ This document describes the main API endpoints for the AI Knowledge Assistant.
     ```json
     {"query": "Summarize the uploaded document."}
     ```
+    - The request body must be a JSON object with a `query` field (string). Example:
+      ```json
+      {"query": "What is the summary?"}
+      ```
 
   - **Response JSON:**
     ```json
@@ -37,10 +41,19 @@ This document describes the main API endpoints for the AI Knowledge Assistant.
       ]
     }
     ```
-
   - **Notes:**
-    - The RAG response now includes a list of sources, each with `page` and `source` fields for traceability.
+    - The RAG response includes a list of sources, each with `page` and `source` fields for traceability.
     - The assistant uses the last 3 chat interactions as context for more relevant answers.
+
+## List Uploaded PDFs
+- `GET /api/uploads`
+  - **Description:** Returns a list of all uploaded PDF filenames.
+  - **Response JSON:**
+    ```json
+    {"files": ["example1.pdf", "example2.pdf"]}
+    ```
+  - **Errors:**
+    - Returns `{ "error": "..." }` with status 500 if the upload directory cannot be read.
 
 ## Upload PDF
 - `POST /api/upload`
