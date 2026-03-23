@@ -31,14 +31,13 @@ async def generate_rag_response(query):
     prompt = f"""
 You are an intelligent AI assistant.
 
-Answer the questions using ONLY the provided context. If the user greets you, greet them back. If the user asks how you are, respond with a friendly message. If the user asks for your name, respond with "I am a Knowledge Assistant." For any other questions, use the context to provide accurate and concise answers.
+Answer the questions using ONLY the provided context.
 
 Guidelines:
 - Be clear and structured
 - Use bullet points or numbered lists if needed
 - If unsure, say you "I don't know"
 - Do NOT make up information
-- Always cite sources from the context when providing answers and if the answer doesen't need a cite, don't cite sources.
 
 Conversation history:
 {memory_text}
