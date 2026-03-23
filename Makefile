@@ -20,7 +20,7 @@ help:
 	@echo "  all                 Setup and build both backend and frontend"
 	@echo "  setup               Setup both backend and frontend dependencies"
 	@echo "  run                 Run both backend and frontend apps (dev mode)"
-	@echo "  stop                Stop all background backend/frontend processes"
+	@echo "  stop                Stop all background apps/backend and apps/frontend processes"
 	@echo "  check-deps          Check required tools (python, pip, npm, etc)"
 	@echo "  backend-setup       Install backend dependencies (prod + dev)"
 	@echo "  backend-run         Run the FastAPI backend app (dev mode)"
@@ -64,7 +64,7 @@ run: check-deps
 	@echo "Frontend running with PID $$(cat frontend.pid)."
 	@echo "Both backend and frontend are running in the background. Use 'make stop' to stop them."
 
-# Stop background backend/frontend processes
+# Stop background apps/backend and apps/frontend processes
 stop:
 	-@if [ -f backend.pid ]; then kill $$(cat backend.pid) 2>/dev/null || true; rm backend.pid; echo "Stopped backend."; fi
 	-@if [ -f frontend.pid ]; then kill $$(cat frontend.pid) 2>/dev/null || true; rm frontend.pid; echo "Stopped frontend."; fi

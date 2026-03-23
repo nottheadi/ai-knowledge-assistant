@@ -9,8 +9,8 @@
 ## Quickstart
 
 1. Clone the repo: `git clone https://github.com/nottheadi/ai-knowledge-assistant.git`
-2. Install dependencies: `pip install -r backend/requirements.txt`
-3. Set up `.env` in backend/ (see below for variables)
+2. Install dependencies: `pip install -r apps/backend/requirements.txt`
+3. Set up `.env` in apps/backend/ (see below for variables)
 4. Run: `cd backend && uvicorn app.main:app --reload`
 5. Access API docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
@@ -27,15 +27,15 @@ AI Knowledge Assistant is a Retrieval-Augmented Generation (RAG) system that ena
 
 ## Documentation
 
-- [Architecture Overview](backend/docs/architecture.md)
-- [API Documentation](backend/docs/api.md)
-- [Developer Guide](backend/docs/developer_guide.md)
+- [Architecture Overview](docs/architecture.md)
+- [API Documentation](docs/api.md)
+- [Developer Guide](docs/developer_guide.md)
 
 **Key Endpoints:**
 - `POST /api/chat/RAG` — Query documents with Retrieval-Augmented Generation (JSON body: `{ "query": "..." }`)
 - `GET /api/uploads` — List all uploaded PDF files
 
-See the `backend/docs/` folder for more details and to contribute to project documentation.
+See the `docs/` folder for more details and to contribute to project documentation.
 
 ## Architecture Diagram 
 
@@ -63,7 +63,7 @@ Answer with Sources
 
 1. **Install dependencies:**
 	```sh
-	pip install -r backend/requirements.txt
+	pip install -r apps/backend/requirements.txt
 	```
 
 2. **Set environment variables:**
@@ -88,7 +88,7 @@ Answer with Sources
 
 ## API Endpoints
 
-See [API Documentation](backend/docs/api.md) for details on endpoints, requests, and responses.
+See [API Documentation](docs/api.md) for details on endpoints, requests, and responses.
 
 ### RAG Chat
 

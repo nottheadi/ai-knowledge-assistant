@@ -2,8 +2,8 @@
 
 ## How do I get started quickly?
 - See the Quickstart section in the main README.md for setup and first run instructions.
-- Install dependencies with `pip install -r backend/requirements.txt`.
-- Set up your `.env` file in `backend/` (see `.env.example`).
+- Install dependencies with `pip install -r apps/backend/requirements.txt`.
+- Set up your `.env` file in `apps/backend/` (see `.env.example`).
 - Run the app with `cd backend && uvicorn app.main:app --reload`.
 
 ## Why does my PDF upload fail?
@@ -20,10 +20,10 @@
 - Use the `/api/uploads` endpoint (GET) to retrieve a list of all uploaded PDF filenames.
 
 ## Where can I find API details?
-- See `backend/docs/api.md` or the live Swagger UI at `/docs` when the app is running.
+- See `docs/api.md` or the live Swagger UI at `/docs` when the app is running.
 
 ## How do I contribute?
-- See CONTRIBUTING.md and the Developer Guide in `backend/docs/`.
+- See CONTRIBUTING.md and the Developer Guide in `docs/`.
 
 ## How do I report a bug or request a feature?
 - Open an issue on GitHub with details and steps to reproduce.

@@ -1,6 +1,12 @@
+# Node.js/Angular ignores
+node_modules/
+apps/frontend/node_modules/
+apps/frontend/dist/
+apps/frontend/.angular/
+apps/frontend/.output/
 # User uploads and vector DB
-backend/uploads/
-backend/chroma_db/
+apps/backend/uploads/
+apps/backend/chroma_db/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
