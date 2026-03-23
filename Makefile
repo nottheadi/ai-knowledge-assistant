@@ -8,8 +8,8 @@
 # Variables
 PYTHON ?= python3
 PIP ?= pip3
-BACKEND_DIR := backend
-FRONTEND_DIR := frontend
+BACKEND_DIR := apps/backend
+FRONTEND_DIR := apps/frontend
 FRONTEND_NODE_MODULES := $(FRONTEND_DIR)/node_modules
 FRONTEND_DIST := $(FRONTEND_DIR)/dist
 BACKEND_PY_CACHE := $(BACKEND_DIR)/.pytest_cache
