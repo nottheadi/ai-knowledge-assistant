@@ -228,16 +228,28 @@ body {
   box-shadow: 0 2px 8px 0 rgba(109, 129, 150, 0.13);
 }
 /* Markdown Styling */
-.bubble h1, .bubble h2, .bubble h3, .bubble h4, .bubble h5, .bubble h6 {
+.bubble h1,
+.bubble h2,
+.bubble h3,
+.bubble h4,
+.bubble h5,
+.bubble h6 {
   font-weight: 700;
   color: #6d8196;
   margin: 0.5em 0 0.3em 0;
   line-height: 1.2;
 }
-.bubble h1 { font-size: 1.5em; }
-.bubble h2 { font-size: 1.3em; }
-.bubble h3 { font-size: 1.15em; }
-.bubble ul, .bubble ol {
+.bubble h1 {
+  font-size: 1.5em;
+}
+.bubble h2 {
+  font-size: 1.3em;
+}
+.bubble h3 {
+  font-size: 1.15em;
+}
+.bubble ul,
+.bubble ol {
   margin: 0.5em 0 0.5em 1.2em;
   padding-left: 1.2em;
 }
@@ -259,7 +271,8 @@ body {
   font-style: italic;
   border-radius: 0.5em;
 }
-.bubble pre, .bubble code {
+.bubble pre,
+.bubble code {
   background: #23272e;
   color: #f8f8f2;
   border-radius: 0.4em;

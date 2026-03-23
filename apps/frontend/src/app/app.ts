@@ -118,6 +118,7 @@ export class App implements OnInit {
         });
         this.isLoading = false;
         this.loadingPhase = 'none';
+        this.cdr.detectChanges();
         setTimeout(() => this.scrollToBottom(), 100);
       }, 200); // Show 'Formatting response...' for at least 200ms
     });

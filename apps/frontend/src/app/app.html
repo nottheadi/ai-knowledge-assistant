@@ -40,7 +40,7 @@
     >
       <input type="file" (change)="onFileSelected($event)" class="hidden" />
       <span class="text-[#4A4A4A] font-medium truncate">{{
-        selectedFile && selectedFile.name || 'Drag & Drop or Choose File'
+        (selectedFile && selectedFile.name) || 'Drag & Drop or Choose File'
       }}</span>
     </label>
     <button
