@@ -1,3 +1,4 @@
+<!-- Modify app ui such that it auto-scrolls to the bottom of the chat window every time a new message is added but at the same time there shouldn't be any browser scrollbars it should be scrollable for inside the message box to see previous messages. Also ensure that the input field is always visible at the bottom. And give each message bacground a glassmorphism effect -->
 <div
   class="min-h-screen flex flex-col items-center justify-center relative p-0 sm:p-4 overflow-x-hidden"
 >
@@ -52,59 +53,73 @@
   </div>
   <div *ngIf="uploadError" class="text-red-600 text-sm mt-1">{{ uploadError }}</div>
 
-  <!-- Chat Window -->
-  <div
-    #chatWindow
-    class="glassmorphism shadow-2xl rounded-2xl w-full max-w-2xl flex-1 overflow-y-auto p-2 sm:p-4 mb-3 transition-all border border-white/30 flex flex-col z-10"
-    style="min-height: 300px"
-  >
-    <div *ngFor="let msg of messages" class="flex flex-col">
-      <div *ngIf="msg.sender === 'User'" class="flex justify-end">
-        <div class="bubble user animate-fade-in">{{ msg.text }}</div>
-      </div>
-      <div *ngIf="msg.sender === 'AI'" class="flex justify-start">
-        <div class="bubble ai animate-fade-in premium-bubble">
-          <div [innerHTML]="msg.html || msg.text"></div>
-          <div *ngIf="msg.sources" class="sources">
-            <div class="font-semibold">Sources:</div>
-            <div *ngFor="let s of msg.sources" class="source-chip">
-              <span class="chip-icon">📄</span>Page {{ s.page }}
+  <!-- Chat Window with Input at Bottom -->
+  <div #chatWindow class="chat-window flex flex-col z-10">
+    <div class="flex-1 overflow-y-auto pr-1" style="min-height: 0;">
+      <div *ngFor="let msg of messages" class="flex flex-col">
+        <div *ngIf="msg.sender === 'User'" class="flex justify-end">
+          <div class="bubble glass-bubble user animate-fade-in">{{ msg.text }}</div>
+        </div>
+        <div *ngIf="msg.sender === 'AI'" class="flex justify-start">
+          <div class="bubble glass-bubble ai animate-fade-in premium-bubble">
+            <div [innerHTML]="msg.html || msg.text"></div>
+            <div *ngIf="msg.sources" class="sources">
+              <div class="font-semibold">Sources:</div>
+              <div *ngFor="let s of msg.sources" class="source-chip">
+                <span class="chip-icon">📄</span>Page {{ s.page }}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Animated Typing Indicator with Multi-Stage Loading -->
-    <div *ngIf="isLoading" class="flex items-center gap-2 mt-2 animate-fade-in">
-      <div class="bubble ai typing-indicator premium-bubble">
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <!-- Animated Typing Indicator with Multi-Stage Loading -->
+      <div *ngIf="isLoading" class="flex items-center gap-2 mt-2 animate-fade-in">
+        <div class="bubble glass-bubble ai typing-indicator premium-bubble">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+        <span class="text-gray-400 text-xs">
+          <ng-container [ngSwitch]="loadingPhase">
+            <span *ngSwitchCase="'thinking'">AI is thinking...</span>
+            <span *ngSwitchCase="'formatting'">Formatting response...</span>
+          </ng-container>
+        </span>
       </div>
-      <span class="text-gray-400 text-xs">
-        <ng-container [ngSwitch]="loadingPhase">
-          <span *ngSwitchCase="'thinking'">AI is thinking...</span>
-          <span *ngSwitchCase="'formatting'">Formatting response...</span>
-        </ng-container>
-      </span>
     </div>
+    <!-- Modern Input Area -->
+    <form class="chat-input-area z-10 flex items-center gap-2 p-2" (ngSubmit)="send()" style="background:transparent;box-shadow:none;">
+      <label class="flex items-center cursor-pointer m-0">
+        <input #fileInput type="file" (change)="onFileSelected($event)" class="hidden" aria-label="Upload file" />
+        <button type="button" (click)="fileInput.click(); $event.preventDefault(); $event.stopPropagation();" aria-label="Upload file"
+          class="flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFFE3] border border-[#CBCBCB] text-[#6D8196] hover:bg-[#6D8196] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#6D8196] transition mr-2"
+        >
+          <!-- Heroicons outline plus -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" role="img" aria-label="Upload">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+        </button>
+      </label>
+      <input
+        [(ngModel)]="query"
+        name="query"
+        autocomplete="off"
+        (keyup.enter)="send()"
+        placeholder="Ask something from the document..."
+        class="flex-1 bg-[#FFFFE3] border-2 border-[#CBCBCB] text-[#4A4A4A] placeholder-[#6D8196] font-medium focus:border-[#6D8196] focus:ring-2 focus:ring-[#6D8196] transition rounded-xl px-4 py-2"
+        style="min-width:0;"
+      />
+      <button
+        type="submit"
+        aria-label="Send message"
+        class="flex items-center justify-center w-10 h-10 rounded-full bg-[#6D8196] text-[#FFFFE3] border border-[#6D8196] hover:bg-[#4A4A4A] hover:text-white hover:border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#6D8196] transition ml-2"
+        title="Send"
+      >
+        <!-- Heroicons solid paper-airplane -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5" role="img" aria-label="Send">
+          <path d="M2.25 12L21.75 3.75c.69-.29 1.41.43 1.12 1.12L12 21.75l-3.38-7.5-7.5-3.38c-.69-.29-.43-1.41.12-1.12z" />
+        </svg>
+      </button>
+    </form>
   </div>
-
-  <!-- Input Area -->
-  <form class="input-area z-10" (ngSubmit)="send()">
-    <input
-      [(ngModel)]="query"
-      name="query"
-      autocomplete="off"
-      (keyup.enter)="send()"
-      placeholder="Ask something from the document..."
-      class="bg-[#FFFFE3] border-2 border-[#CBCBCB] text-[#4A4A4A] placeholder-[#6D8196] font-medium focus:border-[#6D8196] focus:ring-2 focus:ring-[#6D8196] transition"
-    />
-    <button
-      type="submit"
-      class="bg-[#4A4A4A] text-[#FFFFE3] border-2 border-[#4A4A4A] rounded-xl font-semibold px-8 py-2 shadow-sm hover:bg-[#6D8196] hover:border-[#6D8196] hover:text-white transition active:scale-95"
-    >
-      Send
-    </button>
-  </form>
 </div>
 <router-outlet></router-outlet>
