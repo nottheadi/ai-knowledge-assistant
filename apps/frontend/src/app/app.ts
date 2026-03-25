@@ -6,9 +6,12 @@ import { ApiService } from './services/api.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { MessageListComponent } from './components/message-list.component';
+import { ChatInputComponent } from './components/chat-input.component';
+
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FormsModule, CommonModule],
+  imports: [RouterOutlet, FormsModule, CommonModule, MessageListComponent, ChatInputComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

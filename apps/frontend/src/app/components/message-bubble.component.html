@@ -1,0 +1,14 @@
+<div *ngIf="sender === 'User'" class="flex justify-end">
+  <div class="bubble glass-bubble user animate-fade-in">{{ text }}</div>
+</div>
+<div *ngIf="sender === 'AI'" class="flex justify-start">
+  <div class="bubble glass-bubble ai animate-fade-in premium-bubble">
+    <div [innerHTML]="html || text"></div>
+    <div *ngIf="sources" class="sources">
+      <div class="font-semibold">Sources:</div>
+      <div *ngFor="let s of sources" class="source-chip">
+        <span class="chip-icon">📄</span>Page {{ s.page }}
+      </div>
+    </div>
+  </div>
+</div>

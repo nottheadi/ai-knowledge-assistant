@@ -19,7 +19,7 @@
   <!-- Upload Section -->
 
   <!-- Uploaded PDFs List -->
-  <div *ngIf="uploadedFiles.length > 0" class="w-full max-w-2xl mb-2 flex flex-wrap gap-2 z-10">
+  <div *ngIf="uploadedFiles.length > 0" class="w-full max-w-2xl flex flex-wrap gap-2 z-10">
     <span
       *ngFor="let file of uploadedFiles"
       class="px-3 py-1 rounded-full bg-[#CBCBCB] text-[#4A4A4A] font-medium shadow border border-[#FFFFE3] text-sm truncate max-w-xs cursor-pointer hover:bg-[#FFFFE3] transition"
@@ -28,98 +28,25 @@
     </span>
   </div>
 
-  <!-- Drag & Drop Upload Section -->
-  <div
-    class="glassmorphism shadow-xl rounded-2xl p-3 sm:p-4 w-full max-w-2xl mb-3 flex flex-col sm:flex-row gap-2 items-stretch border border-white/30 z-10"
-    [class.dragover]="dragOver"
-    (dragover)="onDragOver($event)"
-    (dragleave)="onDragLeave($event)"
-    (drop)="onDrop($event)"
-  >
-    <label
-      class="flex-1 flex items-center gap-2 bg-[#FFFFE3] border-2 border-[#CBCBCB] rounded-xl px-3 py-2 cursor-pointer transition hover:border-[#6D8196] focus-within:border-[#6D8196]"
-    >
-      <input type="file" (change)="onFileSelected($event)" class="hidden" />
-      <span class="text-[#4A4A4A] font-medium truncate">{{
-        (selectedFile && selectedFile.name) || 'Drag & Drop or Choose File'
-      }}</span>
-    </label>
-    <button
-      (click)="upload()"
-      class="bg-[#6D8196] text-[#FFFFE3] px-6 py-2 rounded-xl font-semibold shadow-sm border-2 border-[#6D8196] hover:bg-[#4A4A4A] hover:text-white hover:border-[#4A4A4A] transition active:scale-95"
-    >
-      Upload
-    </button>
-  </div>
-  <div *ngIf="uploadError" class="text-red-600 text-sm mt-1">{{ uploadError }}</div>
 
   <!-- Chat Window with Input at Bottom -->
-  <div #chatWindow class="chat-window flex flex-col z-10">
-    <div class="flex-1 overflow-y-auto pr-1" style="min-height: 0;">
-      <div *ngFor="let msg of messages" class="flex flex-col">
-        <div *ngIf="msg.sender === 'User'" class="flex justify-end">
-          <div class="bubble glass-bubble user animate-fade-in">{{ msg.text }}</div>
-        </div>
-        <div *ngIf="msg.sender === 'AI'" class="flex justify-start">
-          <div class="bubble glass-bubble ai animate-fade-in premium-bubble">
-            <div [innerHTML]="msg.html || msg.text"></div>
-            <div *ngIf="msg.sources" class="sources">
-              <div class="font-semibold">Sources:</div>
-              <div *ngFor="let s of msg.sources" class="source-chip">
-                <span class="chip-icon">📄</span>Page {{ s.page }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Animated Typing Indicator with Multi-Stage Loading -->
-      <div *ngIf="isLoading" class="flex items-center gap-2 mt-2 animate-fade-in">
-        <div class="bubble glass-bubble ai typing-indicator premium-bubble">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        </div>
-        <span class="text-gray-400 text-xs">
-          <ng-container [ngSwitch]="loadingPhase">
-            <span *ngSwitchCase="'thinking'">AI is thinking...</span>
-            <span *ngSwitchCase="'formatting'">Formatting response...</span>
-          </ng-container>
-        </span>
-      </div>
+  <div #chatWindow class="chat-window flex flex-col z-10" style="min-height:60vh; height:75vh;">
+    <div class="flex-1 min-h-0 flex flex-col">
+      <app-message-list [messages]="messages" [isLoading]="isLoading" [loadingPhase]="loadingPhase"></app-message-list>
     </div>
-    <!-- Modern Input Area -->
-    <form class="chat-input-area z-10 flex items-center gap-2 p-2" (ngSubmit)="send()" style="background:transparent;box-shadow:none;">
-      <label class="flex items-center cursor-pointer m-0">
-        <input #fileInput type="file" (change)="onFileSelected($event)" class="hidden" aria-label="Upload file" />
-        <button type="button" (click)="fileInput.click(); $event.preventDefault(); $event.stopPropagation();" aria-label="Upload file"
-          class="flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFFE3] border border-[#CBCBCB] text-[#6D8196] hover:bg-[#6D8196] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#6D8196] transition mr-2"
-        >
-          <!-- Heroicons outline plus -->
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" role="img" aria-label="Upload">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-      </label>
-      <input
-        [(ngModel)]="query"
-        name="query"
-        autocomplete="off"
-        (keyup.enter)="send()"
-        placeholder="Ask something from the document..."
-        class="flex-1 bg-[#FFFFE3] border-2 border-[#CBCBCB] text-[#4A4A4A] placeholder-[#6D8196] font-medium focus:border-[#6D8196] focus:ring-2 focus:ring-[#6D8196] transition rounded-xl px-4 py-2"
-        style="min-width:0;"
-      />
-      <button
-        type="submit"
-        aria-label="Send message"
-        class="flex items-center justify-center w-10 h-10 rounded-full bg-[#6D8196] text-[#FFFFE3] border border-[#6D8196] hover:bg-[#4A4A4A] hover:text-white hover:border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#6D8196] transition ml-2"
-        title="Send"
-      >
-        <!-- Heroicons solid paper-airplane -->
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5" role="img" aria-label="Send">
-          <path d="M2.25 12L21.75 3.75c.69-.29 1.41.43 1.12 1.12L12 21.75l-3.38-7.5-7.5-3.38c-.69-.29-.43-1.41.12-1.12z" />
-        </svg>
-      </button>
-    </form>
+    <app-chat-input
+      [query]="query"
+      [selectedFile]="selectedFile"
+      [uploadError]="uploadError"
+      [dragOver]="dragOver"
+      (queryChange)="query = $event"
+      (send)="send()"
+      (fileSelected)="onFileSelected($event)"
+      (upload)="upload()"
+      (dragOverEvent)="onDragOver($event)"
+      (dragLeaveEvent)="onDragLeave($event)"
+      (dropEvent)="onDrop($event)"
+    ></app-chat-input>
   </div>
 </div>
 <router-outlet></router-outlet>
