@@ -56,12 +56,16 @@ export class App implements OnInit {
 
   onFileSelected(event: any) {
     if (event.target.files && event.target.files.length > 0) {
+      const isConfirmed = confirm(`Upload "${event.target.files[0].name}"?`); // Native confirmation popup
+    if (isConfirmed) {
       this.handleFile(event.target.files[0]);
+    }
     }
   }
 
   upload() {
     this.uploadError = '';
+    console.log('Uploading file:', this.selectedFile,"upoad clicked");
     if (!this.selectedFile) {
       this.uploadError = 'Please select a file first.';
       return;
@@ -166,5 +170,8 @@ export class App implements OnInit {
       return;
     }
     this.selectedFile = file;
+    if (file) {
+      this.upload();
+    }
   }
 }
