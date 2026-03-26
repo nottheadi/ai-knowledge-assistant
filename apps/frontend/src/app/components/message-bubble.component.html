@@ -7,7 +7,7 @@
     <div *ngIf="sources" class="sources">
       <div class="font-semibold">Sources:</div>
       <div *ngFor="let s of sources" class="source-chip">
-        <span class="chip-icon">📄</span>Page {{ s.page }} | {{s.source.split('/')[1]}}
+        <span class="chip-icon">📄</span>Page {{ s.page }} | {{ s.source.split('/')[1] }}
       </div>
     </div>
   </div>

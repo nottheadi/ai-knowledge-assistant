@@ -1,12 +1,11 @@
 /* Chat window glassmorphism and layout */
 
-
 /* Chat window always at least 60vh, flex column, input at bottom */
 .chat-window {
-  background: rgba(255,255,255,0.13);
-  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.20);
+  background: rgba(255, 255, 255, 0.13);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
   border-radius: 1.5rem;
-  border: 1px solid rgba(255,255,255,0.18);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   min-height: 80vh;
   height: 80vh;
   width: 100%;
@@ -20,7 +19,10 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   position: relative;
-  transition: max-width 0.2s, max-height 0.2s, padding 0.2s;
+  transition:
+    max-width 0.2s,
+    max-height 0.2s,
+    padding 0.2s;
 }
 .chat-window::-webkit-scrollbar {
   display: none;
@@ -65,14 +67,18 @@
   font-size: clamp(1rem, 2vw, 1.15rem);
   padding: 0.75rem 1.25rem;
   border-radius: 0.75rem;
-  transition: font-size 0.2s, padding 0.2s;
+  transition:
+    font-size 0.2s,
+    padding 0.2s;
 }
 .chat-input-area button {
   min-width: 2.5rem;
   min-height: 2.5rem;
   width: clamp(2.5rem, 6vw, 2.75rem);
   height: clamp(2.5rem, 6vw, 2.75rem);
-  transition: width 0.2s, height 0.2s;
+  transition:
+    width 0.2s,
+    height 0.2s;
 }
 
 @media (max-width: 640px) {
@@ -97,32 +103,36 @@
   }
 }
 
-.chat-window > .flex-1, .chat-window .flex-1 {
+.chat-window > .flex-1,
+.chat-window .flex-1 {
   flex: 1 1 0%;
   min-height: 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   scrollbar-width: thin;
-  scrollbar-color: rgba(109,129,150,0.25) rgba(255,255,255,0.08);
+  scrollbar-color: rgba(109, 129, 150, 0.25) rgba(255, 255, 255, 0.08);
 }
 
-.chat-window > .flex-1::-webkit-scrollbar, .chat-window .flex-1::-webkit-scrollbar {
+.chat-window > .flex-1::-webkit-scrollbar,
+.chat-window .flex-1::-webkit-scrollbar {
   width: 8px;
   background: transparent;
 }
-.chat-window > .flex-1::-webkit-scrollbar-thumb, .chat-window .flex-1::-webkit-scrollbar-thumb {
-  background: rgba(109,129,150,0.18);
+.chat-window > .flex-1::-webkit-scrollbar-thumb,
+.chat-window .flex-1::-webkit-scrollbar-thumb {
+  background: rgba(109, 129, 150, 0.18);
   border-radius: 6px;
-  border: 2px solid rgba(255,255,255,0.18);
+  border: 2px solid rgba(255, 255, 255, 0.18);
   transition: background 0.2s;
 }
-.chat-window > .flex-1::-webkit-scrollbar-thumb:hover, .chat-window .flex-1::-webkit-scrollbar-thumb:active {
-  background: rgba(109,129,150,0.32);
+.chat-window > .flex-1::-webkit-scrollbar-thumb:hover,
+.chat-window .flex-1::-webkit-scrollbar-thumb:active {
+  background: rgba(109, 129, 150, 0.32);
 }
 
 .chat-input-area {
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   box-shadow: 0 -2px 16px 0 rgba(31, 38, 135, 0.08);
   border-radius: 0 0 1.5rem 1.5rem;
   padding: 0.5rem 0.75rem;
@@ -135,30 +145,35 @@
   width: 100%;
   z-index: 10;
   /* Soft top shadow/gradient for seamless transition */
-  box-shadow: 0 -2px 16px 0 rgba(31, 38, 135, 0.08), 0 -12px 24px -8px rgba(109,129,150,0.10);
+  box-shadow:
+    0 -2px 16px 0 rgba(31, 38, 135, 0.08),
+    0 -12px 24px -8px rgba(109, 129, 150, 0.1);
 }
 .chat-input-area::before {
-  content: "";
+  content: '';
   position: absolute;
   top: -18px;
   left: 0;
   width: 100%;
   height: 18px;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.01) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
   border-radius: 1.5rem 1.5rem 0 0;
   z-index: 1;
 }
 
 .chat-input-area button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px #6D8196;
+  box-shadow: 0 0 0 2px #6d8196;
 }
 .chat-input-area input:focus {
   outline: none;
-  box-shadow: 0 0 0 2px #6D8196;
+  box-shadow: 0 0 0 2px #6d8196;
 }
-
 
 /* Input area sticky and style */
 .chat-input-area {
@@ -166,7 +181,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   z-index: 20;
   display: flex;
   gap: 0.5rem;
@@ -177,15 +192,17 @@
 
 /* Glassmorphism for message bubbles */
 .glass-bubble {
-  background: rgba(255,255,255,0.18);
-  box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.10);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.1);
   backdrop-filter: blur(8px) saturate(180%);
   -webkit-backdrop-filter: blur(8px) saturate(180%);
   border-radius: 1.25rem;
-  border: 1px solid rgba(255,255,255,0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 0.75rem 1.25rem;
   margin: 0.25rem 0;
-  transition: background 0.3s, box-shadow 0.3s;
+  transition:
+    background 0.3s,
+    box-shadow 0.3s;
 }
 
 /* User message bubble text color */
@@ -193,4 +210,3 @@
   color: #23406e;
   font-weight: 600;
 }
-

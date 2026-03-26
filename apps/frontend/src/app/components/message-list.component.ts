@@ -7,7 +7,7 @@ import { MessageBubbleComponent } from './message-bubble.component';
   standalone: true,
   imports: [CommonModule, MessageBubbleComponent],
   templateUrl: './message-list.component.html',
-  styleUrls: ['./message-list.component.css']
+  styleUrls: ['./message-list.component.css'],
 })
 export class MessageListComponent {
   @Input() messages: any[] = [];

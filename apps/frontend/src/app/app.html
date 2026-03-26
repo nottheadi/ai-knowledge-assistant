@@ -28,11 +28,14 @@
     </span>
   </div>
 
-
   <!-- Chat Window with Input at Bottom -->
-  <div #chatWindow class="chat-window flex flex-col z-10" style="min-height:60vh; height:75vh;">
+  <div #chatWindow class="chat-window flex flex-col z-10" style="min-height: 60vh; height: 75vh">
     <div class="flex-1 min-h-0 flex flex-col">
-      <app-message-list [messages]="messages" [isLoading]="isLoading" [loadingPhase]="loadingPhase"></app-message-list>
+      <app-message-list
+        [messages]="messages"
+        [isLoading]="isLoading"
+        [loadingPhase]="loadingPhase"
+      ></app-message-list>
     </div>
     <app-chat-input
       [query]="query"

@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './message-bubble.component.html',
-  styleUrls: ['./message-bubble.component.css']
+  styleUrls: ['./message-bubble.component.css'],
 })
 export class MessageBubbleComponent {
   @Input() sender: 'User' | 'AI' = 'User';

@@ -1,11 +1,31 @@
-<form class="chat-input-area z-10 flex items-center gap-2 p-2" (ngSubmit)="query.trim() && send.emit()" style="background:transparent; box-shadow:none;">
-  
+<form
+  class="chat-input-area z-10 flex items-center gap-2 p-2"
+  (ngSubmit)="query.trim() && send.emit()"
+  style="background: transparent; box-shadow: none"
+>
   <!-- File Upload -->
   <label class="flex items-center cursor-pointer m-0">
-    <input #fileInput type="file" (change)="fileSelected.emit($event)" class="hidden" aria-label="Upload file" />
-    <button type="button" (click)="fileInput.click()" aria-label="Upload file"
-      class="flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFFE3] border border-[#CBCBCB] text-[#6D8196] hover:bg-[#6D8196] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#6D8196] transition mr-2">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+    <input
+      #fileInput
+      type="file"
+      (change)="fileSelected.emit($event)"
+      class="hidden"
+      aria-label="Upload file"
+    />
+    <button
+      type="button"
+      (click)="fileInput.click()"
+      aria-label="Upload file"
+      class="flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFFE3] border border-[#CBCBCB] text-[#6D8196] hover:bg-[#6D8196] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#6D8196] transition mr-2"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
       </svg>
     </button>
@@ -19,7 +39,7 @@
     autocomplete="off"
     placeholder="Ask something from the document..."
     class="flex-1 bg-[#FFFFE3] border-2 border-[#CBCBCB] text-[#4A4A4A] placeholder-[#6D8196] font-medium focus:border-[#6D8196] focus:ring-2 focus:ring-[#6D8196] transition rounded-xl px-4 py-2"
-    style="min-width:0;"
+    style="min-width: 0"
   />
 
   <!-- Send Button -->
@@ -27,9 +47,12 @@
     type="submit"
     [disabled]="!query.trim()"
     class="flex items-center justify-center w-10 h-10 rounded-full bg-[#6D8196] text-[#FFFFE3] border border-[#6D8196] hover:bg-[#4A4A4A] hover:text-white disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[#6D8196] transition ml-2"
-    title="Send">
+    title="Send"
+  >
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
-      <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+      <path
+        d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z"
+      />
     </svg>
   </button>
 </form>
