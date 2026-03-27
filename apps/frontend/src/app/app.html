@@ -9,9 +9,6 @@
     <div class="shape shape3"></div>
   </div>
 
-  <!-- Toast Container -->
-  <app-toast-container></app-toast-container>
-
   <!-- Title -->
   <h1
     class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 text-center drop-shadow-lg tracking-tight z-10"
@@ -20,40 +17,24 @@
   </h1>
 
   <!-- Uploaded PDFs List -->
-  <div *ngIf="uploadedFiles.length > 0" class="w-full max-w-2xl z-10 mb-4">
-    <div class="text-sm font-semibold text-gray-600 mb-2 px-2">
-      📁 Uploaded Files ({{ uploadedFiles.length }})
-    </div>
-    <div class="space-y-2">
-      <div
-        *ngFor="let file of uploadedFiles"
-        class="file-card"
-      >
-        <div class="file-card-content">
-          <div class="file-icon">📄</div>
-          <div class="file-info">
-            <div class="file-name">{{ file.name }}</div>
-            <div class="file-meta">
-              {{ formatFileSize(file.size) }} • {{ getTimeAgo(file.uploadedAt) }}
-            </div>
-          </div>
-        </div>
-        <button
-          (click)="deleteFile(file.name)"
-          class="delete-btn"
-          aria-label="Delete file"
-          title="Delete file"
-        >
-          ✕
-        </button>
-      </div>
-    </div>
+  <div *ngIf="uploadedFiles.length > 0" class="w-full max-w-2xl flex flex-wrap gap-2 z-10 mb-2">
+    <span
+      *ngFor="let file of uploadedFiles"
+      class="flex items-center gap-1 px-3 py-1 rounded-full bg-[#CBCBCB] text-[#4A4A4A] font-medium shadow border border-[#FFFFE3] text-sm"
+    >
+      <span class="truncate max-w-xs">{{ file }}</span>
+      <button
+        (click)="deleteFile(file)"
+        class="ml-1 text-[#6D8196] hover:text-red-500 transition leading-none"
+        aria-label="Delete file"
+        title="Delete file"
+      >✕</button>
+    </span>
   </div>
 
-  <!-- Empty State -->
-  <div *ngIf="!isLoadingFiles && uploadedFiles.length === 0" class="w-full max-w-2xl z-10 mb-6 text-center">
-    <div class="text-4xl mb-2">📤</div>
-    <div class="text-sm text-gray-500">No files uploaded yet. Click the + button to upload a PDF to get started.</div>
+  <!-- Empty state -->
+  <div *ngIf="uploadedFiles.length === 0" class="w-full max-w-2xl z-10 mb-2 text-center text-sm text-gray-400">
+    No PDFs uploaded yet. Click + to upload one.
   </div>
 
   <!-- Chat Window with Input at Bottom -->
@@ -68,11 +49,27 @@
     <app-chat-input
       [query]="query"
       [selectedFile]="selectedFile"
+      [uploadError]="uploadError"
+      [dragOver]="dragOver"
       (queryChange)="query = $event"
       (send)="send()"
       (fileSelected)="onFileSelected($event)"
+      (upload)="upload()"
+      (dragOverEvent)="onDragOver($event)"
+      (dragLeaveEvent)="onDragLeave($event)"
+      (dropEvent)="onDrop($event)"
       aria-label="Chat input area"
     ></app-chat-input>
+  </div>
+
+  <!-- Toast notification -->
+  <div
+    *ngIf="toastMessage"
+    class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-[#6D8196] text-[#FFFFE3] px-6 py-2 rounded-xl shadow-lg z-50 text-base font-medium animate-fade-in"
+    role="status"
+    aria-live="polite"
+  >
+    {{ toastMessage }}
   </div>
 </div>
 <router-outlet></router-outlet>
