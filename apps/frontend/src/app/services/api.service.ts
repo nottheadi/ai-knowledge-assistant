@@ -31,7 +31,7 @@ export class ApiService {
   }
 
   getUploadedFiles() {
-    return this.http.get(`${this.baseUrl}/uploads`);
+    return this.http.get(`${this.baseUrl}/uploads`, { params: { _t: Date.now() } });
   }
 
   deleteFile(fileName: string) {

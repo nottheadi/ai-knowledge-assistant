@@ -69,10 +69,10 @@ export class App implements OnInit {
     this.api.uploadFile(this.selectedFile).subscribe({
       next: () => {
         this.selectedFile = undefined!;
+        this.uploadedFiles = [...this.uploadedFiles, fileName];
         this.toastMessage = `✓ ${fileName} uploaded successfully`;
         this.cdr.detectChanges();
         setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
-        this.fetchUploadedFiles();
       },
       error: () => {
         this.uploadError = 'Upload failed. Please try again.';
