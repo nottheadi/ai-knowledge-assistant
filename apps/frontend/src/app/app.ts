@@ -55,6 +55,7 @@ export class App implements OnInit {
   onFileSelected(event: any) {
     if (event.target.files && event.target.files.length > 0) {
       this.handleFile(event.target.files[0]);
+      event.target.value = '';
     }
   }
 
