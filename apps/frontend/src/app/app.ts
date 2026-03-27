@@ -29,6 +29,8 @@ export class App implements OnInit {
   isLoading = false;
   loadingPhase: 'none' | 'thinking' | 'refining' | 'formatting' = 'none';
 
+  toastMessage: string = '';
+
   @ViewChild('chatWindow') chatWindow!: ElementRef;
 
   constructor(
@@ -56,10 +58,9 @@ export class App implements OnInit {
 
   onFileSelected(event: any) {
     if (event.target.files && event.target.files.length > 0) {
-      const isConfirmed = confirm(`Upload "${event.target.files[0].name}"?`); // Native confirmation popup
-      if (isConfirmed) {
-        this.handleFile(event.target.files[0]);
-      }
+      this.toastMessage = `Uploading: ${event.target.files[0].name}`;
+      setTimeout(() => { this.toastMessage = ''; }, 2000);
+      this.handleFile(event.target.files[0]);
     }
   }
 
@@ -83,51 +84,39 @@ export class App implements OnInit {
 
   send() {
     if (!this.query.trim()) return;
-
     const question = this.query;
-
-    this.messages.push({
-      sender: 'User',
-      text: question,
-    });
-
+    this.messages.push({ sender: 'User', text: question });
     this.query = '';
-
     this.isLoading = true;
     this.loadingPhase = 'thinking';
-
-    const start = performance.now();
-    this.api.chatRag(question).subscribe((res: any) => {
-      // API responded, now formatting
-      this.loadingPhase = 'formatting';
-      // If Markdown processing is fast, show the phase only briefly
-      setTimeout(() => {
-        let html: SafeHtml | string = res.answer || res.response || res.error;
-        if (typeof html === 'string') {
-          let rendered: string;
-          if (typeof marked.parse === 'function') {
-            const result = marked.parse(html);
-            if (typeof result === 'string') {
-              rendered = result;
+    this.api.chatRag(question).subscribe({
+      next: (res: any) => {
+        this.loadingPhase = 'formatting';
+        setTimeout(() => {
+          let html: SafeHtml | string = res.answer || res.response || res.error;
+          if (typeof html === 'string') {
+            let rendered: string;
+            if (typeof marked.parse === 'function') {
+              const result = marked.parse(html);
+              rendered = typeof result === 'string' ? result : (marked as any)(html);
             } else {
               rendered = (marked as any)(html);
             }
-          } else {
-            rendered = (marked as any)(html);
+            html = this.sanitizer.bypassSecurityTrustHtml(rendered);
           }
-          html = this.sanitizer.bypassSecurityTrustHtml(rendered);
-        }
-        this.messages.push({
-          sender: 'AI',
-          text: res.answer || res.response || res.error,
-          html: html,
-          sources: res.sources,
-        });
+          this.messages.push({ sender: 'AI', text: res.answer || res.response || res.error, html, sources: res.sources });
+          this.isLoading = false;
+          this.loadingPhase = 'none';
+          this.cdr.detectChanges();
+          setTimeout(() => this.scrollToBottom(), 100);
+        }, 200);
+      },
+      error: () => {
         this.isLoading = false;
         this.loadingPhase = 'none';
-        this.cdr.detectChanges();
-        setTimeout(() => this.scrollToBottom(), 100);
-      }, 200); // Show 'Formatting response...' for at least 200ms
+        this.toastMessage = 'Error: Unable to get response from server.';
+        setTimeout(() => { this.toastMessage = ''; }, 3000);
+      }
     });
   }
 

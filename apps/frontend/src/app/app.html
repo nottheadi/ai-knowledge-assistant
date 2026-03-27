@@ -49,7 +49,18 @@
       (dragOverEvent)="onDragOver($event)"
       (dragLeaveEvent)="onDragLeave($event)"
       (dropEvent)="onDrop($event)"
+      aria-label="Chat input area"
     ></app-chat-input>
+  </div>
+
+  <!-- Toast notification -->
+  <div
+    *ngIf="toastMessage"
+    class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-[#6D8196] text-[#FFFFE3] px-6 py-2 rounded-xl shadow-lg z-50 text-base font-medium animate-fade-in"
+    role="status"
+    aria-live="polite"
+  >
+    {{ toastMessage }}
   </div>
 </div>
 <router-outlet></router-outlet>

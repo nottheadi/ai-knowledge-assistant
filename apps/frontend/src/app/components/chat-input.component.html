@@ -2,9 +2,10 @@
   class="chat-input-area z-10 flex items-center gap-2 p-2"
   (ngSubmit)="query.trim() && send.emit()"
   style="background: transparent; box-shadow: none"
+  aria-label="Chat input form"
 >
   <!-- File Upload -->
-  <label class="flex items-center cursor-pointer m-0">
+  <label class="flex items-center cursor-pointer m-0" aria-label="Upload file">
     <input
       #fileInput
       type="file"
@@ -17,6 +18,7 @@
       (click)="fileInput.click()"
       aria-label="Upload file"
       class="flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFFE3] border border-[#CBCBCB] text-[#6D8196] hover:bg-[#6D8196] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#6D8196] transition mr-2"
+      tabindex="0"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -40,6 +42,7 @@
     placeholder="Ask something from the document..."
     class="flex-1 bg-[#FFFFE3] border-2 border-[#CBCBCB] text-[#4A4A4A] placeholder-[#6D8196] font-medium focus:border-[#6D8196] focus:ring-2 focus:ring-[#6D8196] transition rounded-xl px-4 py-2"
     style="min-width: 0"
+    aria-label="Type your message"
   />
 
   <!-- Send Button -->
@@ -48,6 +51,8 @@
     [disabled]="!query.trim()"
     class="flex items-center justify-center w-10 h-10 rounded-full bg-[#6D8196] text-[#FFFFE3] border border-[#6D8196] hover:bg-[#4A4A4A] hover:text-white disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[#6D8196] transition ml-2"
     title="Send"
+    aria-label="Send message"
+    tabindex="0"
   >
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
       <path
