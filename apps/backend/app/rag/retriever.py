@@ -7,6 +7,12 @@ vectordb = None
 from app.rag.vectorstore import load_vector_store
 
 
+def invalidate_retriever():
+    """Force the retriever to reload the vector store on next query."""
+    global vectordb
+    vectordb = None
+
+
 def retrieve_docs(query, k=5):
     """
     Retrieve top-k relevant documents from the vector store based on a query.

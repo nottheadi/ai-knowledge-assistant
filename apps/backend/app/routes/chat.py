@@ -11,6 +11,7 @@ from app.config import limiter
 from app.exceptions import FileUploadError, ValidationError
 from app.rag.pipeline import process_pdf
 from app.rag.rag_chain import generate_rag_response
+from app.rag.retriever import invalidate_retriever
 from app.rag.vectorstore import delete_from_vector_store
 from app.services.llm import ask_llm
 from fastapi import APIRouter, File, HTTPException, Request, UploadFile
@@ -159,6 +160,8 @@ async def upload_pdf(request: Request, file: UploadFile = File(...)):
         raise FileUploadError("Uploaded file is not a valid PDF.")
 
     file_path = os.path.join(UPLOAD_DIR, file.filename)
+    if os.path.isfile(file_path):
+        raise FileUploadError(f"'{file.filename}' is already uploaded.")
     try:
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
@@ -166,11 +169,14 @@ async def upload_pdf(request: Request, file: UploadFile = File(...)):
         # Process the PDF and create vector store
         vectordb = process_pdf(file_path)
         logger.info(f"PDF processed and vector store created for: {file.filename}")
+        invalidate_retriever()
         return {"message": "File uploaded and processed successfully."}
     except FileUploadError:
         raise
     except Exception as e:
         logger.error(f"Error in upload_pdf endpoint: {e}")
+        if os.path.isfile(file_path):
+            os.remove(file_path)
         raise FileUploadError(f"Failed to process PDF: {str(e)}")
 
 
@@ -203,6 +209,7 @@ async def delete_uploaded_pdf(filename: str):
         logger.info(f"File deleted from disk: {safe_name}")
         chunks_removed = delete_from_vector_store(file_path)
         logger.info(f"Removed {chunks_removed} chunks from ChromaDB for: {safe_name}")
+        invalidate_retriever()
         return {"message": f"'{safe_name}' deleted successfully."}
     except Exception as e:
         logger.error(f"Error deleting file {safe_name}: {e}")

@@ -5,7 +5,7 @@ RAG chain module for generating responses using retrieved documents and LLM.
 import asyncio
 import logging
 
-from app.exceptions import RAGPipelineError
+from app.exceptions import LLMError, RAGPipelineError
 from app.rag.retriever import retrieve_docs
 from app.services.llm import ask_llm
 from app.services.memory import add_to_memory, get_memory
@@ -67,6 +67,8 @@ RESPONSE (use markdown formatting):"""
         response = await ask_llm(prompt)
         add_to_memory(query, response)
         return response, docs
+    except LLMError:
+        raise
     except Exception as e:
         logger.error(f"RAG pipeline error: {str(e)}")
         raise RAGPipelineError(f"Failed to generate RAG response: {str(e)}")
