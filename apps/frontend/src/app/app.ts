@@ -82,14 +82,18 @@ export class App implements OnInit {
   }
 
   deleteFile(fileName: string) {
+    // Optimistic update — remove immediately, restore on failure
+    this.uploadedFiles = this.uploadedFiles.filter(f => f !== fileName);
+    this.cdr.detectChanges();
+
     this.api.deleteFile(fileName).subscribe({
       next: () => {
         this.toastMessage = `✓ ${fileName} deleted`;
         this.cdr.detectChanges();
         setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
-        this.fetchUploadedFiles();
       },
       error: () => {
+        this.uploadedFiles = [...this.uploadedFiles, fileName];
         this.toastMessage = 'Failed to delete file.';
         this.cdr.detectChanges();
         setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
