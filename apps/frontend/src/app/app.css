@@ -1,109 +1,36 @@
-/* Chat window glassmorphism and layout */
+/* ================================================================
+   Chat Window Layout
+   ================================================================ */
 
-/* Chat window always at least 60vh, flex column, input at bottom */
 .chat-window {
   background: rgba(255, 255, 255, 0.13);
   box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
   border-radius: 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  min-height: 80vh;
-  height: 80vh;
   width: 100%;
   max-width: clamp(320px, 90vw, 820px);
+  min-height: 75vh;
+  height: 75vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   margin-bottom: 0.5rem;
-  padding: clamp(0.25rem, 2vw, 1.25rem);
+  padding: clamp(0.25rem, 2vw, 1rem);
   scrollbar-width: none;
   -ms-overflow-style: none;
   position: relative;
-  transition:
-    max-width 0.2s,
-    max-height 0.2s,
-    padding 0.2s;
+  transition: max-width 0.2s, padding 0.2s;
 }
+
 .chat-window::-webkit-scrollbar {
   display: none;
 }
 
-@media (max-width: 900px) {
-  .chat-window {
-    max-width: 98vw;
-    min-width: 0;
-    padding: 0.5rem 0.5rem;
-    min-height: 70vh;
-    height: 70vh;
-  }
-}
-@media (max-width: 640px) {
-  .chat-window {
-    max-width: 100vw;
-    min-width: 0;
-    padding: 0.25rem 0.25rem;
-    min-height: 60vh;
-    height: 60vh;
-    border-radius: 0.75rem;
-  }
-  .chat-input-area {
-    padding: 0.25rem 0.25rem;
-    border-radius: 0 0 1rem 1rem;
-    gap: 0.25rem;
-  }
-  .chat-input-area input {
-    font-size: 1rem;
-    padding: 0.5rem 0.75rem;
-  }
-  .chat-input-area button {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-}
+/* ================================================================
+   Scrollable Message Area
+   ================================================================ */
 
-.chat-input-area input {
-  width: 100%;
-  min-width: 0;
-  font-size: clamp(1rem, 2vw, 1.15rem);
-  padding: 0.75rem 1.25rem;
-  border-radius: 0.75rem;
-  transition:
-    font-size 0.2s,
-    padding 0.2s;
-}
-.chat-input-area button {
-  min-width: 2.5rem;
-  min-height: 2.5rem;
-  width: clamp(2.5rem, 6vw, 2.75rem);
-  height: clamp(2.5rem, 6vw, 2.75rem);
-  transition:
-    width 0.2s,
-    height 0.2s;
-}
-
-@media (max-width: 640px) {
-  .chat-window {
-    max-width: 100vw;
-    min-width: 0;
-    padding: 0.25rem 0.25rem;
-    max-height: 65vh;
-  }
-  .chat-input-area {
-    padding: 0.25rem 0.25rem;
-    border-radius: 0 0 1rem 1rem;
-    gap: 0.25rem;
-  }
-  .chat-input-area input {
-    font-size: 1rem;
-    padding: 0.5rem 0.75rem;
-  }
-  .chat-input-area button {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-}
-
-.chat-window > .flex-1,
 .chat-window .flex-1 {
   flex: 1 1 0%;
   min-height: 0;
@@ -111,102 +38,113 @@
   display: flex;
   flex-direction: column;
   scrollbar-width: thin;
-  scrollbar-color: rgba(109, 129, 150, 0.25) rgba(255, 255, 255, 0.08);
+  scrollbar-color: rgba(109, 129, 150, 0.22) transparent;
 }
 
-.chat-window > .flex-1::-webkit-scrollbar,
 .chat-window .flex-1::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
   background: transparent;
 }
-.chat-window > .flex-1::-webkit-scrollbar-thumb,
+
 .chat-window .flex-1::-webkit-scrollbar-thumb {
-  background: rgba(109, 129, 150, 0.18);
+  background: rgba(109, 129, 150, 0.2);
   border-radius: 6px;
-  border: 2px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   transition: background 0.2s;
 }
-.chat-window > .flex-1::-webkit-scrollbar-thumb:hover,
-.chat-window .flex-1::-webkit-scrollbar-thumb:active {
-  background: rgba(109, 129, 150, 0.32);
+
+.chat-window .flex-1::-webkit-scrollbar-thumb:hover {
+  background: rgba(109, 129, 150, 0.38);
 }
 
+/* ================================================================
+   Input Area (sticky footer of chat window)
+   ================================================================ */
+
 .chat-input-area {
-  background: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 -2px 16px 0 rgba(31, 38, 135, 0.08);
-  border-radius: 0 0 1.5rem 1.5rem;
-  padding: 0.5rem 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
   position: sticky;
   bottom: 0;
-  left: 0;
   width: 100%;
-  z-index: 10;
-  /* Soft top shadow/gradient for seamless transition */
-  box-shadow:
-    0 -2px 16px 0 rgba(31, 38, 135, 0.08),
-    0 -12px 24px -8px rgba(109, 129, 150, 0.1);
+  z-index: 20;
+  border-radius: 0 0 1.5rem 1.5rem;
+  padding: 0.5rem 0.25rem 0.25rem;
 }
+
 .chat-input-area::before {
   content: '';
   position: absolute;
-  top: -18px;
+  top: -16px;
   left: 0;
   width: 100%;
-  height: 18px;
+  height: 16px;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.18) 0%,
-    rgba(255, 255, 255, 0.01) 100%
-  );
-  border-radius: 1.5rem 1.5rem 0 0;
-  z-index: 1;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.25) 100%);
 }
 
-.chat-input-area button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #6d8196;
-}
-.chat-input-area input:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #6d8196;
-}
-
-/* Input area sticky and style */
-.chat-input-area {
-  position: sticky;
-  bottom: 0;
-  left: 0;
+.chat-input-area input {
   width: 100%;
-  background: rgba(255, 255, 255, 0.85);
-  z-index: 20;
-  display: flex;
-  gap: 0.5rem;
-  padding: 0.75rem 0 0.5rem 0;
-  border-radius: 0 0 1.5rem 1.5rem;
-  box-shadow: 0 -2px 16px 0 rgba(31, 38, 135, 0.08);
+  min-width: 0;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* Glassmorphism for message bubbles */
+.chat-input-area button {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  width: clamp(2.5rem, 6vw, 2.75rem);
+  height: clamp(2.5rem, 6vw, 2.75rem);
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* ================================================================
+   Glass Bubble
+   ================================================================ */
+
 .glass-bubble {
-  background: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.1);
   backdrop-filter: blur(8px) saturate(180%);
   -webkit-backdrop-filter: blur(8px) saturate(180%);
   border-radius: 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 0.75rem 1.25rem;
   margin: 0.25rem 0;
-  transition:
-    background 0.3s,
-    box-shadow 0.3s;
+  transition: background 0.3s, box-shadow 0.3s;
 }
 
-/* User message bubble text color */
-.bubble.user {
-  color: #23406e;
-  font-weight: 600;
+/* ================================================================
+   Responsive
+   ================================================================ */
+
+@media (max-width: 900px) {
+  .chat-window {
+    max-width: 98vw;
+    padding: 0.5rem;
+    min-height: 70vh;
+    height: 70vh;
+  }
+}
+
+@media (max-width: 640px) {
+  .chat-window {
+    max-width: 100vw;
+    padding: 0.25rem;
+    min-height: 60vh;
+    height: 60vh;
+    border-radius: 0.75rem;
+  }
+
+  .chat-input-area {
+    padding: 0.25rem;
+    border-radius: 0 0 0.75rem 0.75rem;
+  }
+
+  .chat-input-area input {
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .chat-input-area button {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }

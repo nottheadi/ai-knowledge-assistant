@@ -1,7 +1,6 @@
 <form
-  class="chat-input-area z-10 flex flex-col gap-1 p-2"
+  class="chat-input-area z-10 flex flex-col gap-1"
   (ngSubmit)="query.trim() && send.emit()"
-  style="background: transparent; box-shadow: none"
   aria-label="Chat input form"
 >
   <div class="flex items-center gap-2">
@@ -44,7 +43,6 @@
       autocomplete="off"
       placeholder="Ask something from the document..."
       class="flex-1 bg-[#FFFFE3] border-2 border-[#CBCBCB] text-[#4A4A4A] placeholder-[#6D8196] font-medium focus:border-[#6D8196] focus:ring-2 focus:ring-[#6D8196] transition rounded-xl px-4 py-2"
-      style="min-width: 0"
       aria-label="Type your message"
     />
 
