@@ -11,6 +11,7 @@
       type="file"
       (change)="fileSelected.emit($event)"
       class="hidden"
+      accept=".pdf"
       aria-label="Upload file"
     />
     <button
@@ -19,6 +20,7 @@
       aria-label="Upload file"
       class="flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFFE3] border border-[#CBCBCB] text-[#6D8196] hover:bg-[#6D8196] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#6D8196] transition mr-2"
       tabindex="0"
+      title="Upload PDF (max 10 MB)"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

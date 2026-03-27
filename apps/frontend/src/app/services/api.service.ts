@@ -33,4 +33,8 @@ export class ApiService {
   getUploadedFiles() {
     return this.http.get(`${this.baseUrl}/uploads`);
   }
+
+  deleteFile(fileName: string) {
+    return this.http.delete(`${this.baseUrl}/uploads/${encodeURIComponent(fileName)}`);
+  }
 }
