@@ -188,6 +188,48 @@ body {
 }
 
 /* ================================================================
+   File Pill States
+   ================================================================ */
+
+.pill-base {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border: 1px solid;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.pill-uploaded {
+  background: #cbcbcb;
+  color: #4a4a4a;
+  border-color: #ffffe3;
+}
+
+.pill-uploading {
+  background: #6d8196;
+  color: #ffffe3;
+  border-color: #6d8196;
+  animation: pill-pulse 1s ease-in-out infinite;
+}
+
+.pill-deleting {
+  background: #4a4a4a;
+  color: #ffffe3;
+  border-color: #4a4a4a;
+  animation: pill-pulse 1s ease-in-out infinite;
+}
+
+@keyframes pill-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.97); }
+}
+
+/* ================================================================
    Drag-over state
    ================================================================ */
 

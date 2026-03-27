@@ -20,12 +20,18 @@
   <div *ngIf="uploadedFiles.length > 0" class="w-full max-w-[820px] flex flex-wrap gap-2 z-10 mb-2">
     <span
       *ngFor="let file of uploadedFiles"
-      class="flex items-center gap-1 px-3 py-1 rounded-full bg-[#CBCBCB] text-[#4A4A4A] font-medium shadow border border-[#FFFFE3] text-sm"
+      class="pill-base"
+      [ngClass]="{
+        'pill-uploaded':  file.status === 'uploaded',
+        'pill-uploading': file.status === 'uploading',
+        'pill-deleting':  file.status === 'deleting'
+      }"
     >
-      <span class="truncate max-w-xs">{{ file }}</span>
+      <span class="truncate max-w-xs">{{ file.name }}</span>
       <button
-        (click)="deleteFile(file)"
-        class="ml-1 text-[#6D8196] hover:text-red-500 transition leading-none"
+        *ngIf="file.status === 'uploaded'"
+        (click)="deleteFile(file.name)"
+        class="ml-1 hover:text-red-400 transition leading-none opacity-70 hover:opacity-100"
         aria-label="Delete file"
         title="Delete file"
       >✕</button>

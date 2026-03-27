@@ -1,4 +1,4 @@
-import { Component, ElementRef, signal, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, signal, ViewChild, ChangeDetectorRef, afterNextRender } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
 import { RouterOutlet } from '@angular/router';
@@ -9,27 +9,29 @@ import { CommonModule } from '@angular/common';
 import { MessageListComponent } from './components/message-list.component';
 import { ChatInputComponent } from './components/chat-input.component';
 
+interface UploadedFile {
+  name: string;
+  status: 'uploading' | 'uploaded' | 'deleting';
+}
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, FormsModule, CommonModule, MessageListComponent, ChatInputComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App implements OnInit {
+export class App {
   protected readonly title = signal('frontend');
 
   selectedFile!: File;
-
-  uploadedFiles: string[] = [];
-
+  uploadedFiles: UploadedFile[] = [];
   query = '';
-
   messages: any[] = [];
-
   isLoading = false;
   loadingPhase: 'none' | 'thinking' | 'refining' | 'formatting' = 'none';
-
   toastMessage: string = '';
+  dragOver: boolean = false;
+  uploadError: string = '';
 
   @ViewChild('chatWindow') chatWindow!: ElementRef;
 
@@ -37,15 +39,19 @@ export class App implements OnInit {
     private api: ApiService,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
-  ) {}
-
-  ngOnInit(): void {
-    this.fetchUploadedFiles();
+  ) {
+    afterNextRender(() => {
+      this.fetchUploadedFiles();
+    });
   }
+
   fetchUploadedFiles() {
     this.api.getUploadedFiles().subscribe({
       next: (res: any) => {
-        this.uploadedFiles = res.files || [];
+        this.uploadedFiles = (res.files || []).map((name: string) => ({
+          name,
+          status: 'uploaded' as const,
+        }));
         this.cdr.detectChanges();
       },
       error: () => {},
@@ -66,15 +72,24 @@ export class App implements OnInit {
       return;
     }
     const fileName = this.selectedFile.name;
-    this.api.uploadFile(this.selectedFile).subscribe({
+    const fileToUpload = this.selectedFile;
+    this.selectedFile = undefined!;
+
+    // Add pill in uploading state immediately
+    this.uploadedFiles = [...this.uploadedFiles, { name: fileName, status: 'uploading' }];
+    this.cdr.detectChanges();
+
+    this.api.uploadFile(fileToUpload).subscribe({
       next: () => {
-        this.selectedFile = undefined!;
-        this.uploadedFiles = [...this.uploadedFiles, fileName];
+        this.uploadedFiles = this.uploadedFiles.map(f =>
+          f.name === fileName ? { ...f, status: 'uploaded' as const } : f
+        );
         this.toastMessage = `✓ ${fileName} uploaded successfully`;
         this.cdr.detectChanges();
         setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
       },
       error: () => {
+        this.uploadedFiles = this.uploadedFiles.filter(f => f.name !== fileName);
         this.uploadError = 'Upload failed. Please try again.';
         this.cdr.detectChanges();
       },
@@ -82,18 +97,23 @@ export class App implements OnInit {
   }
 
   deleteFile(fileName: string) {
-    // Optimistic update — remove immediately, restore on failure
-    this.uploadedFiles = this.uploadedFiles.filter(f => f !== fileName);
+    // Switch pill to deleting state immediately
+    this.uploadedFiles = this.uploadedFiles.map(f =>
+      f.name === fileName ? { ...f, status: 'deleting' as const } : f
+    );
     this.cdr.detectChanges();
 
     this.api.deleteFile(fileName).subscribe({
       next: () => {
+        this.uploadedFiles = this.uploadedFiles.filter(f => f.name !== fileName);
         this.toastMessage = `✓ ${fileName} deleted`;
         this.cdr.detectChanges();
         setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
       },
       error: () => {
-        this.uploadedFiles = [...this.uploadedFiles, fileName];
+        this.uploadedFiles = this.uploadedFiles.map(f =>
+          f.name === fileName ? { ...f, status: 'uploaded' as const } : f
+        );
         this.toastMessage = 'Failed to delete file.';
         this.cdr.detectChanges();
         setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
@@ -147,8 +167,7 @@ export class App implements OnInit {
       }
     }, 100);
   }
-  dragOver: boolean = false;
-  uploadError: string = '';
+
   onDragOver(event: Event) {
     event.preventDefault();
     this.dragOver = true;
@@ -179,8 +198,6 @@ export class App implements OnInit {
       return;
     }
     this.selectedFile = file;
-    if (file) {
-      this.upload();
-    }
+    this.upload();
   }
 }
