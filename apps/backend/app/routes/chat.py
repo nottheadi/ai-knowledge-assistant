@@ -12,7 +12,7 @@ from app.exceptions import FileUploadError, ValidationError
 from app.rag.pipeline import process_pdf
 from app.rag.rag_chain import generate_rag_response
 from app.services.llm import ask_llm
-from fastapi import APIRouter, File, Request, UploadFile
+from fastapi import APIRouter, File, HTTPException, Request, UploadFile
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
@@ -186,3 +186,21 @@ async def list_uploaded_pdfs():
     except Exception as e:
         logger.error(f"Error listing uploaded PDFs: {e}")
         raise
+
+
+@router.delete("/uploads/{filename}")
+async def delete_uploaded_pdf(filename: str):
+    """
+    Delete an uploaded PDF file by name.
+    """
+    safe_name = os.path.basename(filename)
+    file_path = os.path.join(UPLOAD_DIR, safe_name)
+    if not os.path.isfile(file_path):
+        raise HTTPException(status_code=404, detail=f"File '{safe_name}' not found.")
+    try:
+        os.remove(file_path)
+        logger.info(f"File deleted: {safe_name}")
+        return {"message": f"'{safe_name}' deleted successfully."}
+    except Exception as e:
+        logger.error(f"Error deleting file {safe_name}: {e}")
+        raise FileUploadError(f"Failed to delete '{safe_name}'.")
