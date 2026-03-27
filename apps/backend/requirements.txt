@@ -10,3 +10,4 @@ langchain==0.1.20
 langchain-community==0.0.38
 pypdf==6.9.1
 python-multipart==0.0.22
+slowapi==0.1.9

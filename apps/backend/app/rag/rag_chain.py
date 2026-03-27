@@ -3,10 +3,14 @@ RAG chain module for generating responses using retrieved documents and LLM.
 """
 
 import asyncio
+import logging
 
+from app.exceptions import RAGPipelineError
 from app.rag.retriever import retrieve_docs
 from app.services.llm import ask_llm
 from app.services.memory import add_to_memory, get_memory
+
+logger = logging.getLogger(__name__)
 
 
 async def generate_rag_response(query):
@@ -18,17 +22,24 @@ async def generate_rag_response(query):
 
     Returns:
         tuple: (response from LLM, list of retrieved documents)
+
+    Raises:
+        RAGPipelineError: If the RAG pipeline fails.
     """
-    docs = retrieve_docs(query)
-    memory = get_memory()
+    try:
+        docs = retrieve_docs(query)
+        if not docs:
+            logger.warning(f"No documents retrieved for query: {query}")
 
-    memory_text = "\n".join(
-        [f"User : {m['query']}\nAssistant: {m['response']}" for m in memory]
-    )
+        memory = get_memory()
 
-    context = "\n\n".join([doc.page_content for doc in docs])
+        memory_text = "\n".join(
+            [f"User : {m['query']}\nAssistant: {m['response']}" for m in memory]
+        )
 
-    prompt = f"""
+        context = "\n\n".join([doc.page_content for doc in docs])
+
+        prompt = f"""
 You are an intelligent AI assistant.
 
 Answer the questions using ONLY the provided context.
@@ -45,9 +56,12 @@ Conversation history:
 Context:
 {context}
 
-Question: 
+Question:
 {query}
 """
-    response = await ask_llm(prompt)
-    add_to_memory(query, response)
-    return response, docs
+        response = await ask_llm(prompt)
+        add_to_memory(query, response)
+        return response, docs
+    except Exception as e:
+        logger.error(f"RAG pipeline error: {str(e)}")
+        raise RAGPipelineError(f"Failed to generate RAG response: {str(e)}")
