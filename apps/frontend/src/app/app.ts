@@ -69,11 +69,13 @@ export class App implements OnInit {
       next: () => {
         this.selectedFile = undefined!;
         this.toastMessage = `✓ ${fileName} uploaded successfully`;
-        setTimeout(() => { this.toastMessage = ''; }, 3000);
+        this.cdr.detectChanges();
+        setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
         this.fetchUploadedFiles();
       },
       error: () => {
         this.uploadError = 'Upload failed. Please try again.';
+        this.cdr.detectChanges();
       },
     });
   }
@@ -82,12 +84,14 @@ export class App implements OnInit {
     this.api.deleteFile(fileName).subscribe({
       next: () => {
         this.toastMessage = `✓ ${fileName} deleted`;
-        setTimeout(() => { this.toastMessage = ''; }, 3000);
+        this.cdr.detectChanges();
+        setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
         this.fetchUploadedFiles();
       },
       error: () => {
         this.toastMessage = 'Failed to delete file.';
-        setTimeout(() => { this.toastMessage = ''; }, 3000);
+        this.cdr.detectChanges();
+        setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
       },
     });
   }
@@ -125,7 +129,8 @@ export class App implements OnInit {
         this.isLoading = false;
         this.loadingPhase = 'none';
         this.toastMessage = 'Error: Unable to get response from server.';
-        setTimeout(() => { this.toastMessage = ''; }, 3000);
+        this.cdr.detectChanges();
+        setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
       }
     });
   }
