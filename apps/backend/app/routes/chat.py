@@ -11,6 +11,7 @@ from app.config import limiter
 from app.exceptions import FileUploadError, ValidationError
 from app.rag.pipeline import process_pdf
 from app.rag.rag_chain import generate_rag_response
+from app.rag.vectorstore import delete_from_vector_store
 from app.services.llm import ask_llm
 from fastapi import APIRouter, File, HTTPException, Request, UploadFile
 from fastapi.responses import JSONResponse
@@ -199,7 +200,9 @@ async def delete_uploaded_pdf(filename: str):
         raise HTTPException(status_code=404, detail=f"File '{safe_name}' not found.")
     try:
         os.remove(file_path)
-        logger.info(f"File deleted: {safe_name}")
+        logger.info(f"File deleted from disk: {safe_name}")
+        chunks_removed = delete_from_vector_store(file_path)
+        logger.info(f"Removed {chunks_removed} chunks from ChromaDB for: {safe_name}")
         return {"message": f"'{safe_name}' deleted successfully."}
     except Exception as e:
         logger.error(f"Error deleting file {safe_name}: {e}")
