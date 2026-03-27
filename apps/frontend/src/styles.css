@@ -95,11 +95,11 @@ body {
 }
 
 .bubble.user {
-  background: #6d8196;
+  background: rgba(109, 129, 150, 0.78);
   color: #ffffe3;
   align-self: flex-end;
   border-bottom-right-radius: 0.5rem;
-  border: 1.5px solid #4a4a4a;
+  border: 1.5px solid rgba(109, 129, 150, 0.5);
 }
 
 .bubble.ai {
@@ -122,11 +122,13 @@ body {
    ================================================================ */
 
 .premium-bubble {
-  background: linear-gradient(120deg, #ffffe3 80%, #e6eaf1 100%);
-  border: 2px solid #6d8196;
+  background: rgba(255, 255, 227, 0.68);
+  backdrop-filter: blur(16px) saturate(200%);
+  -webkit-backdrop-filter: blur(16px) saturate(200%);
+  border: 2px solid rgba(109, 129, 150, 0.35);
   box-shadow:
-    0 4px 24px 0 rgba(109, 129, 150, 0.13),
-    0 1.5px 0 0 #6d8196;
+    0 4px 24px 0 rgba(109, 129, 150, 0.12),
+    inset 0 1px 0 rgba(255,255,255,0.6);
   transition: box-shadow 0.2s, background 0.2s;
 }
 
@@ -163,11 +165,13 @@ body {
   display: flex;
   align-items: center;
   gap: 0.2em;
-  background: linear-gradient(120deg, #ffffe3 80%, #e6eaf1 100%);
-  border: 2px solid #6d8196;
+  background: rgba(255, 255, 227, 0.68);
+  backdrop-filter: blur(16px) saturate(200%);
+  -webkit-backdrop-filter: blur(16px) saturate(200%);
+  border: 2px solid rgba(109, 129, 150, 0.35);
   box-shadow:
-    0 4px 24px 0 rgba(109, 129, 150, 0.13),
-    0 1.5px 0 0 #6d8196;
+    0 4px 24px 0 rgba(109, 129, 150, 0.12),
+    inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
 .dot {
@@ -205,22 +209,28 @@ body {
 }
 
 .pill-uploaded {
-  background: #cbcbcb;
+  background: rgba(203, 203, 203, 0.65);
   color: #4a4a4a;
-  border-color: #ffffe3;
+  border-color: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .pill-uploading {
-  background: #6d8196;
+  background: rgba(109, 129, 150, 0.78);
   color: #ffffe3;
-  border-color: #6d8196;
+  border-color: rgba(109, 129, 150, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   animation: pill-pulse 1s ease-in-out infinite;
 }
 
 .pill-deleting {
-  background: #4a4a4a;
+  background: rgba(74, 74, 74, 0.80);
   color: #ffffe3;
-  border-color: #4a4a4a;
+  border-color: rgba(74, 74, 74, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   animation: pill-pulse 1s ease-in-out infinite;
 }
 
@@ -320,3 +330,54 @@ body {
    ================================================================ */
 
 @import 'tailwindcss';
+
+/* ================================================================
+   Glassmorphism Utility Classes
+   ================================================================ */
+
+.toast-glass {
+  background: rgba(109, 129, 150, 0.78);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #ffffe3;
+}
+
+.input-glass {
+  background: rgba(255, 255, 227, 0.60);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border-color: rgba(203, 203, 203, 0.75);
+}
+
+.btn-glass-light {
+  background: rgba(255, 255, 227, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-color: rgba(203, 203, 203, 0.6);
+}
+
+/* ================================================================
+   Accessibility: Reduced Transparency & Motion
+   ================================================================ */
+
+@media (prefers-reduced-transparency: reduce) {
+  .chat-window     { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(255,255,255,0.97); }
+  .glass-bubble    { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .chat-input-area { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(255,255,255,0.97); }
+  .premium-bubble  { backdrop-filter: none; -webkit-backdrop-filter: none; background: #ffffe3; }
+  .typing-indicator { backdrop-filter: none; -webkit-backdrop-filter: none; background: #ffffe3; }
+  .bubble.user     { background: #6d8196; }
+  .pill-uploaded   { backdrop-filter: none; -webkit-backdrop-filter: none; background: #cbcbcb; }
+  .pill-uploading  { backdrop-filter: none; -webkit-backdrop-filter: none; background: #6d8196; }
+  .pill-deleting   { backdrop-filter: none; -webkit-backdrop-filter: none; background: #4a4a4a; }
+  .toast-glass     { backdrop-filter: none; -webkit-backdrop-filter: none; background: #6d8196; }
+  .input-glass     { backdrop-filter: none; -webkit-backdrop-filter: none; background: #ffffe3; }
+  .btn-glass-light { backdrop-filter: none; -webkit-backdrop-filter: none; background: #ffffe3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-uploading,
+  .pill-deleting   { animation: none; }
+  .animate-fade-in { animation: none; }
+}
