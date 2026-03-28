@@ -18,7 +18,7 @@
         type="button"
         (click)="fileInput.click()"
         aria-label="Upload file"
-        class="flex items-center justify-center w-10 h-10 rounded-full btn-glass-light border border-[#C2DCF2] text-[#9BCAF2] hover:bg-[#9BCAF2] hover:text-[#0D0D0D] focus:outline-none focus:ring-2 focus:ring-[#9BCAF2] transition mr-2"
+        class="flex items-center justify-center w-10 h-10 rounded-full btn-glass-light border border-[#595959] text-[#A6A6A6] hover:bg-[#595959] hover:text-[#A6A6A6] focus:outline-none focus:ring-2 focus:ring-[#737373] transition mr-2"
         tabindex="0"
         title="Upload PDF (max 10 MB)"
       >
@@ -42,7 +42,7 @@
       name="query"
       autocomplete="off"
       placeholder="Ask something from the document..."
-      class="flex-1 input-glass border-2 border-[#C2DCF2] text-[#0D0D0D] placeholder-[#4a78a0] font-medium focus:border-[#9BCAF2] focus:ring-2 focus:ring-[#9BCAF2] transition rounded-xl px-4 py-2"
+      class="flex-1 input-glass border-2 border-[#595959] text-[#A6A6A6] placeholder-[#737373] font-medium focus:border-[#A6A6A6] focus:ring-2 focus:ring-[#737373] transition rounded-xl px-4 py-2"
       aria-label="Type your message"
     />
 
@@ -50,7 +50,7 @@
     <button
       type="submit"
       [disabled]="!query.trim()"
-      class="flex items-center justify-center w-10 h-10 rounded-full bg-[#0D0D0D] text-[#F0F1F2] border border-[#0D0D0D] hover:bg-[#9BCAF2] hover:text-[#0D0D0D] hover:border-[#9BCAF2] disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[#9BCAF2] transition ml-2"
+      class="flex items-center justify-center w-10 h-10 rounded-full bg-[#A6A6A6] text-[#0D0D0D] border border-[#A6A6A6] hover:bg-white hover:border-white disabled:opacity-30 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[#737373] transition ml-2"
       title="Send"
       aria-label="Send message"
       tabindex="0"
@@ -66,7 +66,7 @@
   <!-- Upload error -->
   <div
     *ngIf="uploadError"
-    class="text-xs text-red-500 pl-14"
+    class="text-xs text-red-400 pl-14"
     role="alert"
   >{{ uploadError }}</div>
 </form>

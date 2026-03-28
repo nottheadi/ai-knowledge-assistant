@@ -1,6 +1,6 @@
 <!-- Modify app ui such that it auto-scrolls to the bottom of the chat window every time a new message is added but at the same time there shouldn't be any browser scrollbars it should be scrollable for inside the message box to see previous messages. Also ensure that the input field is always visible at the bottom. And give each message bacground a glassmorphism effect -->
 <div
-  class="min-h-screen flex flex-col items-center justify-center relative p-0 sm:p-4 overflow-x-hidden"
+  class="h-screen overflow-hidden flex flex-col items-center relative px-0 sm:px-4 pt-4 sm:pt-6 pb-2"
 >
   <!-- Animated glass background -->
   <div class="glass-bg">
@@ -9,12 +9,30 @@
     <div class="shape shape3"></div>
   </div>
 
-  <!-- Title -->
-  <h1
-    class="text-2xl sm:text-3xl font-bold mb-4 text-[#0D0D0D] text-center drop-shadow-lg tracking-tight z-10"
-  >
-    AI Knowledge Assistant
-  </h1>
+  <!-- Logo + Name -->
+  <div class="flex flex-col items-center gap-2 z-10 mb-4">
+    <div class="flex items-center gap-3">
+      <svg width="34" height="42" viewBox="0 0 36 44" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Docent logo">
+        <!-- Document body -->
+        <path d="M3 0 H23 L33 10 V36 H3 Z" fill="#595959"/>
+        <!-- Corner fold -->
+        <path d="M23 0 L33 10 H23 Z" fill="#737373"/>
+        <!-- Content lines -->
+        <rect x="8" y="16" width="18" height="2" rx="1" fill="#A6A6A6" fill-opacity="0.6"/>
+        <rect x="8" y="22" width="13" height="2" rx="1" fill="#A6A6A6" fill-opacity="0.6"/>
+        <!-- Speech bubble -->
+        <rect x="3" y="29" width="20" height="13" rx="4" fill="#A6A6A6"/>
+        <!-- Bubble tail pointing up into document -->
+        <path d="M16 29 L21 22 L23 29 Z" fill="#A6A6A6"/>
+        <!-- Typing dots -->
+        <circle cx="8"  cy="35.5" r="1.8" fill="#0D0D0D"/>
+        <circle cx="13" cy="35.5" r="1.8" fill="#0D0D0D"/>
+        <circle cx="18" cy="35.5" r="1.8" fill="#0D0D0D"/>
+      </svg>
+      <span class="text-3xl sm:text-4xl font-bold text-[#A6A6A6] tracking-tight">Docent</span>
+    </div>
+    <p class="text-xs text-[#737373] font-medium tracking-widest uppercase">Ask your documents</p>
+  </div>
 
   <!-- Uploaded PDFs List -->
   <div *ngIf="uploadedFiles.length > 0" class="w-full max-w-[820px] flex flex-wrap gap-2 z-10 mb-2">
@@ -39,7 +57,7 @@
   </div>
 
   <!-- Empty state -->
-  <div *ngIf="uploadedFiles.length === 0" class="w-full max-w-[820px] z-10 mb-2 text-center text-sm text-[#9BCAF2]">
+  <div *ngIf="uploadedFiles.length === 0" class="w-full max-w-[820px] z-10 mb-2 text-center text-sm text-[#737373]">
     No PDFs uploaded yet. Click + to upload one.
   </div>
 

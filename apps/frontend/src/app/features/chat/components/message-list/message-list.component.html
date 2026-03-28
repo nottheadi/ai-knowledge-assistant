@@ -1,9 +1,9 @@
 <div class="flex-1 overflow-y-auto min-h-0 pr-1">
   <ng-container *ngIf="messages.length === 0">
-    <div class="flex flex-col items-center justify-center h-full text-[#9BCAF2] py-8">
+    <div class="flex flex-col items-center justify-center h-full text-[#737373] py-8">
       <div class="text-2xl mb-2">👋</div>
-      <div class="font-semibold text-lg text-[#0D0D0D]">Welcome to AI Knowledge Assistant!</div>
-      <div class="text-sm mt-1 text-[#9BCAF2]">Upload a PDF and ask anything about it to get started.</div>
+      <div class="font-semibold text-lg text-[#A6A6A6]">Welcome to Docent!</div>
+      <div class="text-sm mt-1 text-[#737373]">Upload a PDF and ask anything about it to get started.</div>
     </div>
   </ng-container>
   <ng-container *ngFor="let msg of messages">
@@ -18,7 +18,7 @@
     <div class="bubble glass-bubble ai typing-indicator premium-bubble">
       <span class="dot"></span><span class="dot"></span><span class="dot"></span>
     </div>
-    <span class="text-[#9BCAF2] text-xs">
+    <span class="text-[#737373] text-xs">
       <ng-container [ngSwitch]="loadingPhase">
         <span *ngSwitchCase="'thinking'">AI is thinking...</span>
         <span *ngSwitchCase="'formatting'">Formatting response...</span>
