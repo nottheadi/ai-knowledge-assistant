@@ -2,17 +2,14 @@ import { Component, ElementRef, signal, ViewChild, ChangeDetectorRef, afterNextR
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
 import { RouterOutlet } from '@angular/router';
-import { ApiService } from './services/api.service';
+import { ApiService } from './core/services/api.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { MessageListComponent } from './components/message-list.component';
-import { ChatInputComponent } from './components/chat-input.component';
-
-interface UploadedFile {
-  name: string;
-  status: 'uploading' | 'uploaded' | 'deleting';
-}
+import { MessageListComponent } from './features/chat/components/message-list/message-list.component';
+import { ChatInputComponent } from './features/chat/components/chat-input/chat-input.component';
+import { UploadedFile } from './features/knowledge-base/models/uploaded-file.model';
+import { Message } from './features/chat/models/message.model';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +23,7 @@ export class App {
   selectedFile!: File;
   uploadedFiles: UploadedFile[] = [];
   query = '';
-  messages: any[] = [];
+  messages: Message[] = [];
   isLoading = false;
   loadingPhase: 'none' | 'thinking' | 'refining' | 'formatting' = 'none';
   toastMessage: string = '';

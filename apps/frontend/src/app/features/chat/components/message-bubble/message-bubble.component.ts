@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-message-bubble',
@@ -11,6 +12,6 @@ import { CommonModule } from '@angular/common';
 export class MessageBubbleComponent {
   @Input() sender: 'User' | 'AI' = 'User';
   @Input() text: string = '';
-  @Input() html?: string;
+  @Input() html?: SafeHtml | string;
   @Input() sources?: any[];
 }

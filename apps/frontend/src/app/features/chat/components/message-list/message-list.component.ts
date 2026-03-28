@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MessageBubbleComponent } from './message-bubble.component';
+import { MessageBubbleComponent } from '../message-bubble/message-bubble.component';
 
 @Component({
   selector: 'app-message-list',
