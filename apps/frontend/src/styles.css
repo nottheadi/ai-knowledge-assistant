@@ -3,10 +3,10 @@
    ================================================================ */
 
 body {
-  height: 100vh;
-  overflow: hidden;
+  height: 100dvh;
   background: linear-gradient(150deg, #0d0d0d 0%, #1a1a1a 50%, #262626 100%);
   position: relative;
+  color-scheme: dark;
 }
 
 /* ================================================================
