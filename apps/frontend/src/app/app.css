@@ -3,12 +3,12 @@
    ================================================================ */
 
 .chat-window {
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(20px) saturate(200%);
-  -webkit-backdrop-filter: blur(20px) saturate(200%);
-  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2), inset 0 1px 0 rgba(255,255,255,0.45);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 8px 40px 0 rgba(13, 13, 13, 0.12), inset 0 1px 0 rgba(255,255,255,0.9);
   border-radius: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(194, 220, 242, 0.6);
   width: 100%;
   max-width: clamp(320px, 90vw, 820px);
   min-height: 75vh;
@@ -40,7 +40,7 @@
   display: flex;
   flex-direction: column;
   scrollbar-width: thin;
-  scrollbar-color: rgba(109, 129, 150, 0.22) transparent;
+  scrollbar-color: rgba(155, 202, 242, 0.4) transparent;
 }
 
 .chat-window .flex-1::-webkit-scrollbar {
@@ -49,14 +49,14 @@
 }
 
 .chat-window .flex-1::-webkit-scrollbar-thumb {
-  background: rgba(109, 129, 150, 0.2);
+  background: rgba(155, 202, 242, 0.25);
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(194, 220, 242, 0.3);
   transition: background 0.2s;
 }
 
 .chat-window .flex-1::-webkit-scrollbar-thumb:hover {
-  background: rgba(109, 129, 150, 0.38);
+  background: rgba(155, 202, 242, 0.45);
 }
 
 /* ================================================================
@@ -73,7 +73,7 @@
   background: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-top: 1px solid rgba(255, 255, 255, 0.28);
+  border-top: 1px solid rgba(194, 220, 242, 0.4);
 }
 
 .chat-input-area::before {
