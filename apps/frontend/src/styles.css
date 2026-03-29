@@ -277,8 +277,8 @@ html.light-theme .bubble:hover {
 }
 
 html.light-theme .bubble.user {
-  background: var(--color-bg-bubble-user);
-  border-color: rgba(199, 210, 254, 0.7);
+  background: linear-gradient(145deg, #dbe8ff, #e8efff);
+  border-color: rgba(147, 197, 253, 0.62);
 }
 
 .bubble.user::before {
@@ -303,8 +303,8 @@ html.light-theme .bubble.user {
 }
 
 html.light-theme .bubble.ai {
-  background: var(--color-bg-bubble-ai);
-  border-color: rgba(203, 213, 225, 0.5);
+  background: linear-gradient(145deg, #f8fafc, #eef2f8);
+  border-color: rgba(148, 163, 184, 0.36);
   border-left: 3px solid var(--color-accent);
 }
 
@@ -456,10 +456,10 @@ html.light-theme .source-chip:hover {
 }
 
 html.light-theme .typing-indicator {
-  background: var(--color-bg-bubble-ai);
-  border-color: rgba(203, 213, 225, 0.5);
+  background: linear-gradient(145deg, #f8fafc, #eef2f8);
+  border-color: rgba(148, 163, 184, 0.4);
   border-left: 3px solid var(--color-accent);
-  box-shadow: 0 2px 12px 0 rgba(15, 23, 42, 0.06);
+  box-shadow: 0 3px 12px 0 rgba(15, 23, 42, 0.09);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }

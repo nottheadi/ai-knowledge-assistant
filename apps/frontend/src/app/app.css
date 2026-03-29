@@ -62,6 +62,12 @@
   background: rgba(92, 107, 192, 0.12);
 }
 
+html.light-theme .workspace-badge {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(148, 163, 184, 0.45);
+  color: #334155;
+}
+
 .workspace-grid {
   width: min(1260px, 100%);
   margin: 0 auto;
@@ -91,6 +97,12 @@
   background: rgba(26, 31, 58, 0.5);
   backdrop-filter: blur(var(--glass-blur-light));
   -webkit-backdrop-filter: blur(var(--glass-blur-light));
+}
+
+html.light-theme .context-card {
+  background: linear-gradient(145deg, rgba(248, 250, 252, 0.95), rgba(241, 245, 249, 0.92));
+  border-color: rgba(148, 163, 184, 0.38);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
 
 .context-card h2 {
@@ -125,6 +137,11 @@
 .jump-latest-btn:hover {
   transform: translateY(-2px);
   background: var(--color-accent);
+}
+
+html.light-theme .jump-latest-btn {
+  background: #2563eb;
+  border-color: rgba(37, 99, 235, 0.3);
 }
 
 .desktop-sidebar {
@@ -310,11 +327,11 @@
 }
 
 html.light-theme .chat-window {
-  background: rgba(255, 255, 255, 0.85);
+  background: linear-gradient(145deg, rgba(252, 254, 255, 0.96), rgba(241, 245, 252, 0.94));
   box-shadow:
-    0 8px 40px 0 rgba(15, 23, 42, 0.06),
+    0 10px 40px 0 rgba(15, 23, 42, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  border-color: rgba(203, 213, 225, 0.5);
+  border-color: rgba(148, 163, 184, 0.42);
 }
 
 html.light-theme .chat-window::before {
@@ -322,9 +339,9 @@ html.light-theme .chat-window::before {
 }
 
 html.light-theme .chat-window:hover {
-  border-color: rgba(203, 213, 225, 0.7);
+  border-color: rgba(148, 163, 184, 0.56);
   box-shadow:
-    0 12px 48px 0 rgba(15, 23, 42, 0.08),
+    0 14px 48px 0 rgba(15, 23, 42, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
