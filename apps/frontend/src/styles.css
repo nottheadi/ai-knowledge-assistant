@@ -1,89 +1,760 @@
-.premium-bubble {
-  box-shadow:
-    0 4px 24px 0 rgba(109, 129, 150, 0.13),
-    0 1.5px 0 0 #6d8196;
-  background: linear-gradient(120deg, #ffffe3 80%, #e6eaf1 100%);
-  border: 2px solid #6d8196;
-  transition:
-    box-shadow 0.2s,
-    background 0.2s;
+/* ================================================================
+   CSS Variables — Premium Theme System
+   ================================================================ */
+
+:root {
+  /* ========== Dark Theme (Default - Premium) ========== */
+  --color-bg-primary: #0a0e27;
+  --color-bg-secondary: #1a1f3a;
+  --color-bg-tertiary: #141829;
+  --color-bg-bubble-user: #2d3561;
+  --color-bg-bubble-ai: #151a2e;
+  --color-bg-code: #0a0e27;
+  --color-bg-pill-uploaded: rgba(26, 31, 58, 0.8);
+  --color-bg-pill-uploading: rgba(45, 53, 97, 0.8);
+  --color-bg-pill-deleting: rgba(75, 85, 150, 0.8);
+  --color-bg-toast: rgba(45, 53, 97, 0.95);
+  --color-bg-input: rgba(20, 24, 41, 0.7);
+  --color-bg-button: rgba(26, 31, 58, 0.8);
+  --color-bg-glassmorphism: rgba(26, 31, 58, 0.5);
+  --color-bg-gradient-1: #0a0e27;
+  --color-bg-gradient-2: #141829;
+  --color-bg-gradient-3: #1a1f3a;
+
+  --color-text-primary: #e8eaf6;
+  --color-text-secondary: #9fa8da;
+  --color-text-muted: #6c7499;
+  --color-text-pill-deleting: #f1f5fe;
+
+  --color-border-primary: #5c6bc0;
+  --color-border-secondary: #7986cb;
+  --color-border-input: rgba(92, 107, 192, 0.5);
+  --color-border-button: rgba(92, 107, 192, 0.4);
+
+  --color-shape-1: #5c6bc0;
+  --color-shape-2: #7986cb;
+  --color-shape-3: #9fa8da;
+
+  --color-accent: #7986cb;
+  --color-accent-bright: #9fa8da;
+  --color-shadow: rgba(5, 7, 20, 0.4);
+  --color-shadow-light: rgba(5, 7, 20, 0.2);
+  --color-shadow-dark: rgba(0, 0, 0, 0.5);
+
+  --shape-1-opacity: 0.12;
+  --shape-2-opacity: 0.16;
+  --shape-3-opacity: 0.1;
+
+  --color-scheme: dark;
+
+  /* Premium additions */
+  --glass-blur-strong: 24px;
+  --glass-blur-medium: 16px;
+  --glass-blur-light: 12px;
+  --glass-saturation: 180%;
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.source-chip {
-  display: inline-block;
-  background: #cbcbcb;
-  color: #4a4a4a;
-  border-radius: 1em;
-  padding: 0.2em 0.8em;
-  margin: 0.15em 0.3em 0.15em 0;
-  font-size: 0.85em;
-  font-weight: 500;
-  box-shadow: 0 1px 4px 0 rgba(77, 77, 77, 0.07);
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    color 0.2s;
-}
-.source-chip:hover {
-  background: #ffffe3;
-  color: #6d8196;
+/* ========== Light Theme (Premium) ========== */
+html.light-theme {
+  /* Backgrounds - clean whites and light grays */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-bg-bubble-user: #e0e7ff;
+  --color-bg-bubble-ai: #f1f5f9;
+  --color-bg-code: #f8fafc;
+  --color-bg-pill-uploaded: rgba(226, 232, 240, 0.85);
+  --color-bg-pill-uploading: rgba(224, 231, 255, 0.8);
+  --color-bg-pill-deleting: rgba(203, 213, 225, 0.85);
+  --color-bg-toast: rgba(224, 231, 255, 0.95);
+  --color-bg-input: rgba(248, 250, 252, 0.9);
+  --color-bg-button: rgba(241, 245, 249, 0.85);
+  --color-bg-glassmorphism: rgba(248, 250, 252, 0.7);
+  --color-bg-gradient-1: #ffffff;
+  --color-bg-gradient-2: #f1f5f9;
+  --color-bg-gradient-3: #f8fafc;
+
+  /* Text - professional dark colors for readability */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #334155;
+  --color-text-muted: #64748b;
+  --color-text-pill-deleting: #f1f5f9;
+
+  /* Borders - professional grays */
+  --color-border-primary: #cbd5e1;
+  --color-border-secondary: #e2e8f0;
+  --color-border-input: rgba(203, 213, 225, 0.6);
+  --color-border-button: rgba(203, 213, 225, 0.5);
+
+  /* Shapes - professional blue/slate palette */
+  --color-shape-1: #bfdbfe;
+  --color-shape-2: #dbeafe;
+  --color-shape-3: #cbd5e1;
+
+  /* Accents - professional blues */
+  --color-accent: #3b82f6;
+  --color-accent-bright: #60a5fa;
+  --color-shadow: rgba(15, 23, 42, 0.08);
+  --color-shadow-light: rgba(15, 23, 42, 0.04);
+  --color-shadow-dark: rgba(15, 23, 42, 0.15);
+
+  --shape-1-opacity: 0.08;
+  --shape-2-opacity: 0.06;
+  --shape-3-opacity: 0.04;
+
+  --color-scheme: light;
+
+  /* Premium additions */
+  --glass-blur-strong: 24px;
+  --glass-blur-medium: 16px;
+  --glass-blur-light: 12px;
+  --glass-saturation: 180%;
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Typing indicator dots */
-.typing-indicator {
-  min-width: 2.5em;
-  min-height: 1.5em;
-  display: flex;
-  align-items: center;
-  gap: 0.2em;
-  background: linear-gradient(120deg, #ffffe3 80%, #e6eaf1 100%);
-  border: 2px solid #6d8196;
-  box-shadow:
-    0 4px 24px 0 rgba(109, 129, 150, 0.13),
-    0 1.5px 0 0 #6d8196;
-}
-.dot {
-  width: 0.5em;
-  height: 0.5em;
-  background: #6d8196;
-  border-radius: 50%;
-  display: inline-block;
-  animation: typing-bounce 1.2s infinite both;
-}
-.dot:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.dot:nth-child(3) {
-  animation-delay: 0.4s;
-}
-@keyframes typing-bounce {
-  0%,
-  80%,
-  100% {
-    transform: scale(0.7);
-    opacity: 0.5;
-  }
-  40% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-}
-.dragover {
-  border: 2.5px dashed #6d8196 !important;
-  background: rgba(109, 129, 150, 0.08) !important;
-  transition:
-    border 0.2s,
-    background 0.2s;
-}
+/* ================================================================
+   Base
+   ================================================================ */
 
 body {
-  min-height: 100vh;
-  background: linear-gradient(120deg, #cbcbcb 0%, #ffffe3 100%);
+  height: 100dvh;
+  background: linear-gradient(135deg, var(--color-bg-gradient-1) 0%, var(--color-bg-gradient-2) 40%, var(--color-bg-gradient-3) 100%);
   position: relative;
-  overflow-x: hidden;
+  color-scheme: var(--color-scheme);
+  overflow: hidden;
 }
 
-/* Animated glass background shapes */
+* {
+  transition-property: background-color, border-color, color, box-shadow, opacity;
+  transition-duration: 300ms;
+  transition-timing-function: var(--transition-smooth);
+}
+
+/* ================================================================
+   Animated Background Shapes (Enhanced)
+   ================================================================ */
+
+.glass-bg {
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.glass-bg .shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px) saturate(130%);
+  animation: float-smooth 16s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.glass-bg .shape1 {
+  background: linear-gradient(135deg, var(--color-shape-1) 0%, var(--color-shape-2) 100%);
+  width: 45vw;
+  height: 45vw;
+  left: -12vw;
+  top: -8vw;
+  opacity: var(--shape-1-opacity);
+  animation-delay: 0s;
+}
+
+.glass-bg .shape2 {
+  background: linear-gradient(45deg, var(--color-shape-2) 0%, var(--color-shape-3) 100%);
+  width: 35vw;
+  height: 35vw;
+  right: -15vw;
+  top: 15vh;
+  opacity: var(--shape-2-opacity);
+  animation-delay: 2s;
+}
+
+.glass-bg .shape3 {
+  background: linear-gradient(225deg, var(--color-shape-3) 0%, var(--color-shape-1) 100%);
+  width: 30vw;
+  height: 30vw;
+  left: 15vw;
+  bottom: -12vw;
+  opacity: var(--shape-3-opacity);
+  animation-delay: 4s;
+}
+
+@keyframes float-smooth {
+  0%   { transform: translateY(0) translateX(-5px) scale(1); }
+  25%  { transform: translateY(-40px) translateX(10px) scale(1.05); }
+  50%  { transform: translateY(0) translateX(5px) scale(1); }
+  75%  { transform: translateY(-30px) translateX(-10px) scale(1.03); }
+  100% { transform: translateY(0) translateX(-5px) scale(1); }
+}
+
+/* ================================================================
+   Premium Glassmorphism Utility
+   ================================================================ */
+
+.glassmorphism {
+  background: var(--color-bg-glassmorphism);
+  box-shadow:
+    0 15px 60px 0 var(--color-shadow),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturation%));
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturation%));
+  border-radius: 1.5rem;
+  border: 1px solid rgba(92, 107, 192, 0.3);
+  z-index: 1;
+  position: relative;
+}
+
+/* ================================================================
+   Chat Message Bubbles (Premium)
+   ================================================================ */
+
+.bubble {
+  display: inline-block;
+  padding: 0.875rem 1.375rem;
+  border-radius: 1.25rem;
+  margin-bottom: 0.5rem;
+  max-width: min(75ch, 90vw);
+  word-break: break-word;
+  box-shadow:
+    0 4px 20px 0 var(--color-shadow),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  transition: all 0.3s var(--transition-smooth);
+  backdrop-filter: blur(var(--glass-blur-light));
+  -webkit-backdrop-filter: blur(var(--glass-blur-light));
+}
+
+.bubble:hover {
+  box-shadow:
+    0 8px 30px 0 var(--color-shadow),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.bubble.user {
+  background: linear-gradient(135deg, var(--color-bg-bubble-user), rgba(45, 53, 97, 0.6));
+  color: var(--color-text-primary);
+  align-self: flex-end;
+  border-bottom-right-radius: 0.5rem;
+  border: 1.5px solid rgba(92, 107, 192, 0.4);
+  position: relative;
+}
+
+.bubble.user::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  border-bottom-right-radius: 0.5rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+.bubble.ai {
+  background: linear-gradient(135deg, var(--color-bg-bubble-ai), rgba(20, 24, 41, 0.5));
+  color: var(--color-text-primary);
+  align-self: flex-start;
+  max-width: clamp(280px, 78%, 72ch);
+  border-bottom-left-radius: 0.5rem;
+  border: 1.5px solid var(--color-border-primary);
+  border-left: 3px solid var(--color-accent-bright);
+  position: relative;
+}
+
+.bubble.ai::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  border-bottom-left-radius: 0.5rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+.bubble .sources {
+  font-size: 0.8em;
+  color: var(--color-text-muted);
+  margin-top: 0.5em;
+  padding-top: 0.5em;
+  border-top: 1px solid rgba(92, 107, 192, 0.2);
+}
+
+/* ================================================================
+   Premium AI Bubble
+   ================================================================ */
+
+.premium-bubble {
+  background: linear-gradient(135deg, var(--color-bg-bubble-ai), rgba(20, 24, 41, 0.4));
+  border: 1.5px solid var(--color-border-primary);
+  border-left: 3px solid var(--color-accent-bright);
+  box-shadow:
+    0 4px 20px 0 var(--color-shadow),
+    inset 0 1px 2px rgba(255, 255, 255, 0.08);
+  transition: all 0.3s var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.premium-bubble::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+.premium-bubble:hover {
+  box-shadow:
+    0 8px 30px 0 var(--color-shadow),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ================================================================
+   Source Chips (Premium)
+   ================================================================ */
+
+.source-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  background: rgba(92, 107, 192, 0.2);
+  color: var(--color-text-secondary);
+  border-radius: 1.5em;
+  padding: 0.4em 1em;
+  margin: 0.2em 0.4em 0.2em 0;
+  font-size: 0.85em;
+  font-weight: 500;
+  border: 1px solid rgba(92, 107, 192, 0.3);
+  box-shadow:
+    0 2px 8px 0 var(--color-shadow-light),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.2s var(--transition-smooth);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  position: relative;
+}
+
+.source-chip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1.5em;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+.source-chip:hover {
+  background: rgba(92, 107, 192, 0.35);
+  border-color: rgba(92, 107, 192, 0.5);
+  color: var(--color-accent-bright);
+  box-shadow:
+    0 4px 12px 0 var(--color-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* ================================================================
+   Typing Indicator (Premium)
+   ================================================================ */
+
+.typing-indicator {
+  min-width: 3em;
+  min-height: 1.8em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4em;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, var(--color-bg-bubble-ai), rgba(20, 24, 41, 0.5));
+  border: 1.5px solid var(--color-border-primary);
+  border-left: 3px solid var(--color-accent-bright);
+  box-shadow:
+    0 4px 20px 0 var(--color-shadow),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(var(--glass-blur-light));
+  -webkit-backdrop-filter: blur(var(--glass-blur-light));
+}
+
+.dot {
+  width: 0.6em;
+  height: 0.6em;
+  background: var(--color-accent);
+  border-radius: 50%;
+  display: inline-block;
+  animation: typing-bounce 1.4s infinite both;
+  box-shadow: 0 0 8px rgba(92, 107, 192, 0.5);
+}
+
+.dot:nth-child(2) { animation-delay: 0.25s; }
+.dot:nth-child(3) { animation-delay: 0.5s; }
+
+@keyframes typing-bounce {
+  0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+  40%            { transform: scale(1.3); opacity: 1; }
+}
+
+/* ================================================================
+   File Pill States (Premium)
+   ================================================================ */
+
+.pill-base {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.875rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: 1.5px solid;
+  box-shadow:
+    0 2px 12px var(--color-shadow-light),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s var(--transition-smooth);
+  backdrop-filter: blur(var(--glass-blur-light));
+  -webkit-backdrop-filter: blur(var(--glass-blur-light));
+  position: relative;
+  overflow: hidden;
+}
+
+.pill-base::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  border-radius: 9999px;
+}
+
+.pill-uploaded {
+  background: linear-gradient(135deg, rgba(92, 107, 192, 0.25), rgba(92, 107, 192, 0.15));
+  color: var(--color-text-primary);
+  border-color: rgba(92, 107, 192, 0.4);
+}
+
+.pill-uploaded:hover {
+  background: linear-gradient(135deg, rgba(92, 107, 192, 0.35), rgba(92, 107, 192, 0.25));
+  border-color: rgba(92, 107, 192, 0.6);
+  box-shadow:
+    0 4px 16px var(--color-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.pill-uploading {
+  background: linear-gradient(135deg, rgba(92, 107, 192, 0.4), rgba(92, 107, 192, 0.25));
+  color: var(--color-text-primary);
+  border-color: var(--color-accent-bright);
+  animation: pill-pulse 1.2s ease-in-out infinite;
+}
+
+.pill-deleting {
+  background: linear-gradient(135deg, rgba(150, 100, 150, 0.3), rgba(150, 100, 150, 0.2));
+  color: var(--color-text-primary);
+  border-color: rgba(200, 100, 150, 0.5);
+  animation: pill-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes pill-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.7; transform: scale(0.96); }
+}
+
+.pill-base:hover {
+  transform: translateY(-2px);
+}
+
+/* ================================================================
+   Drag-over state (Premium)
+   ================================================================ */
+
+.dragover {
+  border: 2.5px dashed var(--color-accent-bright) !important;
+  background: rgba(92, 107, 192, 0.15) !important;
+  box-shadow:
+    0 0 20px rgba(92, 107, 192, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.2s var(--transition-smooth);
+}
+
+html.light-theme .dragover {
+  background: rgba(59, 130, 246, 0.08) !important;
+  box-shadow:
+    0 0 20px rgba(59, 130, 246, 0.15),
+    inset 0 1px 0 rgba(248, 250, 252, 0.2) !important;
+}
+
+/* ================================================================
+   Markdown inside AI bubbles
+   ================================================================ */
+
+.bubble h1, .bubble h2, .bubble h3,
+.bubble h4, .bubble h5, .bubble h6 {
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0.8em 0 0.4em;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+.bubble h1 { font-size: 1.6em; }
+.bubble h2 { font-size: 1.4em; }
+.bubble h3 { font-size: 1.2em; }
+
+.bubble ul, .bubble ol {
+  margin: 0.75em 0 0.75em 1.5em;
+  padding-left: 0;
+}
+.bubble ul { list-style: disc inside; }
+.bubble ol { list-style: decimal inside; }
+.bubble li { margin-bottom: 0.3em; }
+
+.bubble blockquote {
+  border-left: 4px solid var(--color-border-primary);
+  background: rgba(92, 107, 192, 0.08);
+  margin: 0.75em 0;
+  padding: 0.75em 1.25em;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  border-radius: 0.75em;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.bubble pre,
+.bubble code {
+  background: var(--color-bg-code);
+  color: var(--color-text-primary);
+  border-radius: 0.5em;
+  padding: 0.4em 0.8em;
+  font-family: 'JetBrains Mono', 'Fira Mono', 'Consolas', monospace;
+  font-size: 0.9em;
+  border: 1px solid rgba(92, 107, 192, 0.2);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.bubble pre {
+  overflow-x: auto;
+  margin: 0.75em 0;
+  padding: 1em;
+}
+
+.bubble a {
+  color: var(--color-accent-bright);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s var(--transition-smooth);
+}
+
+.bubble a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent-bright);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s var(--transition-smooth);
+}
+
+.bubble a:hover {
+  color: var(--color-accent-bright);
+}
+
+.bubble a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+html.light-theme .bubble a { color: var(--color-accent); }
+html.light-theme .bubble a:hover { color: var(--color-text-primary); }
+
+/* ================================================================
+   Animations
+   ================================================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s var(--transition-smooth) both;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s var(--transition-smooth) both;
+}
+
+/* ================================================================
+   Responsive
+   ================================================================ */
+
+@media (max-width: 640px) {
+  .bubble { max-width: 95vw; }
+  .glassmorphism { max-width: 98vw; }
+
+  .bubble {
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+  }
+}
+
+/* ================================================================
+   Tailwind
+   ================================================================ */
+
+@import 'tailwindcss';
+
+/* ================================================================
+   Premium Glassmorphism Utility Classes
+   ================================================================ */
+
+.toast-glass {
+  background: var(--color-bg-toast);
+  backdrop-filter: blur(var(--glass-blur-medium)) saturate(var(--glass-saturation%));
+  -webkit-backdrop-filter: blur(var(--glass-blur-medium)) saturate(var(--glass-saturation%));
+  border: 1px solid rgba(92, 107, 192, 0.3);
+  color: var(--color-text-primary);
+  box-shadow:
+    0 8px 32px 0 var(--color-shadow),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.toast-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+html.light-theme .toast-glass {
+  border: 1px solid rgba(92, 107, 192, 0.25);
+  box-shadow:
+    0 8px 32px 0 var(--color-shadow),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.input-glass {
+  background: var(--color-bg-input);
+  backdrop-filter: blur(var(--glass-blur-medium));
+  -webkit-backdrop-filter: blur(var(--glass-blur-medium));
+  border-color: var(--color-border-input);
+  color: var(--color-text-primary);
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 0.2s var(--transition-smooth);
+}
+
+.input-glass:focus, .input-glass:active {
+  border-color: var(--color-border-primary);
+  box-shadow:
+    0 0 20px rgba(92, 107, 192, 0.2),
+    inset 0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background: rgba(26, 31, 58, 0.9);
+}
+
+.btn-glass-light {
+  background: var(--color-bg-button);
+  backdrop-filter: blur(var(--glass-blur-light));
+  -webkit-backdrop-filter: blur(var(--glass-blur-light));
+  border-color: var(--color-border-button);
+  box-shadow:
+    0 4px 15px 0 var(--color-shadow-light),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 0.2s var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glass-light::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+.btn-glass-light:hover, .btn-glass-light:active {
+  background: rgba(26, 31, 58, 0.9);
+  border-color: var(--color-accent);
+  box-shadow:
+    0 8px 25px 0 var(--color-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* ================================================================
+   Accessibility: Reduced Transparency & Motion
+   ================================================================ */
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-bg .shape         { filter: blur(60px) saturate(100%); }
+  .chat-window             { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+  .glass-bubble            { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .chat-input-area         { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+  .premium-bubble          { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+  .typing-indicator        { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+  .bubble.user             { background: var(--color-bg-bubble-user); }
+  .pill-uploaded           { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+  .pill-uploading          { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-bubble-user); }
+  .pill-deleting           { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-accent); }
+  .toast-glass             { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-bubble-user); }
+  .input-glass             { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+  .btn-glass-light         { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ================================================================
+   Base
+   ================================================================ */
+
+body {
+  height: 100dvh;
+  background: linear-gradient(150deg, var(--color-bg-gradient-1) 0%, var(--color-bg-gradient-2) 50%, var(--color-bg-gradient-3) 100%);
+  position: relative;
+  color-scheme: var(--color-scheme);
+}
+
+/* ================================================================
+   Animated Background Shapes
+   ================================================================ */
+
 .glass-bg {
   position: fixed;
   z-index: 0;
@@ -93,188 +764,271 @@ body {
   height: 100vh;
   pointer-events: none;
 }
+
 .glass-bg .shape {
   position: absolute;
   border-radius: 50%;
-  filter: blur(60px) saturate(180%);
-  opacity: 0.5;
+  filter: blur(70px) saturate(120%);
   animation: float 12s ease-in-out infinite alternate;
 }
+
 .glass-bg .shape1 {
-  background: #cbcbcb;
+  background: var(--color-shape-1);
   width: 40vw;
   height: 40vw;
   left: -10vw;
   top: -10vw;
+  opacity: var(--shape-1-opacity);
   animation-delay: 0s;
-  opacity: 0.25;
 }
+
 .glass-bg .shape2 {
-  background: #ffffe3;
+  background: var(--color-shape-2);
   width: 30vw;
   height: 30vw;
-  right: -8vw;
+  right: -18vw;
   top: 20vh;
+  opacity: var(--shape-2-opacity);
   animation-delay: 2s;
-  opacity: 0.18;
 }
+
 .glass-bg .shape3 {
-  background: #6d8196;
+  background: var(--color-shape-3);
   width: 25vw;
   height: 25vw;
   left: 20vw;
   bottom: -10vw;
+  opacity: var(--shape-3-opacity);
   animation-delay: 4s;
-  opacity: 0.13;
-}
-@keyframes float {
-  0% {
-    transform: translateY(0) scale(1);
-  }
-  100% {
-    transform: translateY(-30px) scale(1.05);
-  }
 }
 
+@keyframes float {
+  0%   { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-30px) scale(1.05); }
+}
+
+/* ================================================================
+   Glassmorphism Utility
+   ================================================================ */
+
 .glassmorphism {
-  background: rgba(255, 255, 255, 0.55);
-  box-shadow: 0 8px 32px 0 rgba(77, 77, 77, 0.1);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  background: var(--color-bg-glassmorphism);
+  box-shadow: 0 8px 32px 0 var(--color-shadow);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
   border-radius: 1.5rem;
-  border: 1px solid #cbcbcb;
+  border: 1px solid rgba(89, 89, 89, 0.4);
   z-index: 1;
 }
 
-/* Chat message bubbles */
+/* ================================================================
+   Chat Message Bubbles
+   ================================================================ */
+
 .bubble {
   display: inline-block;
   padding: 0.75rem 1.25rem;
   border-radius: 1.25rem;
-  margin-bottom: 0.25rem;
-  max-width: 90vw;
+  margin-bottom: 0.5rem;
+  max-width: min(75ch, 90vw);
   word-break: break-word;
-  box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.07);
-  transition:
-    background 0.2s,
-    color 0.2s;
+  box-shadow: 0 2px 8px 0 var(--color-shadow);
+  transition: background 0.2s, color 0.2s;
 }
+
 .bubble.user {
-  background: #6d8196;
-  color: #fff;
+  background: var(--color-bg-bubble-user);
+  color: var(--color-text-primary);
   align-self: flex-end;
   border-bottom-right-radius: 0.5rem;
-  border: 1.5px solid #4a4a4a;
+  border: 1.5px solid rgba(89, 89, 89, 0.7);
 }
+
 .bubble.ai {
-  background: #ffffe3;
-  color: #4a4a4a;
+  background: var(--color-bg-bubble-ai);
+  color: var(--color-text-primary);
   align-self: flex-start;
+  max-width: clamp(280px, 78%, 72ch);
   border-bottom-left-radius: 0.5rem;
-  border: 1.5px solid #cbcbcb;
-  box-shadow: 0 2px 8px 0 rgba(77, 77, 77, 0.07);
+  border: 1.5px solid var(--color-border-primary);
+  border-left: 3px solid var(--color-accent);
+  box-shadow: 0 2px 8px 0 var(--color-shadow);
 }
+
 .bubble .sources {
   font-size: 0.8em;
-  color: #5a6a7a;
+  color: var(--color-text-muted);
   margin-top: 0.5em;
 }
 
-/* Input area */
-.input-area {
-  display: flex;
-  width: 100%;
-  max-width: 40rem;
-  gap: 0.5rem;
-  margin-top: auto;
-  z-index: 2;
+/* ================================================================
+   Premium AI Bubble
+   ================================================================ */
+
+.premium-bubble {
+  background: var(--color-bg-bubble-ai);
+  border: 1.5px solid var(--color-border-primary);
+  border-left: 3px solid var(--color-accent);
+  box-shadow: 0 2px 10px 0 var(--color-shadow);
+  transition: box-shadow 0.2s;
 }
-.input-area input {
-  flex: 1;
-  border-radius: 1.25rem;
-  border: 1.5px solid #b3c6e0;
-  padding: 1rem 1.25rem;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.7);
-  transition:
-    border 0.2s,
-    box-shadow 0.2s;
-}
-.input-area input:focus {
-  outline: none;
-  border-color: #6d8196;
-  box-shadow: 0 0 0 3px #e6eaf1;
-}
-.input-area button {
-  border-radius: 1.25rem;
-  padding: 1rem 2.5rem 1rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  background: #4a4a4a;
-  color: #ffffe3;
-  border: 2px solid #4a4a4a;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border 0.2s,
-    box-shadow 0.2s;
+
+/* ================================================================
+   Source Chips
+   ================================================================ */
+
+.source-chip {
+  display: inline-block;
+  background: var(--color-border-primary);
+  color: var(--color-text-primary);
+  border-radius: 1em;
+  padding: 0.2em 0.8em;
+  margin: 0.15em 0.3em 0.15em 0;
+  font-size: 0.85em;
+  font-weight: 500;
+  box-shadow: 0 1px 4px 0 var(--color-shadow-light);
   cursor: pointer;
-  position: relative;
+  transition: background 0.2s, color 0.2s;
 }
-.input-area button:hover {
-  background: #6d8196;
-  color: #fff;
-  border-color: #6d8196;
-  box-shadow: 0 2px 8px 0 rgba(109, 129, 150, 0.13);
+
+.source-chip:hover {
+  background: var(--color-accent);
+  color: var(--color-text-primary);
 }
-/* Markdown Styling */
-.bubble h1,
-.bubble h2,
-.bubble h3,
-.bubble h4,
-.bubble h5,
-.bubble h6 {
+
+/* ================================================================
+   Typing Indicator
+   ================================================================ */
+
+.typing-indicator {
+  min-width: 2.5em;
+  min-height: 1.5em;
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+  background: var(--color-bg-bubble-ai);
+  border: 1.5px solid var(--color-border-primary);
+  border-left: 3px solid var(--color-accent);
+  box-shadow: 0 2px 10px 0 var(--color-shadow);
+}
+
+.dot {
+  width: 0.5em;
+  height: 0.5em;
+  background: var(--color-text-primary);
+  border-radius: 50%;
+  display: inline-block;
+  animation: typing-bounce 1.2s infinite both;
+}
+
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-bounce {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+  40%            { transform: scale(1.2); opacity: 1; }
+}
+
+/* ================================================================
+   File Pill States
+   ================================================================ */
+
+.pill-base {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border: 1px solid;
+  box-shadow: 0 1px 4px var(--color-shadow-light);
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.pill-uploaded {
+  background: var(--color-bg-pill-uploaded);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-primary);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.pill-uploading {
+  background: var(--color-bg-pill-uploading);
+  color: var(--color-text-primary);
+  border-color: var(--color-accent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: pill-pulse 1s ease-in-out infinite;
+}
+
+.pill-deleting {
+  background: var(--color-bg-pill-deleting);
+  color: var(--color-text-pill-deleting);
+  border-color: var(--color-text-primary);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: pill-pulse 1s ease-in-out infinite;
+}
+
+@keyframes pill-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.97); }
+}
+
+/* ================================================================
+   Drag-over state
+   ================================================================ */
+
+.dragover {
+  border: 2.5px dashed var(--color-accent) !important;
+  background: rgba(89, 89, 89, 0.1) !important;
+  transition: border 0.2s, background 0.2s;
+}
+
+html.light-theme .dragover {
+  background: rgba(180, 187, 220, 0.1) !important;
+}
+
+/* ================================================================
+   Markdown inside AI bubbles
+   ================================================================ */
+
+.bubble h1, .bubble h2, .bubble h3,
+.bubble h4, .bubble h5, .bubble h6 {
   font-weight: 700;
-  color: #6d8196;
-  margin: 0.5em 0 0.3em 0;
+  color: var(--color-text-primary);
+  margin: 0.5em 0 0.3em;
   line-height: 1.2;
 }
-.bubble h1 {
-  font-size: 1.5em;
-}
-.bubble h2 {
-  font-size: 1.3em;
-}
-.bubble h3 {
-  font-size: 1.15em;
-}
-.bubble ul,
-.bubble ol {
+.bubble h1 { font-size: 1.5em; }
+.bubble h2 { font-size: 1.3em; }
+.bubble h3 { font-size: 1.15em; }
+
+.bubble ul, .bubble ol {
   margin: 0.5em 0 0.5em 1.2em;
   padding-left: 1.2em;
 }
-.bubble ul {
-  list-style: disc inside;
-}
-.bubble ol {
-  list-style: decimal inside;
-}
-.bubble li {
-  margin-bottom: 0.2em;
-}
+.bubble ul { list-style: disc inside; }
+.bubble ol { list-style: decimal inside; }
+.bubble li { margin-bottom: 0.2em; }
+
 .bubble blockquote {
-  border-left: 4px solid #b4b4b4;
-  background: #f9f9e3;
+  border-left: 4px solid var(--color-border-primary);
+  background: var(--color-bg-secondary);
+  opacity: 0.4;
   margin: 0.5em 0;
   padding: 0.5em 1em;
-  color: #6d8196;
+  color: var(--color-text-muted);
   font-style: italic;
   border-radius: 0.5em;
 }
+
 .bubble pre,
 .bubble code {
-  background: #23272e;
-  color: #f8f8f2;
+  background: var(--color-bg-code);
+  color: var(--color-text-primary);
   border-radius: 0.4em;
   padding: 0.3em 0.7em;
   font-family: 'Fira Mono', 'Consolas', monospace;
@@ -284,44 +1038,97 @@ body {
   overflow-x: auto;
   margin: 0.5em 0;
 }
+
 .bubble a {
-  color: #4a90e2;
+  color: var(--color-text-primary);
   text-decoration: underline;
   transition: color 0.2s;
 }
-.bubble a:hover {
-  color: #6d8196;
+.bubble a:hover { color: #ffffff; }
+
+html.light-theme .bubble a { color: var(--color-text-secondary); }
+html.light-theme .bubble a:hover { color: var(--color-text-primary); }
+
+/* ================================================================
+   Animations
+   ================================================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-/* Custom Scrollbar for chat window */
-#chatWindow::-webkit-scrollbar {
-  width: 10px;
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out both;
 }
-#chatWindow::-webkit-scrollbar-thumb {
-  background: #cbcbcb;
-  border-radius: 8px;
-}
-#chatWindow::-webkit-scrollbar-track {
-  background: transparent;
-}
+
+/* ================================================================
+   Responsive
+   ================================================================ */
 
 @media (max-width: 640px) {
-  .glassmorphism,
-  .input-area {
-    max-width: 98vw !important;
-  }
-  .bubble {
-    max-width: 98vw;
-  }
+  .bubble { max-width: 95vw; }
+  .glassmorphism { max-width: 98vw; }
 }
-/* Glassmorphism (liquid glass) effect */
-.glassmorphism {
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border-radius: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-/* You can add global styles to this file, and also import other style files */
+
+/* ================================================================
+   Tailwind
+   ================================================================ */
 
 @import 'tailwindcss';
+
+/* ================================================================
+   Glassmorphism Utility Classes
+   ================================================================ */
+
+.toast-glass {
+  background: var(--color-bg-toast);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgba(115, 115, 115, 0.4);
+  color: var(--color-text-primary);
+}
+
+html.light-theme .toast-glass {
+  border: 1px solid rgba(203, 213, 225, 0.4);
+}
+
+.input-glass {
+  background: var(--color-bg-input);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: var(--color-border-input);
+  color: var(--color-text-primary);
+}
+
+.btn-glass-light {
+  background: var(--color-bg-button);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-color: var(--color-border-button);
+}
+
+/* ================================================================
+   Accessibility: Reduced Transparency & Motion
+   ================================================================ */
+
+@media (prefers-reduced-transparency: reduce) {
+  .chat-window     { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+  .glass-bubble    { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .chat-input-area { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+  .premium-bubble  { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+  .typing-indicator { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+  .bubble.user     { background: var(--color-bg-bubble-user); }
+  .pill-uploaded   { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+  .pill-uploading  { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-bubble-user); }
+  .pill-deleting   { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-accent); }
+  .toast-glass     { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-bubble-user); }
+  .input-glass     { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+  .btn-glass-light { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-bg-secondary); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-uploading,
+  .pill-deleting   { animation: none; }
+  .animate-fade-in { animation: none; }
+}

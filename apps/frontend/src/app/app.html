@@ -1,89 +1,104 @@
-<!-- Modify app ui such that it auto-scrolls to the bottom of the chat window every time a new message is added but at the same time there shouldn't be any browser scrollbars it should be scrollable for inside the message box to see previous messages. Also ensure that the input field is always visible at the bottom. And give each message bacground a glassmorphism effect -->
-<div
-  class="min-h-screen flex flex-col items-center justify-center relative p-0 sm:p-4 overflow-x-hidden"
->
-  <!-- Animated glass background -->
-  <div class="glass-bg">
-    <div class="shape shape1"></div>
-    <div class="shape shape2"></div>
-    <div class="shape shape3"></div>
-  </div>
+<div class="app-container">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
 
-  <!-- Title -->
-  <h1
-    class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 text-center drop-shadow-lg tracking-tight z-10"
-  >
-    AI Knowledge Assistant
-  </h1>
-
-  <!-- Upload Section -->
-
-  <!-- Uploaded PDFs List -->
-  <div *ngIf="uploadedFiles.length > 0" class="w-full max-w-2xl mb-2 flex flex-wrap gap-2 z-10">
-    <span
-      *ngFor="let file of uploadedFiles"
-      class="px-3 py-1 rounded-full bg-[#CBCBCB] text-[#4A4A4A] font-medium shadow border border-[#FFFFE3] text-sm truncate max-w-xs cursor-pointer hover:bg-[#FFFFE3] transition"
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <div
+      class="h-screen overflow-hidden flex flex-col items-center relative px-0 sm:px-4 pt-4 sm:pt-6 pb-2"
     >
-      {{ file }}
-    </span>
-  </div>
-
-  <!-- Drag & Drop Upload Section -->
-  <div
-    class="glassmorphism shadow-xl rounded-2xl p-3 sm:p-4 w-full max-w-2xl mb-3 flex flex-col sm:flex-row gap-2 items-stretch border border-white/30 z-10"
-    [class.dragover]="dragOver"
-    (dragover)="onDragOver($event)"
-    (dragleave)="onDragLeave($event)"
-    (drop)="onDrop($event)"
-  >
-    <label
-      class="flex-1 flex items-center gap-2 bg-[#FFFFE3] border-2 border-[#CBCBCB] rounded-xl px-3 py-2 cursor-pointer transition hover:border-[#6D8196] focus-within:border-[#6D8196]"
-    >
-      <input type="file" (change)="onFileSelected($event)" class="hidden" />
-      <span class="text-[#4A4A4A] font-medium truncate">{{
-        (selectedFile && selectedFile.name) || 'Drag & Drop or Choose File'
-      }}</span>
-    </label>
-    <button
-      (click)="upload()"
-      class="bg-[#6D8196] text-[#FFFFE3] px-6 py-2 rounded-xl font-semibold shadow-sm border-2 border-[#6D8196] hover:bg-[#4A4A4A] hover:text-white hover:border-[#4A4A4A] transition active:scale-95"
-    >
-      Upload
-    </button>
-  </div>
-  <div *ngIf="uploadError" class="text-red-600 text-sm mt-1">{{ uploadError }}</div>
-
-  <!-- Chat Window with Input at Bottom -->
-  <div #chatWindow class="chat-window flex flex-col z-10">
-    <div class="flex-1 overflow-y-auto pr-1" style="min-height: 0;">
-      <div *ngFor="let msg of messages" class="flex flex-col">
-        <div *ngIf="msg.sender === 'User'" class="flex justify-end">
-          <div class="bubble glass-bubble user animate-fade-in">{{ msg.text }}</div>
-        </div>
-        <div *ngIf="msg.sender === 'AI'" class="flex justify-start">
-          <div class="bubble glass-bubble ai animate-fade-in premium-bubble">
-            <div [innerHTML]="msg.html || msg.text"></div>
-            <div *ngIf="msg.sources" class="sources">
-              <div class="font-semibold">Sources:</div>
-              <div *ngFor="let s of msg.sources" class="source-chip">
-                <span class="chip-icon">📄</span>Page {{ s.page }}
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Animated glass background -->
+      <div class="glass-bg">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
       </div>
 
-      <!-- Animated Typing Indicator with Multi-Stage Loading -->
-      <div *ngIf="isLoading" class="flex items-center gap-2 mt-2 animate-fade-in">
-        <div class="bubble glass-bubble ai typing-indicator premium-bubble">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <!-- Logo + Name -->
+      <div class="flex flex-col items-center gap-2 z-10 mb-4">
+        <div class="flex items-center gap-3">
+          <svg width="34" height="42" viewBox="0 0 36 44" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Docent logo" class="logo-svg">
+            <!-- Document body -->
+            <path d="M3 0 H23 L33 10 V36 H3 Z" class="logo-path-main"/>
+            <!-- Corner fold -->
+            <path d="M23 0 L33 10 H23 Z" class="logo-path-fold"/>
+            <!-- Content lines -->
+            <rect x="8" y="16" width="18" height="2" rx="1" class="logo-rect-content" fill-opacity="0.6"/>
+            <rect x="8" y="22" width="13" height="2" rx="1" class="logo-rect-content" fill-opacity="0.6"/>
+            <!-- Speech bubble -->
+            <rect x="3" y="29" width="20" height="13" rx="4" class="logo-bubble"/>
+            <!-- Bubble tail pointing up into document -->
+            <path d="M16 29 L21 22 L23 29 Z" class="logo-bubble"/>
+            <!-- Typing dots -->
+            <circle cx="8"  cy="35.5" r="1.8" class="logo-dot"/>
+            <circle cx="13" cy="35.5" r="1.8" class="logo-dot"/>
+            <circle cx="18" cy="35.5" r="1.8" class="logo-dot"/>
+          </svg>
+          <span class="text-3xl sm:text-4xl font-bold text-primary tracking-tight">Docent</span>
         </div>
-        <span class="text-gray-400 text-xs">
-          <ng-container [ngSwitch]="loadingPhase">
-            <span *ngSwitchCase="'thinking'">AI is thinking...</span>
-            <span *ngSwitchCase="'formatting'">Formatting response...</span>
-          </ng-container>
+        <p class="text-xs text-secondary font-medium tracking-widest uppercase">Ask your documents</p>
+      </div>
+
+      <!-- Uploaded PDFs List -->
+      <div *ngIf="uploadedFiles.length > 0" class="w-full max-w-[820px] flex flex-wrap gap-2 z-10 mb-2">
+        <span
+          *ngFor="let file of uploadedFiles"
+          class="pill-base"
+          [ngClass]="{
+            'pill-uploaded':  file.status === 'uploaded',
+            'pill-uploading': file.status === 'uploading',
+            'pill-deleting':  file.status === 'deleting'
+          }"
+        >
+          <span class="truncate max-w-xs">{{ file.name }}</span>
+          <button
+            *ngIf="file.status === 'uploaded'"
+            (click)="deleteFile(file.name)"
+            class="ml-1 hover:text-red-400 transition leading-none opacity-70 hover:opacity-100"
+            aria-label="Delete file"
+            title="Delete file"
+          >✕</button>
         </span>
+      </div>
+
+      <!-- Empty state -->
+      <div *ngIf="uploadedFiles.length === 0" class="w-full max-w-[820px] z-10 mb-2 text-center text-sm text-muted">
+        No PDFs uploaded yet. Click + to upload one.
+      </div>
+
+      <!-- Chat Window with Input at Bottom -->
+      <div #chatWindow class="chat-window flex flex-col z-10">
+        <div class="flex-1 min-h-0 flex flex-col">
+          <app-message-list
+            [messages]="messages"
+            [isLoading]="isLoading"
+            [loadingPhase]="loadingPhase"
+          ></app-message-list>
+        </div>
+        <app-chat-input
+          [query]="query"
+          [selectedFile]="selectedFile"
+          [uploadError]="uploadError"
+          [dragOver]="dragOver"
+          (queryChange)="query = $event"
+          (send)="send()"
+          (fileSelected)="onFileSelected($event)"
+          (upload)="upload()"
+          (dragOverEvent)="onDragOver($event)"
+          (dragLeaveEvent)="onDragLeave($event)"
+          (dropEvent)="onDrop($event)"
+          aria-label="Chat input area"
+        ></app-chat-input>
+      </div>
+
+      <!-- Toast notification -->
+      <div
+        *ngIf="toastMessage"
+        class="fixed top-4 left-1/2 transform -translate-x-1/2 toast-glass px-6 py-2 rounded-xl shadow-lg z-50 text-base font-medium animate-fade-in"
+        role="status"
+        aria-live="polite"
+      >
+        {{ toastMessage }}
       </div>
     </div>
     <!-- Modern Input Area -->
@@ -122,4 +137,6 @@
     </form>
   </div>
 </div>
+
 <router-outlet></router-outlet>
+
