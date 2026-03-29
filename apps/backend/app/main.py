@@ -1,6 +1,6 @@
 from app.config import limiter
 from app.exceptions import CustomException, ErrorResponse
-from app.routes import chat
+from app.routes import chat, auth
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -97,4 +97,5 @@ def health_check():
     )
 
 
+app.include_router(auth.router, tags=["Authentication"], prefix="/api")
 app.include_router(chat.router, tags=["Chat"], prefix="/api")

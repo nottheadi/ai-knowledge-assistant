@@ -7,7 +7,7 @@ import logging
 import os
 import shutil
 
-from app.config import limiter, verify_api_key
+from app.config import limiter, verify_jwt_token
 from app.exceptions import FileUploadError, ValidationError
 from app.rag.pipeline import process_pdf
 from app.rag.rag_chain import generate_rag_response
@@ -69,7 +69,7 @@ class ChatResponse(BaseModel):
     responses={200: {"description": "Successful response with AI answer"}},
 )
 @limiter.limit("10/minute")
-async def chat(request: Request, chat_request: ChatRequest, api_key: str = Depends(verify_api_key)):
+async def chat(request: Request, chat_request: ChatRequest, user: dict = Depends(verify_jwt_token)):
     """
     Chat with the AI model.
 
@@ -93,7 +93,7 @@ async def chat(request: Request, chat_request: ChatRequest, api_key: str = Depen
 
 @router.post("/chat/RAG")
 @limiter.limit("10/minute")
-async def chat_rag(request: Request, rag_request: ChatRagRequest, api_key: str = Depends(verify_api_key)):
+async def chat_rag(request: Request, rag_request: ChatRagRequest, user: dict = Depends(verify_jwt_token)):
     """
     Chat with the AI model using Retrieval-Augmented Generation (RAG).
 
@@ -125,7 +125,7 @@ async def chat_rag(request: Request, rag_request: ChatRagRequest, api_key: str =
 
 @router.post("/upload")
 @limiter.limit("5/minute")
-async def upload_pdf(request: Request, file: UploadFile = File(...), api_key: str = Depends(verify_api_key)):
+async def upload_pdf(request: Request, file: UploadFile = File(...), user: dict = Depends(verify_jwt_token)):
     """
     Upload a PDF file, process it, and store in the vector DB.
 
@@ -181,7 +181,7 @@ async def upload_pdf(request: Request, file: UploadFile = File(...), api_key: st
 
 
 @router.get("/uploads")
-async def list_uploaded_pdfs(api_key: str = Depends(verify_api_key)):
+async def list_uploaded_pdfs(user: dict = Depends(verify_jwt_token)):
     """
     List all uploaded PDF files in the uploads directory.
     Returns:
@@ -196,7 +196,7 @@ async def list_uploaded_pdfs(api_key: str = Depends(verify_api_key)):
 
 
 @router.delete("/uploads/{filename}")
-async def delete_uploaded_pdf(filename: str, api_key: str = Depends(verify_api_key)):
+async def delete_uploaded_pdf(filename: str, user: dict = Depends(verify_jwt_token)):
     """
     Delete an uploaded PDF file by name.
     """

@@ -11,3 +11,5 @@ langchain-community==0.0.38
 pypdf==6.9.1
 python-multipart==0.0.22
 slowapi==0.1.9
+PyJWT==2.8.1
+passlib[bcrypt]==1.7.4
