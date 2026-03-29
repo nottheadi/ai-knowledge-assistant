@@ -1,0 +1,29 @@
+<div class="sidebar">
+  <!-- User Section -->
+  <div class="user-section">
+    <div class="user-avatar">{{ username()[0]?.toUpperCase() || 'U' }}</div>
+    <div class="user-info">
+      <p class="user-name">{{ username() }}</p>
+      <p class="user-status">Online</p>
+    </div>
+  </div>
+
+  <!-- Spacer -->
+  <div class="spacer"></div>
+
+  <!-- Theme Toggle -->
+  <div class="control-section">
+    <button class="control-btn toggle-btn" (click)="toggleTheme()" [attr.aria-label]="'Switch to ' + (isDark() ? 'light' : 'dark') + ' theme'">
+      <span class="btn-icon">{{ isDark() ? '☀️' : '🌙' }}</span>
+      <span class="btn-text">{{ isDark() ? 'Light' : 'Dark' }}</span>
+    </button>
+  </div>
+
+  <!-- Logout -->
+  <div class="control-section">
+    <button class="control-btn logout-btn" (click)="logout()" aria-label="Logout">
+      <span class="btn-icon">↪️</span>
+      <span class="btn-text">Logout</span>
+    </button>
+  </div>
+</div>

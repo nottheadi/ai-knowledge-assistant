@@ -4,10 +4,10 @@ import { marked } from 'marked';
 import { Router, RouterOutlet } from '@angular/router';
 import { ApiService } from './core/services/api.service';
 import { ThemeService } from './core/services/theme.service';
-import { AuthService } from './core/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { SidebarComponent } from './core/components/sidebar/sidebar.component';
 import { MessageListComponent } from './features/chat/components/message-list/message-list.component';
 import { ChatInputComponent } from './features/chat/components/chat-input/chat-input.component';
 import { UploadedFile } from './features/knowledge-base/models/uploaded-file.model';
@@ -15,7 +15,7 @@ import { Message } from './features/chat/models/message.model';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FormsModule, CommonModule, MessageListComponent, ChatInputComponent],
+  imports: [RouterOutlet, FormsModule, CommonModule, SidebarComponent, MessageListComponent, ChatInputComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -39,17 +39,10 @@ export class App {
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
     public themeService: ThemeService,
-    private authService: AuthService,
-    private router: Router,
   ) {
     afterNextRender(() => {
       this.fetchUploadedFiles();
     });
-  }
-
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
   }
 
   fetchUploadedFiles() {

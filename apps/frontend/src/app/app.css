@@ -1,6 +1,6 @@
-/* ================================================================
-   Semantic Color Classes (Using CSS Variables)
-   ================================================================ */
+/* Layout */.app-container{display:grid;grid-template-columns:240px 1fr;height:100vh;gap:0;background:linear-gradient(135deg,var(--color-bg-gradient-1) 0%,var(--color-bg-gradient-2) 40%,var(--color-bg-gradient-3) 100%);overflow:hidden}.main-content{display:flex;flex-direction:column;overflow:hidden;background:0}
+
+/* Color Classes */
 
 .text-primary {
   color: var(--color-text-primary);
@@ -174,20 +174,20 @@
 }
 
 html.light-theme .chat-window {
-  background: linear-gradient(135deg, rgba(232, 236, 248, 0.7), rgba(240, 243, 251, 0.6));
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.8), rgba(241, 245, 249, 0.75));
   box-shadow:
     0 15px 60px 0 var(--color-shadow),
-    inset 0 1px 2px rgba(123, 134, 203, 0.15),
-    inset 0 -1px 2px rgba(44, 62, 80, 0.1);
-  border-color: rgba(123, 134, 203, 0.4);
+    inset 0 1px 2px rgba(203, 213, 225, 0.2),
+    inset 0 -1px 2px rgba(15, 23, 42, 0.05);
+  border-color: rgba(203, 213, 225, 0.4);
 }
 
 html.light-theme .chat-window:hover {
-  border-color: rgba(123, 134, 203, 0.6);
+  border-color: rgba(203, 213, 225, 0.6);
   box-shadow:
     0 20px 80px 0 var(--color-shadow),
-    inset 0 1px 2px rgba(123, 134, 203, 0.25),
-    inset 0 -1px 2px rgba(44, 62, 80, 0.1);
+    inset 0 1px 2px rgba(203, 213, 225, 0.3),
+    inset 0 -1px 2px rgba(15, 23, 42, 0.05);
 }
 
 .chat-window::-webkit-scrollbar {
@@ -281,16 +281,16 @@ html.light-theme .chat-window:hover {
 }
 
 html.light-theme .chat-input-area {
-  background: linear-gradient(180deg, rgba(240, 243, 251, 0.9), rgba(245, 247, 255, 0.95));
-  border-top-color: rgba(123, 134, 203, 0.3);
+  background: linear-gradient(180deg, rgba(245, 247, 255, 0.95), rgba(248, 250, 252, 0.98));
+  border-top-color: rgba(203, 213, 225, 0.3);
 }
 
 html.light-theme .chat-input-area::before {
   background: linear-gradient(
     to bottom,
-    rgba(240, 243, 251, 0),
-    rgba(240, 243, 251, 0.5) 80%,
-    rgba(240, 243, 251, 0.9) 100%
+    rgba(245, 247, 255, 0),
+    rgba(245, 247, 255, 0.5) 80%,
+    rgba(245, 247, 255, 0.95) 100%
   );
 }
 
@@ -368,7 +368,10 @@ html.light-theme .chat-input-area::before {
    Responsive Design (Premium)
    ================================================================ */
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
+  .app-container {
+    grid-template-columns: 70px 1fr;
+  }
   .chat-window {
     max-width: 98vw;
     padding: 0.75rem;
@@ -377,6 +380,10 @@ html.light-theme .chat-input-area::before {
 }
 
 @media (max-width: 640px) {
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+
   .chat-window {
     max-width: 100vw;
     padding: 0.5rem;

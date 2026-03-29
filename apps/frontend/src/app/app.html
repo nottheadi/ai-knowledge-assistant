@@ -1,135 +1,108 @@
-<!-- Modify app ui such that it auto-scrolls to the bottom of the chat window every time a new message is added but at the same time there shouldn't be any browser scrollbars it should be scrollable for inside the message box to see previous messages. Also ensure that the input field is always visible at the bottom. And give each message bacground a glassmorphism effect -->
-<div
-  class="h-screen overflow-hidden flex flex-col items-center relative px-0 sm:px-4 pt-4 sm:pt-6 pb-2"
->
-  <!-- Animated glass background -->
-  <div class="glass-bg">
-    <div class="shape shape1"></div>
-    <div class="shape shape2"></div>
-    <div class="shape shape3"></div>
-  </div>
+<div class="app-container">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
 
-  <!-- Theme Toggle Button (Top Right) -->
-  <button
-    (click)="themeService.toggleTheme()"
-    class="fixed top-4 right-4 z-50 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 theme-toggle-btn"
-    title="Toggle theme"
-    aria-label="Toggle light/dark theme"
-  >
-    <!-- Sun icon (shown in dark mode) -->
-    <svg *ngIf="themeService.theme() === 'dark'" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
-      <circle cx="12" cy="12" r="5"/>
-      <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-    <!-- Moon icon (shown in light mode) -->
-    <svg *ngIf="themeService.theme() === 'light'" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
-  </button>
-
-  <!-- Logout Button (Top Right, next to theme toggle) -->
-  <button
-    (click)="logout()"
-    class="fixed top-4 right-16 z-50 px-4 py-2 rounded-full flex items-center justify-center transition-all duration-200 text-sm font-medium bg-white/10 hover:bg-white/20 border border-white/20 text-slate-200 hover:text-white"
-    title="Logout"
-    aria-label="Logout"
-  >
-    Logout
-  </button>
-
-  <!-- Logo + Name -->
-  <div class="flex flex-col items-center gap-2 z-10 mb-4">
-    <div class="flex items-center gap-3">
-      <svg width="34" height="42" viewBox="0 0 36 44" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Docent logo" class="logo-svg">
-        <!-- Document body -->
-        <path d="M3 0 H23 L33 10 V36 H3 Z" class="logo-path-main"/>
-        <!-- Corner fold -->
-        <path d="M23 0 L33 10 H23 Z" class="logo-path-fold"/>
-        <!-- Content lines -->
-        <rect x="8" y="16" width="18" height="2" rx="1" class="logo-rect-content" fill-opacity="0.6"/>
-        <rect x="8" y="22" width="13" height="2" rx="1" class="logo-rect-content" fill-opacity="0.6"/>
-        <!-- Speech bubble -->
-        <rect x="3" y="29" width="20" height="13" rx="4" class="logo-bubble"/>
-        <!-- Bubble tail pointing up into document -->
-        <path d="M16 29 L21 22 L23 29 Z" class="logo-bubble"/>
-        <!-- Typing dots -->
-        <circle cx="8"  cy="35.5" r="1.8" class="logo-dot"/>
-        <circle cx="13" cy="35.5" r="1.8" class="logo-dot"/>
-        <circle cx="18" cy="35.5" r="1.8" class="logo-dot"/>
-      </svg>
-      <span class="text-3xl sm:text-4xl font-bold text-primary tracking-tight">Docent</span>
-    </div>
-    <p class="text-xs text-secondary font-medium tracking-widest uppercase">Ask your documents</p>
-  </div>
-
-  <!-- Uploaded PDFs List -->
-  <div *ngIf="uploadedFiles.length > 0" class="w-full max-w-[820px] flex flex-wrap gap-2 z-10 mb-2">
-    <span
-      *ngFor="let file of uploadedFiles"
-      class="pill-base"
-      [ngClass]="{
-        'pill-uploaded':  file.status === 'uploaded',
-        'pill-uploading': file.status === 'uploading',
-        'pill-deleting':  file.status === 'deleting'
-      }"
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <div
+      class="h-screen overflow-hidden flex flex-col items-center relative px-0 sm:px-4 pt-4 sm:pt-6 pb-2"
     >
-      <span class="truncate max-w-xs">{{ file.name }}</span>
-      <button
-        *ngIf="file.status === 'uploaded'"
-        (click)="deleteFile(file.name)"
-        class="ml-1 hover:text-red-400 transition leading-none opacity-70 hover:opacity-100"
-        aria-label="Delete file"
-        title="Delete file"
-      >✕</button>
-    </span>
-  </div>
+      <!-- Animated glass background -->
+      <div class="glass-bg">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+      </div>
 
-  <!-- Empty state -->
-  <div *ngIf="uploadedFiles.length === 0" class="w-full max-w-[820px] z-10 mb-2 text-center text-sm text-muted">
-    No PDFs uploaded yet. Click + to upload one.
-  </div>
+      <!-- Logo + Name -->
+      <div class="flex flex-col items-center gap-2 z-10 mb-4">
+        <div class="flex items-center gap-3">
+          <svg width="34" height="42" viewBox="0 0 36 44" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Docent logo" class="logo-svg">
+            <!-- Document body -->
+            <path d="M3 0 H23 L33 10 V36 H3 Z" class="logo-path-main"/>
+            <!-- Corner fold -->
+            <path d="M23 0 L33 10 H23 Z" class="logo-path-fold"/>
+            <!-- Content lines -->
+            <rect x="8" y="16" width="18" height="2" rx="1" class="logo-rect-content" fill-opacity="0.6"/>
+            <rect x="8" y="22" width="13" height="2" rx="1" class="logo-rect-content" fill-opacity="0.6"/>
+            <!-- Speech bubble -->
+            <rect x="3" y="29" width="20" height="13" rx="4" class="logo-bubble"/>
+            <!-- Bubble tail pointing up into document -->
+            <path d="M16 29 L21 22 L23 29 Z" class="logo-bubble"/>
+            <!-- Typing dots -->
+            <circle cx="8"  cy="35.5" r="1.8" class="logo-dot"/>
+            <circle cx="13" cy="35.5" r="1.8" class="logo-dot"/>
+            <circle cx="18" cy="35.5" r="1.8" class="logo-dot"/>
+          </svg>
+          <span class="text-3xl sm:text-4xl font-bold text-primary tracking-tight">Docent</span>
+        </div>
+        <p class="text-xs text-secondary font-medium tracking-widest uppercase">Ask your documents</p>
+      </div>
 
-  <!-- Chat Window with Input at Bottom -->
-  <div #chatWindow class="chat-window flex flex-col z-10">
-    <div class="flex-1 min-h-0 flex flex-col">
-      <app-message-list
-        [messages]="messages"
-        [isLoading]="isLoading"
-        [loadingPhase]="loadingPhase"
-      ></app-message-list>
+      <!-- Uploaded PDFs List -->
+      <div *ngIf="uploadedFiles.length > 0" class="w-full max-w-[820px] flex flex-wrap gap-2 z-10 mb-2">
+        <span
+          *ngFor="let file of uploadedFiles"
+          class="pill-base"
+          [ngClass]="{
+            'pill-uploaded':  file.status === 'uploaded',
+            'pill-uploading': file.status === 'uploading',
+            'pill-deleting':  file.status === 'deleting'
+          }"
+        >
+          <span class="truncate max-w-xs">{{ file.name }}</span>
+          <button
+            *ngIf="file.status === 'uploaded'"
+            (click)="deleteFile(file.name)"
+            class="ml-1 hover:text-red-400 transition leading-none opacity-70 hover:opacity-100"
+            aria-label="Delete file"
+            title="Delete file"
+          >✕</button>
+        </span>
+      </div>
+
+      <!-- Empty state -->
+      <div *ngIf="uploadedFiles.length === 0" class="w-full max-w-[820px] z-10 mb-2 text-center text-sm text-muted">
+        No PDFs uploaded yet. Click + to upload one.
+      </div>
+
+      <!-- Chat Window with Input at Bottom -->
+      <div #chatWindow class="chat-window flex flex-col z-10">
+        <div class="flex-1 min-h-0 flex flex-col">
+          <app-message-list
+            [messages]="messages"
+            [isLoading]="isLoading"
+            [loadingPhase]="loadingPhase"
+          ></app-message-list>
+        </div>
+        <app-chat-input
+          [query]="query"
+          [selectedFile]="selectedFile"
+          [uploadError]="uploadError"
+          [dragOver]="dragOver"
+          (queryChange)="query = $event"
+          (send)="send()"
+          (fileSelected)="onFileSelected($event)"
+          (upload)="upload()"
+          (dragOverEvent)="onDragOver($event)"
+          (dragLeaveEvent)="onDragLeave($event)"
+          (dropEvent)="onDrop($event)"
+          aria-label="Chat input area"
+        ></app-chat-input>
+      </div>
+
+      <!-- Toast notification -->
+      <div
+        *ngIf="toastMessage"
+        class="fixed top-4 left-1/2 transform -translate-x-1/2 toast-glass px-6 py-2 rounded-xl shadow-lg z-50 text-base font-medium animate-fade-in"
+        role="status"
+        aria-live="polite"
+      >
+        {{ toastMessage }}
+      </div>
     </div>
-    <app-chat-input
-      [query]="query"
-      [selectedFile]="selectedFile"
-      [uploadError]="uploadError"
-      [dragOver]="dragOver"
-      (queryChange)="query = $event"
-      (send)="send()"
-      (fileSelected)="onFileSelected($event)"
-      (upload)="upload()"
-      (dragOverEvent)="onDragOver($event)"
-      (dragLeaveEvent)="onDragLeave($event)"
-      (dropEvent)="onDrop($event)"
-      aria-label="Chat input area"
-    ></app-chat-input>
-  </div>
-
-  <!-- Toast notification -->
-  <div
-    *ngIf="toastMessage"
-    class="fixed top-4 left-1/2 transform -translate-x-1/2 toast-glass px-6 py-2 rounded-xl shadow-lg z-50 text-base font-medium animate-fade-in"
-    role="status"
-    aria-live="polite"
-  >
-    {{ toastMessage }}
   </div>
 </div>
+
 <router-outlet></router-outlet>
 

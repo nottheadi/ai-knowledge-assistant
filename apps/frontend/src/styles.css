@@ -57,46 +57,51 @@
 
 /* ========== Light Theme (Premium) ========== */
 html.light-theme {
-  --color-bg-primary: #f5f7ff;
-  --color-bg-secondary: #e8ecf8;
-  --color-bg-tertiary: #f0f3fb;
-  --color-bg-bubble-user: #a5b4e8;
-  --color-bg-bubble-ai: #e8ecf8;
-  --color-bg-code: #e8ecf8;
-  --color-bg-pill-uploaded: rgba(232, 236, 248, 0.85);
-  --color-bg-pill-uploading: rgba(165, 180, 232, 0.8);
-  --color-bg-pill-deleting: rgba(123, 134, 203, 0.85);
-  --color-bg-toast: rgba(165, 180, 232, 0.95);
-  --color-bg-input: rgba(240, 243, 251, 0.8);
-  --color-bg-button: rgba(232, 236, 248, 0.85);
-  --color-bg-glassmorphism: rgba(232, 236, 248, 0.5);
-  --color-bg-gradient-1: #f5f7ff;
-  --color-bg-gradient-2: #f0f3fb;
-  --color-bg-gradient-3: #e8ecf8;
+  /* Backgrounds - clean whites and light grays */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-bg-bubble-user: #e0e7ff;
+  --color-bg-bubble-ai: #f1f5f9;
+  --color-bg-code: #f8fafc;
+  --color-bg-pill-uploaded: rgba(226, 232, 240, 0.85);
+  --color-bg-pill-uploading: rgba(224, 231, 255, 0.8);
+  --color-bg-pill-deleting: rgba(203, 213, 225, 0.85);
+  --color-bg-toast: rgba(224, 231, 255, 0.95);
+  --color-bg-input: rgba(248, 250, 252, 0.9);
+  --color-bg-button: rgba(241, 245, 249, 0.85);
+  --color-bg-glassmorphism: rgba(248, 250, 252, 0.7);
+  --color-bg-gradient-1: #ffffff;
+  --color-bg-gradient-2: #f1f5f9;
+  --color-bg-gradient-3: #f8fafc;
 
-  --color-text-primary: #2c3e50;
-  --color-text-secondary: #5c6fbf;
-  --color-text-muted: #7986cb;
-  --color-text-pill-deleting: #f5f7ff;
+  /* Text - professional dark colors for readability */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #334155;
+  --color-text-muted: #64748b;
+  --color-text-pill-deleting: #f1f5f9;
 
-  --color-border-primary: #7986cb;
-  --color-border-secondary: #5c6bc0;
-  --color-border-input: rgba(123, 134, 203, 0.6);
-  --color-border-button: rgba(123, 134, 203, 0.5);
+  /* Borders - professional grays */
+  --color-border-primary: #cbd5e1;
+  --color-border-secondary: #e2e8f0;
+  --color-border-input: rgba(203, 213, 225, 0.6);
+  --color-border-button: rgba(203, 213, 225, 0.5);
 
-  --color-shape-1: #a5b4e8;
-  --color-shape-2: #8fa3d1;
-  --color-shape-3: #7986cb;
+  /* Shapes - professional blue/slate palette */
+  --color-shape-1: #bfdbfe;
+  --color-shape-2: #dbeafe;
+  --color-shape-3: #cbd5e1;
 
-  --color-accent: #5c6bc0;
-  --color-accent-bright: #7986cb;
-  --color-shadow: rgba(44, 62, 80, 0.12);
-  --color-shadow-light: rgba(44, 62, 80, 0.06);
-  --color-shadow-dark: rgba(44, 62, 80, 0.2);
+  /* Accents - professional blues */
+  --color-accent: #3b82f6;
+  --color-accent-bright: #60a5fa;
+  --color-shadow: rgba(15, 23, 42, 0.08);
+  --color-shadow-light: rgba(15, 23, 42, 0.04);
+  --color-shadow-dark: rgba(15, 23, 42, 0.15);
 
-  --shape-1-opacity: 0.15;
-  --shape-2-opacity: 0.12;
-  --shape-3-opacity: 0.08;
+  --shape-1-opacity: 0.08;
+  --shape-2-opacity: 0.06;
+  --shape-3-opacity: 0.04;
 
   --color-scheme: light;
 
@@ -479,10 +484,10 @@ body {
 }
 
 html.light-theme .dragover {
-  background: rgba(92, 107, 192, 0.1) !important;
+  background: rgba(59, 130, 246, 0.08) !important;
   box-shadow:
-    0 0 20px rgba(92, 107, 192, 0.2),
-    inset 0 1px 0 rgba(240, 243, 251, 0.1) !important;
+    0 0 20px rgba(59, 130, 246, 0.15),
+    inset 0 1px 0 rgba(248, 250, 252, 0.2) !important;
 }
 
 /* ================================================================
@@ -1085,7 +1090,7 @@ html.light-theme .bubble a:hover { color: var(--color-text-primary); }
 }
 
 html.light-theme .toast-glass {
-  border: 1px solid rgba(142, 150, 192, 0.4);
+  border: 1px solid rgba(203, 213, 225, 0.4);
 }
 
 .input-glass {
