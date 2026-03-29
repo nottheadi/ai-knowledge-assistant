@@ -1,12 +1,91 @@
 /* ================================================================
+   Semantic Color Classes (Using CSS Variables)
+   ================================================================ */
+
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.bg-primary {
+  background: var(--color-bg-primary);
+}
+
+.bg-secondary {
+  background: var(--color-bg-secondary);
+}
+
+.border-primary {
+  border-color: var(--color-border-primary);
+}
+
+.border-secondary {
+  border-color: var(--color-border-secondary);
+}
+
+/* ================================================================
+   Theme Toggle Button
+   ================================================================ */
+
+.theme-toggle-btn {
+  background: var(--color-border-secondary);
+  color: var(--color-text-primary);
+  transition: background-color 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--color-accent);
+}
+
+.theme-toggle-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ================================================================
+   SVG Logo Styling
+   ================================================================ */
+
+.logo-svg {
+  transition: filter 0.3s ease;
+}
+
+.logo-path-main {
+  fill: var(--color-border-primary);
+}
+
+.logo-path-fold {
+  fill: var(--color-accent);
+}
+
+.logo-rect-content {
+  fill: var(--color-text-primary);
+}
+
+.logo-bubble {
+  fill: var(--color-text-primary);
+}
+
+.logo-dot {
+  fill: var(--color-bg-primary);
+}
+
+/* ================================================================
    Chat Window Layout
    ================================================================ */
 
 .chat-window {
-  background: rgba(38, 38, 38, 0.78);
+  background: var(--color-bg-glassmorphism);
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
-  box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(115, 115, 115, 0.12);
+  box-shadow: 0 8px 40px 0 var(--color-shadow), inset 0 1px 0 rgba(115, 115, 115, 0.12);
   border-radius: 1.5rem;
   border: 1px solid rgba(89, 89, 89, 0.45);
   width: 100%;
@@ -22,7 +101,12 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   position: relative;
-  transition: max-width 0.2s, padding 0.2s;
+  transition: all 0.3s ease;
+}
+
+html.light-theme .chat-window {
+  box-shadow: 0 8px 40px 0 var(--color-shadow), inset 0 1px 0 rgba(142, 150, 192, 0.12);
+  border: 1px solid var(--color-border-primary);
 }
 
 .chat-window::-webkit-scrollbar {
@@ -40,7 +124,7 @@
   display: flex;
   flex-direction: column;
   scrollbar-width: thin;
-  scrollbar-color: rgba(89, 89, 89, 0.5) transparent;
+  scrollbar-color: var(--color-border-primary) transparent;
 }
 
 .chat-window .flex-1::-webkit-scrollbar {
@@ -49,14 +133,14 @@
 }
 
 .chat-window .flex-1::-webkit-scrollbar-thumb {
-  background: rgba(89, 89, 89, 0.35);
+  background: var(--color-border-secondary);
   border-radius: 6px;
-  border: 1px solid rgba(89, 89, 89, 0.2);
+  border: 1px solid var(--color-border-secondary);
   transition: background 0.2s;
 }
 
 .chat-window .flex-1::-webkit-scrollbar-thumb:hover {
-  background: rgba(115, 115, 115, 0.5);
+  background: var(--color-accent);
 }
 
 /* ================================================================
@@ -70,10 +154,11 @@
   z-index: 20;
   border-radius: 0 0 1.5rem 1.5rem;
   padding: 0.5rem 0.25rem 0.25rem;
-  background: rgba(38, 38, 38, 0.85);
+  background: var(--color-bg-input);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid rgba(89, 89, 89, 0.35);
+  border-top: 1px solid var(--color-border-input);
+  transition: all 0.3s ease;
 }
 
 .chat-input-area::before {
@@ -84,7 +169,11 @@
   width: 100%;
   height: 16px;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgba(38, 38, 38, 0) 0%, rgba(38, 38, 38, 0.6) 100%);
+  background: linear-gradient(to bottom, rgba(38, 38, 38, 0) 0%, var(--color-bg-input) 60%);
+}
+
+html.light-theme .chat-input-area::before {
+  background: linear-gradient(to bottom, rgba(226, 229, 245, 0) 0%, var(--color-bg-input) 60%);
 }
 
 .chat-input-area input {
@@ -109,10 +198,10 @@
 
 .glass-bubble {
   border-radius: 1.25rem;
-  border: 1px solid rgba(89, 89, 89, 0.3);
+  border: 1px solid var(--color-border-secondary);
   padding: 0.75rem 1.25rem;
   margin: 0.25rem 0;
-  transition: background 0.3s, box-shadow 0.3s;
+  transition: all 0.3s ease;
 }
 
 /* ================================================================

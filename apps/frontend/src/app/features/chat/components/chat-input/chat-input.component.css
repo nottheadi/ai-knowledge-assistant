@@ -1,1 +1,70 @@
+/* ================================================================
+   Chat Input Component — Using CSS Variables
+   ================================================================ */
 
+/* Upload button */
+.chat-input-area button.btn-glass-light {
+  color: var(--color-text-primary);
+  transition: all 0.2s ease;
+}
+
+.chat-input-area button.btn-glass-light:hover {
+  background: var(--color-border-secondary) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.chat-input-area button.btn-glass-light:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Text input */
+.chat-input-area input.input-glass {
+  color: var(--color-text-primary);
+  background: var(--color-bg-input) !important;
+  border-color: var(--color-border-input) !important;
+  transition: all 0.2s ease;
+}
+
+.chat-input-area input.input-glass::placeholder {
+  color: var(--color-text-muted) !important;
+}
+
+.chat-input-area input.input-glass:focus {
+  border-color: var(--color-text-primary) !important;
+  box-shadow: 0 0 0 2px var(--color-accent) !important;
+}
+
+/* Send button */
+.chat-input-area button[type="submit"] {
+  background: var(--color-accent) !important;
+  color: var(--color-bg-primary) !important;
+  border-color: var(--color-accent) !important;
+  transition: all 0.2s ease;
+}
+
+html.light-theme .chat-input-area button[type="submit"] {
+  background: #A8C4BF !important;
+  color: var(--color-text-primary) !important;
+  border-color: #A8C4BF !important;
+}
+
+.chat-input-area button[type="submit"]:hover:not(:disabled) {
+  background: var(--color-border-secondary) !important;
+  border-color: var(--color-border-secondary) !important;
+}
+
+html.light-theme .chat-input-area button[type="submit"]:hover:not(:disabled) {
+  background: var(--color-accent) !important;
+  border-color: var(--color-accent) !important;
+}
+
+.chat-input-area button[type="submit"]:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.chat-input-area button[type="submit"]:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}

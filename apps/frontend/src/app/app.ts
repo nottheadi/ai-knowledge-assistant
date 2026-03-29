@@ -3,6 +3,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
 import { RouterOutlet } from '@angular/router';
 import { ApiService } from './core/services/api.service';
+import { ThemeService } from './core/services/theme.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -36,6 +37,7 @@ export class App {
     private api: ApiService,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
+    public themeService: ThemeService,
   ) {
     afterNextRender(() => {
       this.fetchUploadedFiles();
