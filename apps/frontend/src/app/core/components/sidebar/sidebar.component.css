@@ -17,12 +17,12 @@
 	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-html.light-theme .sidebar {
-	background: #f8fafc;
+:host-context(.light-theme) .sidebar {
+	background: linear-gradient(180deg, #f8fbff, #f1f6fc);
 	backdrop-filter: none;
 	-webkit-backdrop-filter: none;
-	border-right: 1.5px solid rgba(203, 213, 225, 0.5);
-	box-shadow: 1px 0 8px rgba(15, 23, 42, 0.04);
+	border-right: 1.5px solid rgba(148, 163, 184, 0.45);
+	box-shadow: 1px 0 12px rgba(15, 23, 42, 0.07);
 }
 
 .sidebar::before {
@@ -33,7 +33,7 @@ html.light-theme .sidebar {
 	pointer-events: none;
 }
 
-html.light-theme .sidebar::before {
+:host-context(.light-theme) .sidebar::before {
 	background: none;
 }
 
@@ -84,12 +84,12 @@ html.light-theme .sidebar::before {
 	border-color: rgba(92, 107, 192, 0.3);
 }
 
-html.light-theme .user-section {
-	background: rgba(241, 245, 249, 0.8);
-	border-color: rgba(203, 213, 225, 0.4);
+:host-context(.light-theme) .user-section {
+	background: rgba(241, 247, 253, 0.95);
+	border-color: rgba(148, 163, 184, 0.42);
 }
 
-html.light-theme .user-section:hover {
+:host-context(.light-theme) .user-section:hover {
 	background: rgba(241, 245, 249, 1);
 	border-color: rgba(203, 213, 225, 0.6);
 }
@@ -197,20 +197,20 @@ html.light-theme .user-section:hover {
 	outline-offset: 2px;
 }
 
-html.light-theme .control-btn {
-	background: rgba(241, 245, 249, 0.8);
-	border-color: rgba(203, 213, 225, 0.4);
+:host-context(.light-theme) .control-btn {
+	background: rgba(241, 247, 253, 0.92);
+	border-color: rgba(148, 163, 184, 0.42);
 	color: var(--color-text-primary);
 }
 
-html.light-theme .control-btn::before {
+:host-context(.light-theme) .control-btn::before {
 	background: none;
 }
 
-html.light-theme .control-btn:hover {
-	background: rgba(241, 245, 249, 1);
-	border-color: rgba(203, 213, 225, 0.6);
-	box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+:host-context(.light-theme) .control-btn:hover {
+	background: rgba(232, 241, 251, 1);
+	border-color: rgba(100, 116, 139, 0.46);
+	box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06);
 }
 
 .logout-btn {
@@ -226,13 +226,13 @@ html.light-theme .control-btn:hover {
 	box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-html.light-theme .logout-btn {
+:host-context(.light-theme) .logout-btn {
 	background: rgba(239, 68, 68, 0.08);
 	border-color: rgba(239, 68, 68, 0.25);
 	color: #dc2626;
 }
 
-html.light-theme .logout-btn:hover {
+:host-context(.light-theme) .logout-btn:hover {
 	background: rgba(239, 68, 68, 0.15);
 	border-color: rgba(239, 68, 68, 0.4);
 	color: #991b1b;
@@ -274,12 +274,12 @@ html.light-theme .logout-btn:hover {
 	background: linear-gradient(180deg, rgba(92, 107, 192, 0.6), rgba(92, 107, 192, 0.4));
 }
 
-html.light-theme .sidebar::-webkit-scrollbar-thumb {
+:host-context(.light-theme) .sidebar::-webkit-scrollbar-thumb {
 	background: rgba(203, 213, 225, 0.4);
 	border-radius: 3px;
 }
 
-html.light-theme .sidebar::-webkit-scrollbar-thumb:hover {
+:host-context(.light-theme) .sidebar::-webkit-scrollbar-thumb:hover {
 	background: rgba(203, 213, 225, 0.6);
 }
 

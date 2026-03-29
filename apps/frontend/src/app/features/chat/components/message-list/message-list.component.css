@@ -13,6 +13,11 @@
 	background: rgba(92, 107, 192, 0.08);
 }
 
+:host-context(.light-theme) .message-empty {
+	background: rgba(226, 236, 248, 0.65);
+	border-color: rgba(148, 163, 184, 0.5);
+}
+
 .message-loading-row {
 	position: sticky;
 	bottom: 0.3rem;

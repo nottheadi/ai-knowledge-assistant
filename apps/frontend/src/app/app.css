@@ -62,10 +62,10 @@
   background: rgba(92, 107, 192, 0.12);
 }
 
-html.light-theme .workspace-badge {
-  background: rgba(59, 130, 246, 0.08);
-  border-color: rgba(148, 163, 184, 0.45);
-  color: #334155;
+:host-context(.light-theme) .workspace-badge {
+  background: rgba(37, 99, 235, 0.08);
+  border-color: rgba(148, 163, 184, 0.5);
+  color: #1f334a;
 }
 
 .workspace-grid {
@@ -99,10 +99,10 @@ html.light-theme .workspace-badge {
   -webkit-backdrop-filter: blur(var(--glass-blur-light));
 }
 
-html.light-theme .context-card {
-  background: linear-gradient(145deg, rgba(248, 250, 252, 0.95), rgba(241, 245, 249, 0.92));
-  border-color: rgba(148, 163, 184, 0.38);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+:host-context(.light-theme) .context-card {
+  background: linear-gradient(145deg, rgba(250, 252, 255, 0.97), rgba(239, 245, 252, 0.95));
+  border-color: rgba(148, 163, 184, 0.45);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
 }
 
 .context-card h2 {
@@ -139,7 +139,7 @@ html.light-theme .context-card {
   background: var(--color-accent);
 }
 
-html.light-theme .jump-latest-btn {
+:host-context(.light-theme) .jump-latest-btn {
   background: #2563eb;
   border-color: rgba(37, 99, 235, 0.3);
 }
@@ -326,22 +326,22 @@ html.light-theme .jump-latest-btn {
     inset 0 -1px 2px rgba(0, 0, 0, 0.2);
 }
 
-html.light-theme .chat-window {
-  background: linear-gradient(145deg, rgba(252, 254, 255, 0.96), rgba(241, 245, 252, 0.94));
+:host-context(.light-theme) .chat-window {
+  background: linear-gradient(145deg, rgba(253, 255, 255, 0.98), rgba(240, 246, 252, 0.96));
   box-shadow:
-    0 10px 40px 0 rgba(15, 23, 42, 0.08),
+    0 12px 34px 0 rgba(15, 23, 42, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  border-color: rgba(148, 163, 184, 0.42);
+  border-color: rgba(148, 163, 184, 0.5);
 }
 
-html.light-theme .chat-window::before {
+:host-context(.light-theme) .chat-window::before {
   background: none;
 }
 
-html.light-theme .chat-window:hover {
-  border-color: rgba(148, 163, 184, 0.56);
+:host-context(.light-theme) .chat-window:hover {
+  border-color: rgba(100, 116, 139, 0.5);
   box-shadow:
-    0 14px 48px 0 rgba(15, 23, 42, 0.1),
+    0 16px 48px 0 rgba(15, 23, 42, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
@@ -388,12 +388,12 @@ html.light-theme .chat-window:hover {
   box-shadow: 0 0 8px rgba(92, 107, 192, 0.3);
 }
 
-html.light-theme .chat-window .flex-1::-webkit-scrollbar-thumb {
+:host-context(.light-theme) .chat-window .flex-1::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, var(--color-border-primary), var(--color-border-secondary));
   border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
-html.light-theme .chat-window .flex-1::-webkit-scrollbar-thumb:hover {
+:host-context(.light-theme) .chat-window .flex-1::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, var(--color-accent), var(--color-accent-bright));
   border-color: rgba(255, 255, 255, 0.6);
   box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
@@ -446,21 +446,22 @@ html.light-theme .chat-window .flex-1::-webkit-scrollbar-thumb:hover {
   border-radius: 0 0 1.5rem 1.5rem;
 }
 
-html.light-theme .chat-input-area {
-  background: rgba(255, 255, 255, 0.9);
-  border-top-color: rgba(203, 213, 225, 0.4);
+:host-context(.light-theme) .chat-input-area {
+  background: linear-gradient(180deg, rgba(247, 251, 255, 0.98), rgba(240, 246, 252, 0.98));
+  border-top-color: rgba(148, 163, 184, 0.5);
+  box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.06);
 }
 
-html.light-theme .chat-input-area::before {
+:host-context(.light-theme) .chat-input-area::before {
   background: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 0.5) 80%,
-    rgba(255, 255, 255, 0.9) 100%
+    rgba(247, 251, 255, 0.6) 80%,
+    rgba(240, 246, 252, 0.95) 100%
   );
 }
 
-html.light-theme .chat-input-area::after {
+:host-context(.light-theme) .chat-input-area::after {
   background: none;
 }
 
@@ -534,18 +535,18 @@ html.light-theme .chat-input-area::after {
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-html.light-theme .glass-bubble {
+:host-context(.light-theme) .glass-bubble {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border-color: rgba(203, 213, 225, 0.4);
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  border-color: rgba(148, 163, 184, 0.42);
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06);
 }
 
-html.light-theme .glass-bubble::before {
+:host-context(.light-theme) .glass-bubble::before {
   background: none;
 }
 
-html.light-theme .glass-bubble:hover {
+:host-context(.light-theme) .glass-bubble:hover {
   border-color: rgba(203, 213, 225, 0.6);
   box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
 }

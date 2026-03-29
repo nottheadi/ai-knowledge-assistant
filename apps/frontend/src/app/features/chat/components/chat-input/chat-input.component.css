@@ -15,6 +15,18 @@
   border-color: var(--color-accent);
 }
 
+:host-context(.light-theme) .chat-input-area .upload-btn {
+  background: #f4f8fd;
+  border-color: rgba(148, 163, 184, 0.5);
+  color: #31465f;
+}
+
+:host-context(.light-theme) .chat-input-area .upload-btn:hover {
+  background: #eaf2fb;
+  border-color: rgba(37, 99, 235, 0.45);
+  color: #1d4ed8;
+}
+
 .chat-input-area .upload-btn:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
@@ -37,6 +49,18 @@
   box-shadow: 0 0 0 2px rgba(from var(--color-accent) r g b / 0.25);
   background: var(--color-bg-secondary);
   transform: translateY(-1px);
+}
+
+:host-context(.light-theme) .chat-input-area input.input-glass {
+  background: #fbfdff;
+  border-color: rgba(148, 163, 184, 0.5);
+  color: #172d45;
+}
+
+:host-context(.light-theme) .chat-input-area input.input-glass:focus {
+  background: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
 }
 
 /* Send button */
@@ -66,6 +90,17 @@
 .send-btn:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+:host-context(.light-theme) .send-btn {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+:host-context(.light-theme) .send-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
 }
 
 @media (max-width: 640px) {
