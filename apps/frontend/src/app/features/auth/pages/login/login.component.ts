@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -34,10 +35,10 @@ export class LoginComponent {
         this.isLoading = false;
         this.router.navigate(['/']);
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         this.isLoading = false;
         this.errorMessage =
-          error.error.detail || 'Login failed. Please try again.';
+          error.error?.detail || 'Login failed. Please try again.';
       },
     });
   }

@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -11,10 +12,12 @@ interface LoginRequest {
 interface LoginResponse {
   access_token: string;
   token_type: string;
-  user: {
-    id: string;
-    username: string;
-  };
+  user: User;
+}
+
+interface User {
+  id: string;
+  username: string;
 }
 
 @Injectable({
@@ -24,24 +27,38 @@ export class AuthService {
   private apiUrl = 'https://urban-space-adventure-45qjwrjvvj5379w7-8000.app.github.dev/api';
   private tokenKey = 'auth_token';
   private userKey = 'auth_user';
+  private isBrowser: boolean;
 
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  private userSubject = new BehaviorSubject<any>(this.getStoredUser());
+  private userSubject = new BehaviorSubject<User | null>(null);
   public user$ = this.userSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) platformId: object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+    this.userSubject.next(this.getStoredUser());
     this.checkAuthStatus();
   }
 
   private hasToken(): boolean {
+    if (!this.isBrowser) {
+      return false;
+    }
+
     return !!localStorage.getItem(this.tokenKey);
   }
 
-  private getStoredUser() {
+  private getStoredUser(): User | null {
+    if (!this.isBrowser) {
+      return null;
+    }
+
     const user = localStorage.getItem(this.userKey);
-    return user ? JSON.parse(user) : null;
+    return user ? (JSON.parse(user) as User) : null;
   }
 
   private checkAuthStatus(): void {
@@ -66,6 +83,10 @@ export class AuthService {
   }
 
   logout(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.userKey);
     this.isAuthenticatedSubject.next(false);
@@ -73,14 +94,26 @@ export class AuthService {
   }
 
   getToken(): string | null {
+    if (!this.isBrowser) {
+      return null;
+    }
+
     return localStorage.getItem(this.tokenKey);
   }
 
   setToken(token: string): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
     localStorage.setItem(this.tokenKey, token);
   }
 
-  setUser(user: any): void {
+  setUser(user: User): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
     localStorage.setItem(this.userKey, JSON.stringify(user));
   }
 
@@ -88,7 +121,7 @@ export class AuthService {
     return this.hasToken();
   }
 
-  getUser(): any {
+  getUser(): User | null {
     return this.getStoredUser();
   }
 }
