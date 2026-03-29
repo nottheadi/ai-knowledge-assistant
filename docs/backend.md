@@ -505,7 +505,7 @@ chromadb==0.4.24          # Vector database
 langchain==0.1.20         # RAG orchestration
 sentence-transformers==3.0.1  # Embeddings
 PyPDF==6.9.1              # PDF loading
-PyJWT==2.8.1              # JWT tokens
+PyJWT==2.10.1             # JWT tokens
 passlib[bcrypt]==1.7.4    # Password hashing
 slowapi==0.1.9            # Rate limiting
 ```
