@@ -3,7 +3,8 @@ Configuration for rate limiting and JWT security.
 """
 
 import os
-from datetime import datetime, timedelta
+import warnings
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 import jwt
 from slowapi import Limiter
@@ -14,10 +15,40 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 # Initialize rate limiter with default limits
 limiter = Limiter(key_func=get_remote_address, default_limits=["10/minute"])
 
+# Validate critical environment variables
+def validate_env_variables():
+    """Validate required environment variables on startup."""
+
+    # Check JWT_SECRET_KEY
+    secret = os.getenv("JWT_SECRET_KEY", "")
+    if not secret or secret == "your-secret-key-change-in-production":
+        warnings.warn(
+            "\n" + "="*70 + "\n"
+            "⚠️  WARNING: JWT_SECRET_KEY is not set or using default value!\n"
+            "This is INSECURE for production use.\n"
+            "Set JWT_SECRET_KEY in .env file immediately.\n"
+            "="*70,
+            UserWarning,
+            stacklevel=2
+        )
+
+    # Check GOOGLE_API_KEY
+    api_key = os.getenv("GOOGLE_API_KEY", "")
+    if not api_key:
+        warnings.warn(
+            "GOOGLE_API_KEY environment variable is not set. "
+            "LLM operations will fail without it.",
+            UserWarning,
+            stacklevel=2
+        )
+
 # JWT configuration
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your-secret-key-change-in-production")
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY") or "your-secret-key-change-in-production"
 JWT_ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
 JWT_EXPIRE_MINUTES = int(os.getenv("JWT_EXPIRE_MINUTES", "60"))
+
+# Validate on module load
+validate_env_variables()
 
 # Security scheme for Bearer token
 security = HTTPBearer()
@@ -28,9 +59,9 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
     to_encode = data.copy()
 
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = datetime.now(timezone.utc) + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=JWT_EXPIRE_MINUTES)
+        expire = datetime.now(timezone.utc) + timedelta(minutes=JWT_EXPIRE_MINUTES)
 
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
