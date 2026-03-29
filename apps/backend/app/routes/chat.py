@@ -7,14 +7,14 @@ import logging
 import os
 import shutil
 
-from app.config import limiter
+from app.config import limiter, verify_api_key
 from app.exceptions import FileUploadError, ValidationError
 from app.rag.pipeline import process_pdf
 from app.rag.rag_chain import generate_rag_response
 from app.rag.retriever import invalidate_retriever
 from app.rag.vectorstore import delete_from_vector_store
 from app.services.llm import ask_llm
-from fastapi import APIRouter, File, HTTPException, Request, UploadFile
+from fastapi import APIRouter, File, HTTPException, Request, UploadFile, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
@@ -69,7 +69,7 @@ class ChatResponse(BaseModel):
     responses={200: {"description": "Successful response with AI answer"}},
 )
 @limiter.limit("10/minute")
-async def chat(request: Request, chat_request: ChatRequest):
+async def chat(request: Request, chat_request: ChatRequest, api_key: str = Depends(verify_api_key)):
     """
     Chat with the AI model.
 
@@ -93,7 +93,7 @@ async def chat(request: Request, chat_request: ChatRequest):
 
 @router.post("/chat/RAG")
 @limiter.limit("10/minute")
-async def chat_rag(request: Request, rag_request: ChatRagRequest):
+async def chat_rag(request: Request, rag_request: ChatRagRequest, api_key: str = Depends(verify_api_key)):
     """
     Chat with the AI model using Retrieval-Augmented Generation (RAG).
 
@@ -125,7 +125,7 @@ async def chat_rag(request: Request, rag_request: ChatRagRequest):
 
 @router.post("/upload")
 @limiter.limit("5/minute")
-async def upload_pdf(request: Request, file: UploadFile = File(...)):
+async def upload_pdf(request: Request, file: UploadFile = File(...), api_key: str = Depends(verify_api_key)):
     """
     Upload a PDF file, process it, and store in the vector DB.
 
@@ -181,7 +181,7 @@ async def upload_pdf(request: Request, file: UploadFile = File(...)):
 
 
 @router.get("/uploads")
-async def list_uploaded_pdfs():
+async def list_uploaded_pdfs(api_key: str = Depends(verify_api_key)):
     """
     List all uploaded PDF files in the uploads directory.
     Returns:
@@ -196,7 +196,7 @@ async def list_uploaded_pdfs():
 
 
 @router.delete("/uploads/{filename}")
-async def delete_uploaded_pdf(filename: str):
+async def delete_uploaded_pdf(filename: str, api_key: str = Depends(verify_api_key)):
     """
     Delete an uploaded PDF file by name.
     """
