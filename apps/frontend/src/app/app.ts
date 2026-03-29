@@ -3,6 +3,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
 import { Router, RouterOutlet } from '@angular/router';
 import { ApiService } from './core/services/api.service';
+import { AuthService } from './core/services/auth.service';
 import { ThemeService } from './core/services/theme.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -29,23 +30,46 @@ export class App {
   isLoading = false;
   loadingPhase: 'none' | 'thinking' | 'refining' | 'formatting' = 'none';
   toastMessage: string = '';
+  toastType: 'success' | 'error' | 'info' = 'info';
+  toastFadingOut: boolean = false;
+  private toastTimeout: ReturnType<typeof setTimeout> | null = null;
   dragOver: boolean = false;
   uploadError: string = '';
+  isLoggedIn: boolean = false;
 
   @ViewChild('chatWindow') chatWindow!: ElementRef;
 
   constructor(
     private api: ApiService,
+    public authService: AuthService,
+    private router: Router,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
     public themeService: ThemeService,
   ) {
+    this.isLoggedIn = this.authService?.isAuthenticated() ?? false;
+
     afterNextRender(() => {
-      this.fetchUploadedFiles();
+      if (this.authService.isAuthenticated()) {
+        this.fetchUploadedFiles();
+      }
+    });
+
+    this.authService.isAuthenticated$.subscribe((isAuthenticated) => {
+      this.isLoggedIn = isAuthenticated;
+      if (isAuthenticated) {
+        this.fetchUploadedFiles();
+      } else {
+        this.uploadedFiles = [];
+      }
     });
   }
 
   fetchUploadedFiles() {
+    if (!this.authService.isAuthenticated()) {
+      return;
+    }
+
     this.api.getUploadedFiles().subscribe({
       next: (res: any) => {
         this.uploadedFiles = (res.files || []).map((name: string) => ({
@@ -66,6 +90,11 @@ export class App {
   }
 
   upload() {
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.uploadError = '';
     if (!this.selectedFile) {
       this.uploadError = 'Please select a file first.';
@@ -84,9 +113,7 @@ export class App {
         this.uploadedFiles = this.uploadedFiles.map(f =>
           f.name === fileName ? { ...f, status: 'uploaded' as const } : f
         );
-        this.toastMessage = `✓ ${fileName} uploaded successfully`;
-        this.cdr.detectChanges();
-        setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
+        this.showToast(`${fileName} uploaded successfully`, 'success');
       },
       error: () => {
         this.uploadedFiles = this.uploadedFiles.filter(f => f.name !== fileName);
@@ -97,6 +124,11 @@ export class App {
   }
 
   deleteFile(fileName: string) {
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     // Switch pill to deleting state immediately
     this.uploadedFiles = this.uploadedFiles.map(f =>
       f.name === fileName ? { ...f, status: 'deleting' as const } : f
@@ -106,22 +138,23 @@ export class App {
     this.api.deleteFile(fileName).subscribe({
       next: () => {
         this.uploadedFiles = this.uploadedFiles.filter(f => f.name !== fileName);
-        this.toastMessage = `✓ ${fileName} deleted`;
-        this.cdr.detectChanges();
-        setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
+        this.showToast(`${fileName} deleted`, 'success');
       },
       error: () => {
         this.uploadedFiles = this.uploadedFiles.map(f =>
           f.name === fileName ? { ...f, status: 'uploaded' as const } : f
         );
-        this.toastMessage = 'Failed to delete file.';
-        this.cdr.detectChanges();
-        setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
+        this.showToast('Failed to delete file', 'error');
       },
     });
   }
 
   send() {
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     if (!this.query.trim()) return;
     const question = this.query;
     this.messages.push({ sender: 'User', text: question });
@@ -153,9 +186,7 @@ export class App {
       error: () => {
         this.isLoading = false;
         this.loadingPhase = 'none';
-        this.toastMessage = 'Error: Unable to get response from server.';
-        this.cdr.detectChanges();
-        setTimeout(() => { this.toastMessage = ''; this.cdr.detectChanges(); }, 3000);
+        this.showToast('Unable to get response from server', 'error');
       }
     });
   }
@@ -199,5 +230,27 @@ export class App {
     }
     this.selectedFile = file;
     this.upload();
+  }
+
+  showToast(message: string, type: 'success' | 'error' | 'info' = 'info') {
+    // Clear any existing toast timeout
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+    }
+    this.toastMessage = message;
+    this.toastType = type;
+    this.toastFadingOut = false;
+    this.cdr.detectChanges();
+
+    this.toastTimeout = setTimeout(() => {
+      this.toastFadingOut = true;
+      this.cdr.detectChanges();
+      // Wait for fade-out animation to finish
+      setTimeout(() => {
+        this.toastMessage = '';
+        this.toastFadingOut = false;
+        this.cdr.detectChanges();
+      }, 350);
+    }, 2700);
   }
 }

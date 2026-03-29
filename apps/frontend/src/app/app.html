@@ -1,4 +1,4 @@
-<div class="app-container">
+<div *ngIf="isLoggedIn; else authRoute" class="app-container">
   <!-- Sidebar -->
   <app-sidebar></app-sidebar>
 
@@ -94,10 +94,18 @@
       <!-- Toast notification -->
       <div
         *ngIf="toastMessage"
-        class="fixed top-4 left-1/2 transform -translate-x-1/2 toast-glass px-6 py-2 rounded-xl shadow-lg z-50 text-base font-medium animate-fade-in"
+        class="fixed top-4 left-1/2 transform -translate-x-1/2 toast-glass px-5 py-2.5 rounded-xl shadow-lg z-50 text-sm font-medium flex items-center gap-2"
+        [class.toast-success]="toastType === 'success'"
+        [class.toast-error]="toastType === 'error'"
+        [class.toast-info]="toastType === 'info'"
+        [class.animate-fade-in]="!toastFadingOut"
+        [class.animate-fade-out]="toastFadingOut"
         role="status"
         aria-live="polite"
       >
+        <span *ngIf="toastType === 'success'" style="color: var(--color-success)">&#10003;</span>
+        <span *ngIf="toastType === 'error'" style="color: var(--color-error)">&#10007;</span>
+        <span *ngIf="toastType === 'info'" style="color: var(--color-accent)">&#9432;</span>
         {{ toastMessage }}
       </div>
     </div>
@@ -138,5 +146,7 @@
   </div>
 </div>
 
-<router-outlet></router-outlet>
+<ng-template #authRoute>
+  <router-outlet></router-outlet>
+</ng-template>
 

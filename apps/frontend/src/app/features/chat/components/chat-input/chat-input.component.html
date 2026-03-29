@@ -18,7 +18,7 @@
         type="button"
         (click)="fileInput.click()"
         aria-label="Upload file"
-        class="flex items-center justify-center w-10 h-10 rounded-full btn-glass-light border border-[#595959] text-[#A6A6A6] hover:bg-[#595959] hover:text-[#A6A6A6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#737373] transition mr-2"
+        class="upload-btn flex items-center justify-center w-10 h-10 rounded-full btn-glass-light border transition mr-2"
         tabindex="0"
         title="Upload PDF (max 10 MB)"
       >
@@ -42,7 +42,7 @@
       name="query"
       autocomplete="off"
       placeholder="Ask something from the document..."
-      class="flex-1 input-glass border-2 border-[#595959] text-[#A6A6A6] placeholder-[#A6A6A6] font-medium focus-visible:border-[#A6A6A6] focus-visible:ring-2 focus-visible:ring-[#737373] transition rounded-xl px-4 py-2"
+      class="flex-1 input-glass border-2 font-medium focus-visible:ring-2 transition rounded-xl px-4 py-2"
       aria-label="Type your message"
     />
 
@@ -50,7 +50,7 @@
     <button
       type="submit"
       [disabled]="!query.trim()"
-      class="flex items-center justify-center w-10 h-10 rounded-full bg-[#A6A6A6] text-[#0D0D0D] border border-[#A6A6A6] hover:bg-white hover:border-white disabled:opacity-30 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#737373] transition ml-2"
+      class="send-btn flex items-center justify-center w-10 h-10 rounded-full border disabled:opacity-30 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 transition ml-2"
       title="Send"
       aria-label="Send message"
       tabindex="0"
@@ -66,7 +66,8 @@
   <!-- Upload error -->
   <div
     *ngIf="uploadError"
-    class="text-xs text-red-400 pl-14"
+    class="text-xs pl-14"
+    style="color: var(--color-error)"
     role="alert"
   >{{ uploadError }}</div>
 </form>

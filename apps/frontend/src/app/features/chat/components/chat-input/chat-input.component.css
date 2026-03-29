@@ -3,17 +3,19 @@
    ================================================================ */
 
 /* Upload button */
-.chat-input-area button.btn-glass-light {
+.chat-input-area .upload-btn {
+  color: var(--color-text-secondary);
+  border-color: var(--color-border-button);
+  transition: all 0.2s var(--transition-smooth);
+}
+
+.chat-input-area .upload-btn:hover {
+  background: var(--color-bg-secondary);
   color: var(--color-text-primary);
-  transition: all 0.2s ease;
+  border-color: var(--color-accent);
 }
 
-.chat-input-area button.btn-glass-light:hover {
-  background: var(--color-border-secondary) !important;
-  color: var(--color-text-primary) !important;
-}
-
-.chat-input-area button.btn-glass-light:focus-visible {
+.chat-input-area .upload-btn:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
@@ -21,50 +23,46 @@
 /* Text input */
 .chat-input-area input.input-glass {
   color: var(--color-text-primary);
-  background: var(--color-bg-input) !important;
-  border-color: var(--color-border-input) !important;
-  transition: all 0.2s ease;
+  background: var(--color-bg-input);
+  border-color: var(--color-border-input);
+  transition: all 0.2s var(--transition-smooth);
 }
 
 .chat-input-area input.input-glass::placeholder {
-  color: var(--color-text-muted) !important;
+  color: var(--color-text-muted);
 }
 
 .chat-input-area input.input-glass:focus {
-  border-color: var(--color-text-primary) !important;
-  box-shadow: 0 0 0 2px var(--color-accent) !important;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(from var(--color-accent) r g b / 0.25);
+  background: var(--color-bg-secondary);
 }
 
 /* Send button */
-.chat-input-area button[type="submit"] {
-  background: var(--color-accent) !important;
-  color: var(--color-bg-primary) !important;
-  border-color: var(--color-accent) !important;
-  transition: all 0.2s ease;
+.send-btn {
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  border-color: var(--color-accent);
+  transition: all 0.2s var(--transition-smooth);
 }
 
-html.light-theme .chat-input-area button[type="submit"] {
-  background: #A8C4BF !important;
-  color: var(--color-text-primary) !important;
-  border-color: #A8C4BF !important;
+.send-btn:hover:not(:disabled) {
+  background: var(--color-accent-bright);
+  border-color: var(--color-accent-bright);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--color-shadow);
 }
 
-.chat-input-area button[type="submit"]:hover:not(:disabled) {
-  background: var(--color-border-secondary) !important;
-  border-color: var(--color-border-secondary) !important;
+.send-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
 }
 
-html.light-theme .chat-input-area button[type="submit"]:hover:not(:disabled) {
-  background: var(--color-accent) !important;
-  border-color: var(--color-accent) !important;
-}
-
-.chat-input-area button[type="submit"]:disabled {
+.send-btn:disabled {
   opacity: 0.3;
   cursor: not-allowed;
 }
 
-.chat-input-area button[type="submit"]:focus-visible {
+.send-btn:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
