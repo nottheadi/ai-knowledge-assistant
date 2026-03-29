@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ThemeService } from '../../services/theme.service';
@@ -12,6 +12,9 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
+  @Input() isMobilePanel = false;
+  @Output() closePanel = new EventEmitter<void>();
+
   username = signal('');
   isDark = computed(() => this.themeService.theme() === 'dark');
 
@@ -33,5 +36,9 @@ export class SidebarComponent {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  close(): void {
+    this.closePanel.emit();
   }
 }

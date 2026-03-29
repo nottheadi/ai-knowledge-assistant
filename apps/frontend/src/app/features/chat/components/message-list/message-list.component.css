@@ -1,1 +1,31 @@
 
+.message-list-shell {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+	padding-right: 0.15rem;
+}
+
+.message-empty {
+	border: 1px dashed var(--color-border-input);
+	border-radius: 1rem;
+	background: rgba(92, 107, 192, 0.08);
+}
+
+.message-loading-row {
+	position: sticky;
+	bottom: 0.3rem;
+}
+
+.loading-phase {
+	font-weight: 500;
+}
+
+@media (max-width: 640px) {
+	.message-empty {
+		border-radius: 0.8rem;
+		padding-left: 0.65rem;
+		padding-right: 0.65rem;
+	}
+}
+

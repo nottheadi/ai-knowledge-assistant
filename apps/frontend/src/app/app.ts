@@ -36,6 +36,8 @@ export class App {
   dragOver: boolean = false;
   uploadError: string = '';
   isLoggedIn: boolean = false;
+  isSidebarOpen: boolean = false;
+  showScrollToLatest: boolean = false;
 
   @ViewChild('chatWindow') chatWindow!: ElementRef;
 
@@ -83,6 +85,7 @@ export class App {
   }
 
   onFileSelected(event: any) {
+    this.closeSidebar();
     if (event.target.files && event.target.files.length > 0) {
       this.handleFile(event.target.files[0]);
       event.target.value = '';
@@ -156,11 +159,16 @@ export class App {
     }
 
     if (!this.query.trim()) return;
+    this.closeSidebar();
+
     const question = this.query;
     this.messages.push({ sender: 'User', text: question });
     this.query = '';
     this.isLoading = true;
     this.loadingPhase = 'thinking';
+    this.showScrollToLatest = false;
+    this.scrollToBottom();
+
     this.api.chatRag(question).subscribe({
       next: (res: any) => {
         this.loadingPhase = 'formatting';
@@ -195,6 +203,7 @@ export class App {
     setTimeout(() => {
       if (this.chatWindow) {
         this.chatWindow.nativeElement.scrollTop = this.chatWindow.nativeElement.scrollHeight;
+        this.showScrollToLatest = false;
       }
     }, 100);
   }
@@ -216,6 +225,29 @@ export class App {
     if (dragEvent.dataTransfer && dragEvent.dataTransfer.files.length > 0) {
       this.handleFile(dragEvent.dataTransfer.files[0]);
     }
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  closeSidebar() {
+    this.isSidebarOpen = false;
+  }
+
+  onChatScroll() {
+    if (!this.chatWindow) {
+      return;
+    }
+
+    const el = this.chatWindow.nativeElement;
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    this.showScrollToLatest = distanceFromBottom > 180;
+  }
+
+  scrollToLatest() {
+    this.scrollToBottom();
+    this.showScrollToLatest = false;
   }
 
   handleFile(file: File) {

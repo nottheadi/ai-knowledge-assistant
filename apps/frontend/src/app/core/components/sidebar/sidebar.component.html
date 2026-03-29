@@ -1,4 +1,11 @@
 <div class="sidebar">
+  <div *ngIf="isMobilePanel" class="sidebar-mobile-head">
+    <p class="sidebar-mobile-title">Workspace</p>
+    <button class="sidebar-close-btn" type="button" (click)="close()" aria-label="Close sidebar">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+
   <!-- User Section -->
   <div class="user-section">
     <div class="user-avatar">{{ username()[0]?.toUpperCase() || 'U' }}</div>
@@ -14,7 +21,7 @@
   <!-- Theme Toggle -->
   <div class="control-section">
     <button class="control-btn toggle-btn" (click)="toggleTheme()" [attr.aria-label]="'Switch to ' + (isDark() ? 'light' : 'dark') + ' theme'">
-      <span class="btn-icon">{{ isDark() ? '☀️' : '🌙' }}</span>
+      <span class="btn-icon" aria-hidden="true">{{ isDark() ? '☀' : '◐' }}</span>
       <span class="btn-text">{{ isDark() ? 'Light' : 'Dark' }}</span>
     </button>
   </div>
@@ -22,7 +29,7 @@
   <!-- Logout -->
   <div class="control-section">
     <button class="control-btn logout-btn" (click)="logout()" aria-label="Logout">
-      <span class="btn-icon">↪️</span>
+      <span class="btn-icon" aria-hidden="true">⇢</span>
       <span class="btn-text">Logout</span>
     </button>
   </div>

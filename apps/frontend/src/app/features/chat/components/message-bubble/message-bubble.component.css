@@ -1,1 +1,33 @@
 
+:host {
+	display: block;
+}
+
+.bubble.user {
+	max-width: min(66ch, 86%);
+}
+
+.bubble.ai {
+	max-width: min(74ch, 88%);
+}
+
+.bubble .sources {
+	margin-top: 0.7rem;
+	padding-top: 0.6rem;
+}
+
+.source-chip {
+	font-size: 0.78rem;
+}
+
+@media (max-width: 640px) {
+	.bubble.user,
+	.bubble.ai {
+		max-width: 94%;
+	}
+
+	.source-chip {
+		font-size: 0.74rem;
+	}
+}
+

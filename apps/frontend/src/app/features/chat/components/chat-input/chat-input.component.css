@@ -36,6 +36,7 @@
   border-color: var(--color-accent);
   box-shadow: 0 0 0 2px rgba(from var(--color-accent) r g b / 0.25);
   background: var(--color-bg-secondary);
+  transform: translateY(-1px);
 }
 
 /* Send button */
@@ -65,4 +66,16 @@
 .send-btn:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .chat-input-area .upload-btn,
+  .send-btn {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .chat-input-area input.input-glass {
+    border-width: 1.5px;
+  }
 }
